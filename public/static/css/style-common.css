@@ -1,0 +1,1055 @@
+* {box-sizing: border-box;}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-BlackItalic.eot');
+    src: local('Axiforma Black Italic'), local('Axiforma-BlackItalic'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Bold.eot');
+    src: local('Axiforma Bold'), local('Axiforma-Bold'),
+        url('../fonts/Axiforma/Axiforma-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Bold.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-ThinItalic.eot');
+    src: local('Axiforma Thin Italic'), local('Axiforma-ThinItalic'),
+        url('../fonts/Axiforma/Axiforma-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-ThinItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Heavy.eot');
+    src: local('Axiforma Heavy'), local('Axiforma-Heavy'),
+        url('../fonts/Axiforma/Axiforma-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Heavy.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Heavy.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Medium.eot');
+    src: local('Axiforma Medium'), local('Axiforma-Medium'),
+        url('../fonts/Axiforma/Axiforma-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Medium.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-LightItalic.eot');
+    src: local('Axiforma Light Italic'), local('Axiforma-LightItalic'),
+        url('../fonts/Axiforma/Axiforma-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-LightItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-BoldItalic.eot');
+    src: local('Axiforma Bold Italic'), local('Axiforma-BoldItalic'),
+        url('../fonts/Axiforma/Axiforma-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-BoldItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-BookItalic.eot');
+    src: local('Axiforma Book Italic'), local('Axiforma-BookItalic'),
+        url('../fonts/Axiforma/Axiforma-BookItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-BookItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-BookItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-SemiBold.eot');
+    src: local('Axiforma SemiBold'), local('Axiforma-SemiBold'),
+        url('../fonts/Axiforma/Axiforma-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-SemiBold.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Black.eot');
+    src: local('Axiforma Black'), local('Axiforma-Black'),
+        url('../fonts/Axiforma/Axiforma-Black.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Black.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Thin.eot');
+    src: local('Axiforma Thin'), local('Axiforma-Thin'),
+        url('../fonts/Axiforma/Axiforma-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Thin.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Book.eot');
+    src: local('Axiforma Book'), local('Axiforma-Book'),
+        url('../fonts/Axiforma/Axiforma-Book.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Book.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-ExtraBold.eot');
+    src: local('Axiforma ExtraBold'), local('Axiforma-ExtraBold'),
+        url('../fonts/Axiforma/Axiforma-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-ExtraBold.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-HeavyItalic.eot');
+    src: local('Axiforma Heavy Italic'), local('Axiforma-HeavyItalic'),
+        url('../fonts/Axiforma/Axiforma-HeavyItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-HeavyItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-HeavyItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-MediumItalic.eot');
+    src: local('Axiforma Medium Italic'), local('Axiforma-MediumItalic'),
+        url('../fonts/Axiforma/Axiforma-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-MediumItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Italic.eot');
+    src: local('Axiforma Italic'), local('Axiforma-Italic'),
+        url('../fonts/Axiforma/Axiforma-Italic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Italic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-SemiBoldItalic.eot');
+    src: local('Axiforma SemiBold Italic'), local('Axiforma-SemiBoldItalic'),
+        url('../fonts/Axiforma/Axiforma-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-SemiBoldItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Regular.eot');
+    src: local('Axiforma Regular'), local('Axiforma-Regular'),
+        url('../fonts/Axiforma/Axiforma-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Regular.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-Light.eot');
+    src: local('Axiforma Light'), local('Axiforma-Light'),
+        url('../fonts/Axiforma/Axiforma-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-Light.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-ExtraBoldItalic.eot');
+    src: local('Axiforma ExtraBold Italic'), local('Axiforma-ExtraBoldItalic'),
+        url('../fonts/Axiforma/Axiforma-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-ExtraBoldItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Axiforma';
+    src: url('../fonts/Axiforma/Axiforma-BlackItalic.eot');
+    src: local('Axiforma Black Italic'), local('Axiforma-BlackItalic'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.woff') format('woff'),
+        url('../fonts/Axiforma/Axiforma-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Righteous';
+    src: url('../fonts/Righteous-Regular.ttf');
+    src: local('Righteous-Regular'), local('Righteous-Regular');
+    font-weight: 800;
+    font-style: normal;
+}
+body{overflow-x: hidden}
+
+
+.main-nav .dropdown-menu.show{width: auto}
+.main-nav .nav-item .nav-link{font-size: 13px; font-family: 'Righteous'; opacity: 1; color: white;}
+.main-nav .nav-item .nav-link.active,
+.main-nav .nav-item .nav-link:hover{background: -webkit-linear-gradient(#8DC33F, #00A7A7) !important;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+.swapper .nav-item a.active,
+.swapper .nav-item a:hover{background: -webkit-linear-gradient(#8DC33F, #00A7A7) !important; 
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+
+.homepage .header{height: 100vh;}
+.banner-content h1{font-size: 56px; font-family: 'Righteous';}
+.banner-content p{font-size: 14px; font-family: 'Axiforma';}
+.banner-content .row{align-items: center}
+.banner-img{text-align: right}
+.banner-goj-ic{top: 200px; left: 200px;}
+.banner-gaba-ic{top: 200px; right: 200px;}
+.banner-hanu-ic{top: 500px; left: 40%;}
+.banner-mia-ic{top: 650px; right: 45%;}
+
+
+.section-heading{font-family: 'Righteous'; font-size: 38px;}
+.section-desc{font-family: 'axiforma'; font-size: 13px;}
+.token-block{background: #1F1F1F; border-radius: 16px;}
+.theme-btn:hover{background: #1F1F1F; color: white}
+.token-block h2{font-family: 'axiforma'; font-size: 20px; color: white; line-height: 1.5}
+.token-row{padding: 2rem 7rem}
+.token-block:hover{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); box-shadow: 0px 4px 40px rgba(141, 195, 63, 0.5);}
+.token-block:hover img{filter: brightness(0) invert(1);}
+.whitepaper-link{padding: 2rem 7rem}
+.blockchain-features{padding: 2rem 7rem}
+.blockchain-feature h2{font-family: 'Righteous'; font-size: 18px;}
+p{font-size: 13px;}
+.blockchain-features .col-sm-4:nth-child(2){margin-top: 5rem}
+.blockchain-features .col-sm-4:nth-child(5){margin-top: 5rem}
+.goji-exchange{padding: 2rem 7rem}
+.section-sub-heading{font-family: 'Righteous'; font-size: 20px;}
+.video-play-link{position: absolute; top: calc(50% - 50px); left: calc(50% - 50px);}
+.video-thumb{width: 100%; height: auto}
+.video-link-step h2{font-family: 'Righteous'; font-size: 14px;}
+.video-link-step p{font-size: 12px; line-height: 1.5}
+.start-guide-step{text-align: left; background: #070707 !important; border-radius: 16px !important; border: none; text-transform: inherit !important}
+.start-guide-step h2{color: white}
+.start-guide-step p{color: #dfdfdf}
+.start-guide-step.active,
+.start-guide-step:hover
+{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%) !important; box-shadow: 0px 4px 40px rgba(141, 195, 63, 0.5); border: none}
+.start-guide{padding: 2rem 7rem}
+
+.slide-body{border: 0.5px solid #8DC33F; border-radius: 16px; min-height: 285px;}
+.slide-body h2{font-family: 'Righteous'; font-size: 18px;}
+.blockchain-benefits-slider{padding-left: 8rem !important}
+.blockchain-benefits-slider .slide{width: 315px; height: 310px;}
+.blockchain-benefits-slider .slick-arrow.slick-next{left: 45px; right: auto; top: 30%}
+.blockchain-benefits-slider .slick-prev{display: none !important}
+
+.our-team{padding: 2rem 7rem}
+.team-member{text-align: center}
+.our-team .overlay{border-radius: 16px; transform: matrix(1, 0, 0, -1, 0, 0); position: absolute; width: 100%; height: 100%; top: 0;}
+.member-info{z-index: 1; bottom: 50px; position: absolute !important; width: 100%;}
+.member-name{font-family: 'Righteous'; font-size: 20px;}
+.member-designation{font-family: 'axiforma'; font-size: 12px; }
+
+.roadmap{background: linear-gradient(180deg, rgba(0, 140, 140, 0) 0%, #008C8C 100%);}
+.roadmap-timeline{min-height: 550px;}
+.timeline {width:90%; height: 20px; list-style: none; text-align: justify; margin: 80px auto;
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,0)), color-stop(45%, rgba(255,255,255,0)), color-stop(51%, rgba(141,195,63,1)), color-stop(57%, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,0)));
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 45%, rgba(141,195,63,1) 51%, rgba(255,255,255,0) 57%, rgba(255,255,255,0) 100%);
+    padding: 0 5rem;}
+.timeline:after {display: inline-block; content: ""; width: 100%;}
+.timeline li {display: inline-flex; width: 14px; height: 14px; background: #8DC33F; text-align: center; margin-top: 3px; position: relative; border-radius: 50%;}
+
+.timeline li:before {
+	display: inline-block; content: attr(data-year); position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Righteous'; font-size: 14px; top: -40px; white-space: nowrap}
+.timeline-desc{background: #1f1f1f; border-radius: 16px; padding: 1.25rem; color: white; min-width: 219px; margin-top: 35px; margin-left: -100px; text-align: left; min-height: 350px;}
+.timeline-desc h2{font-family: 'Righteous'; font-size: 14px; color: white}
+.timeline-desc p{font-family: 'Axiforma'; font-size: 12px; color: #dfdfdf}
+
+
+footer h2{font-family: 'Righteous'; font-size: 20px;}
+footer p{font-family: 'Axiforma'; font-size: 14px;}
+.copyright{font-family: 'Righteous'; font-size: 14px;}
+.bold{font-weight: 800 !important}
+.text-right{text-align: right}
+.text-left{text-align: left}
+
+/* ================================================================= About Page start ============================================ */
+.top-watermark{position: absolute; top: 0; right: 0; z-index: -1}
+.our-investor{padding: 0 17rem}
+.investor{border-radius: 16px; width: 167px; height: 90px; background: rgba(31, 31, 31, 0.5);}
+body:not(.homepage) footer{margin-top: 8rem}
+/* ================================================================= About Page end ============================================== */
+
+/* ====================================================== Whitepaper start ======================================================== */
+.slide-cont h1{font-family: 'Righteous'; font-size: 56px;}
+.slide-cont h2{font-family: 'Righteous'; font-size: 38px;}
+.slide-cont p{font-family: 'Axiforma'; font-size: 13px;}
+.slide-number{position: absolute; right: 15px; bottom: 0; color: white}
+.slide-number .curr-slide{font-family: 'Axiforma'; font-size: 36px; color: #8DC33F}
+.whitepaper .carousel-control-next, .whitepaper .carousel-control-prev{width: 10%}
+.whitepaper .header{height: 100vh}
+.whitepaper-slider-guide carousel-inner{padding: 0 10rem}
+.whitepaper-slider-guide .carousel-item{height: 100%}
+.whitepaper .banner-content{height: calc(100vh - 155px)}
+.whitepaper-slider-guide .carousel-inner{height: 100%}
+.slide-cont{padding: 0 10rem}
+.slide-cont h3{font-family: 'Righteous'; font-size: 18px;}
+.bulltets{line-height: 5}
+.bulltets span{padding: 15px 20px; border-radius: 60px; white-space: nowrap}
+.slide-cont .token-block h2{font-size: 14px;}
+.future-services .slide-cont .token-block{border-radius: 60px;}
+.modal h2{font-family: 'Righteous'; font-size: 18px;}
+.modal p{font-family: 'Axiforma'; font-size: 13px;}
+.modal-body{padding: 2rem}
+.gojiswap-rewards-modal .modal-body img{width: 100%; height: auto}
+/* ====================================================== Whitepaper End ======================================================== */
+
+/* ====================================================== News Start ======================================================== */
+.news-block{border-radius: 16px; min-height: 485px;}
+.news-block h5{font-family: 'Righteous'; font-size: 18px;}
+.news-block p{font-family: 'Axiforma'; font-size: 13px;}
+/* ====================================================== News End ======================================================== */
+
+/* ====================================================== News Single Start ======================================================== */
+.blog-content h2{font-family: 'Righteous'; font-size: 38px;}
+.blog-content p span{color: #8DC33F; font-weight: bold}
+.news-single-img{text-align: right}
+/* ====================================================== News Single End ======================================================== */
+
+/* ====================================================== Hanu Token Start ======================================================== */
+.chart-legend{border-left: 10px solid}
+.chart-legend h2{font-family: 'Righteous'; font-size: 18px;}
+.chart-legend p{font-family: 'Axiforma'; font-size: 13px;}
+.chart-legend.treasury{border-left-color: #8DC33F}
+.chart-legend.development{border-left-color: #0D4545}
+.chart-legend.reservces{border-left-color: #5C8127}
+.chart-legend.business{border-left-color: #027575}
+.chart-legend.marketing{border-left-color: #384F17}
+.chart-legend.liquidity{border-left-color: #00A8A8}
+.timeline-token-slider .slide-body h1{font-family: 'Righteous'; font-size: 24px;}
+.timeline-token-slider .slide-body{width: 273px; height: 273px; border-radius: 40px; border: 0.25px solid #8DC33F}
+.timeline-token-slider .first-slide .slide-body{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%) !important;}
+.timeline-token-slider .slick-dots{justify-content: center}
+.timeline-token-slider .slick-dots li{width: 6px; height: 6px; border-radius: 60px; background: #717171; border: none; cursor: pointer}
+.timeline-token-slider .slick-dots li.slick-active{background: #8DC33F}
+.tokenomics-prop{border: 0.25px solid #8DC33F; border-radius: 4px;}
+.tokenomics-prop p{font-family: 'Axiforma'; font-size: 13px;}
+.tokenomics-prop h2{font-family: 'Righteous'; font-size: 16px;}
+.tokenomics-btn-1{background: #00A7A7 !important}
+.tokenomics-btn-2{background: #8DC33F !important}
+.tokenomics-points p{font-family: 'Axiforma'; font-size: 13px;}
+.swapper-legend h2{font-family: 'Righteous'; font-size: 18px;}
+.swapper-legend p{font-family: 'Axiforma'; font-size: 13px;}
+.swap-form .form-btn{text-align: center}
+.swap-form .form-btn .btn{max-width: 353px;}
+.gaba-tokenomics-info{font-family: 'Axiforma'; font-size: 13px;}
+.what-gaba p span{font-family: 'Axiforma'; font-size: 24px; font-weight: 800}
+
+/* ====================================================== Hanu Token End ======================================================== */
+
+/* ====================================================== Goji Staking Start ======================================================== */
+.active-tabs .nav-item:nth-child(1){border-right: 1px solid}
+.active-tabs .nav-item a{padding: 0; font-size: 13px; letter-spacing: 1.5px; background: none !important;}
+.active-tabs .nav-item a.active{font-weight: 900}
+.curr-item{border-radius: 26px;}
+.staking .curr-item{min-height:560px;}
+.btn-green{min-height: 40px; min-width: 40px; border-radius: 26px; background: linear-gradient(180deg, #79DB72 0%, #71CCA4 100%); color: white}
+.curr-name{font-size: 29px; font-weight: 800}
+.curr-x-val{font-size: 11px; color: white; background: #030303; border-radius: 60px; width: 38px; height: 20px;}
+.curr-item .curr-props h3{font-size: 13px; font-weight: 400}
+.curr-detail .detail-heading{font-size: 13px; font-weight: 600; letter-spacing: 2px;}
+.curr-detail h4, .curr-detail a{font-size: 11px; font-weight: 600}
+.curr-detail a{border-bottom: 1px solid; padding-bottom: 1px;}
+.stake-item{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); }
+
+.comp-link{color: #79DB72; font-weight: 600; font-size: 10px; border-bottom: 1px solid #79DB72; padding-bottom: 1px;}
+.comp-link:hover{color: white; border-bottom-color: white}
+.stake-item .calc-APR path{fill:#ffff}
+.curr-x-val.no-fees{min-width: 65px; background: linear-gradient(180deg, #79DB72 0%, #71CCA4 100%);}
+.curr-btn .btn-green{font-weight: 600; font-size: 13px;}
+.curr-btn .btn-green:hover{background: #030303; color: white}
+.curr-btn .btn-green:not(.unlock-btn){min-width: 87px;}
+.curr-item.staked{border: 1px solid #74D292}
+.info-link{top: 25px; right: 25px; z-index: 1}
+.switch {position: relative; display: inline-block; width: 30px; height: 14px; }
+.switch input {opacity: 0; width: 0; height: 0;}
+.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s;}
+.slider:before {position: absolute; content: ""; height: 18px; width: 18px; left: -3px; bottom: -1.95px;
+  background-color: white; -webkit-transition: .4s; transition: .4s;}
+input:checked + .slider { background-color: #8DC33F;}
+input:focus + .slider {box-shadow: 0 0 1px #8DC33F;}
+input:checked + .slider:before { -webkit-transform: translateX(18px);  -ms-transform: translateX(18px); transform: translateX(18px);}
+.slider.round {border-radius: 34px;}
+.slider.round:before {border-radius: 50%;}
+
+.select-input{min-height: 56px; border:1px solid; border-radius: 60px; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0 15px;}
+.select-input { -webkit-appearance: none; -moz-appearance: none; -o-appearance: none;}
+.select-input + i.fa {float: right; margin-top: 0px; margin-left: -30px;}
+.select-input:focus-visible{outline: none; border: none}
+.select-input{min-width: 185px;}
+.search-btn{border-radius: 60px;}
+.search-input{position: relative}
+.search-input input{min-height: 56px !important; border:1px solid; border-radius: 60px !important; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0 15px; padding-right: 55px;}
+/*.search-input input:focus{background: none}*/
+.search-btn{width: 40px; height: 40px; border-radius: 60px !important; margin-top: 8px; position: absolute !important; z-index: 9 !important; right: 10px; font-size: 13px;}
+.search-btn svg{margin-top: -8px;}
+.tab-menu-link{min-height: 200px; border-radius: 26px !important; border: 1px solid; padding: 16px 8px !important;}
+.tab-menu-link .F-stat-value{text-align: left;}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{border: none !important}
+.menu-link-stats{border-radius: 26px; min-height: 152px;}
+.menu-link-stats .F-stat-heading{text-align: left}
+.tab-link-name{position: absolute; bottom: 0; left: 0}
+.staked-tab{border: 1px solid #74D292 !important}
+.sticky-content{position: sticky; top: 0;  width: 555px; float: right}
+.tab-detail{width: 555px; border-radius: 26px;}
+.tab-wallet-texture{position: absolute; right: 25px; top: 20px}
+.tab-wallet-heading{font-size: 29px; font-weight: 800;}
+
+.tab-detail .search-btn{min-width: 95px; padding-top: 0; color: white}
+.tab-detail .TVL-farms{margin-left: 0}
+.tab-detail .F-S-feature{min-width: 150px;}
+.tab-detail .feature-name{font-size: 16px; text-align: center}
+.tab-detail  .F-S-feature-content{padding: 1rem}
+.tab-detail .feature-value{font-size: 22px; font-weight: 800; color: white}
+.tab-detail  .feature-legend{font-size: 14px; font-weight: 500; color: white}
+.tab-detail .vaults-feature .feature-texture{width: 150px;}
+.tab-detail-btns .theme-btn{min-width: 200px;}
+.tab-detail .Feature-1, .tab-detail .Feature-2{margin-right: 1rem}
+
+
+.tablet-features .feature-1,
+.tablet-features .feature-2,
+.tablet-features .feature-3{min-width: 150px !impirtant;}
+.search-inputs select, .search-inputs input{height: 40px; border-radius: 60px; border: 1px solid #717171; font-family: 'Axiforma'; font-size: 13px; font-weight: 500; color: #717171; background: none; padding: 0 1rem}
+
+.active-tabs .nav-item a.active{background: -webkit-linear-gradient(#8DC33F, #00A7A7) !important;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+.staked-toggle span{font-size: 13px;}
+.stake-item.active{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%) !important;}
+.estimated-val{font-size: 11px !important ;}
+.staking .stake-item{min-height: 570px;}
+.stake-item.active .theme-btn{background: #070707}
+.stake-item:not(.active) .curr-x-val{background: #8DC33F}
+.stake-item{background: none; border: 1px solid #8DC33F}
+/* ====================================================== Goji Staking End ======================================================== */
+
+
+/* ====================================================== Goji Farming Start ======================================================== */
+.farming .curr-x-val{background: #00A7A7 !important;}
+.curr-x-farm{font-size: 11px; color: white; background: linear-gradient(180deg, #79DB72 0%, #71CCA4 100%); border-radius: 60px; width: auto; height: 20px; padding: 0 10px}
+.farming .stake-item{border: 1px solid #00A7A7}
+/* ====================================================== Goji Farming End ======================================================== */
+
+
+/* ====================================================== Goji Locking Start ======================================================== */
+.lock-overview{border-radius: 26px; border: 1px solid #8DC33F;}
+.locking-row h2{font-family: 'Righteous'; font-size: 24px;}
+.locking-row p{font-family: 'Axiforma'; font-size: 13px;}
+.lock-prop{border: 0.5px solid #717171; border-radius: 16px;}
+.locking-row h3{font-family: 'Righteous'; font-size: 14px;}
+.lockup-val{border-radius: 26px; border: 1px solid #8DC33F;}
+.lockup-chart-legend.mc{border-left: 4px solid #8DC33F}
+.lockup-chart-legend.vol{border-left: 4px solid #00A7A7}
+.lockup-chart-legend.cs{border-left: 4px solid #717171}
+.lock-events{border-radius: 26px; border: 1px solid #8DC33F;}
+#countdown li { display: inline-block; list-style-type: none; padding: 1em; font-family: 'Axiforma'; font-size: 13px; margin-right: 2rem}
+#countdown li span { display: block; font-family: 'Righteous'; font-size: 24px;}
+.countdown-heading{font-family: 'Axiforma'; font-size: 13px;}
+
+@media all and (max-width: 768px) {
+    
+}
+/* ====================================================== Goji Locking End ======================================================== */
+
+
+/* ====================================================== Goji New Lock Start ======================================================== */
+.token-select{border: 1px solid #8DC33F; border-radius: 16px; width: 428px;}
+.token-select h3{font-family: 'Righteous'; font-size: 20px;}
+.token-select p{font-family: 'Axiforma'; font-size: 13px;}
+.token-select.select{background: linear-gradient(180deg, #79DB72 0%, #71CCA4 100%);}
+.token-select:hover{cursor: pointer; background: linear-gradient(180deg, #79DB72 0%, #71CCA4 100%); transition: 0.5s}
+/* ====================================================== Goji New Lock End ======================================================== */
+
+/* ====================================================== Goji Dao Start ======================================================== */
+.dao-tabs a h3{font-family: 'Righteous'; font-size: 18px; text-transform: initial; text-align: left; color: white}
+.dao-tabs a h4{font-family: 'Righteous'; font-size: 14px; color: white}
+.dao-tabs a p{font-family: 'Axiforma'; font-size: 14px; text-transform: initial; color: #dfdfdf; white-space: nowrap}
+.dao-tabs a.nav-link{background: #1F1F1F; border-radius: 16px;}
+.dao-tabs a.nav-link.active, .dao-tabs a:hover{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%);}
+.dao-stats{background: rgba(31, 31, 31, 0.25); border-radius: 8px; flex-grow: 0.5}
+.text-left{text-align: left}
+.dao-tabs a:not(.active) .dao-stats{background: #070707}
+.tab-content-body{border: 1px solid #8DC33F; border-radius: 16px;}
+.tab-content-body .dao-stats{background: #1f1f1f}
+.tab-content-body h2{font-family: 'Righteous'; font-size: 20px;}
+.tab-content-body .dao-stats h4{font-family: 'Righteous'; font-size: 14px; color: white}
+.tab-content-body .dao-stats p{font-family: 'Axiforma'; font-size: 14px; color: #dfdfdf}
+.SwapFee .grid{max-height: 304px; overflow-y: scroll}
+.DecayTime .grid{max-height: 262px; overflow-y: scroll}
+.RefRew .grid{max-height: 240px; overflow-y: scroll}
+.GR .grid{max-height: 326px; overflow-y: scroll}
+.grid table{ border-spacing: 0 10px; border-collapse: separate; }
+.grid th{font-family: 'Axiforma'; font-size: 14px; }
+.grid td, .grid th{border: none}
+.grid td{padding: 10px 25px;}
+.grid tbody tr{font-family: 'Righteous'; font-size: 14px;  border-spacing: 20px; border-collapse: separate; }
+.grid tbody tr td:first-child{border-top-left-radius: 60px; border-bottom-left-radius: 60px;}
+.grid tbody tr td:last-child{border-top-right-radius: 60px; border-bottom-right-radius: 60px;}
+.top-address{border: 1px solid #8DC33F; border-radius: 16px;}
+.top-address h2{font-family: 'Righteous'; font-size: 20px;}
+.row-alert{padding: 5px 8px; border-radius: 36px; font-family: 'Righteous'; font-size: 10px; color: white !important}
+.row-alert.pink{background: #DA1B6B}
+.row-alert.green{background: #8DC33F}
+.pagination-row a{background: #1F1F1F; color: white; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 60px;}
+
+
+.FAQ-panel{}
+.collapsible { background: #1F1F1F !important; border-radius: 16px !important; font-family: 'Righteous'; font-size: 14px; color: white; cursor: pointer; width: 100%; border: none; text-align: left; outline: none; height: 50px;}
+button.collapsible:focus {outline: 0}
+.collapsible h5{font-size: 14px; padding-left: 10px;}
+.collapsible.active{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%) !important; border-radius: 16px 16px 0px 0px !important;}
+.collapsible:after {content: '\002B'; color: #fff; font-weight: 200; font-size: 28px; position: absolute; right: 30px;}
+.collapsible.active:after {content: "\2212";}
+.content { padding:0; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; }
+.faqs{margin-top: 3rem}
+.faqs .question{margin-top: 0rem}
+.faqs h5{margin-left: 0; margin-bottom: 0; font-weight: 600; line-height: 1.5; font-size: 1rem}
+
+.faqs h2{line-height: 1.5}
+.dao-tabs.mobile .tab-body-content{border-radius: 0px 0px 16px 16px; border: 0.5px solid #8DC33F}
+.dao-tabs.mobile .tab-body-content h2{font-family: 'Righteous'; font-size: 16px;}
+.dao-tabs.mobile .tab-body-content .dao-stats h4{font-family: 'Righteous'; font-size: 14px;}
+.dao-tabs.mobile .tab-body-content p{font-family: 'Axiforma'; font-size: 14px;}
+
+/* ====================================================== Goji Dao End ======================================================== */
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width:1920px){
+    .lockup-chart img{width: 100%; height: auto}
+}
+
+@media (min-width:1600px){
+    .container{max-width: 88%;}
+    .locking .container{max-width: 100%;}
+    
+}
+
+
+
+@media (max-width:1280px){
+    .member-photo{width: 100%; height: auto}
+}
+@media (min-width:1280px){
+    .buy-goji{padding: 0 15rem}
+    .locking .container{max-width: 100%;}
+    .dao-tabs{max-width: 95%;}
+    .top-add{max-width: 95%;}
+    .dao-tabs.desktop{display: flex !important}
+    .dao-tabs.mobile{display: none !important}
+}
+
+
+@media (max-width:1024px){
+    .dao-tabs.desktop{display: none !important}
+    .dao-tabs.mobile{display: flex !important; flex-direction: column;}
+    .grid{width: 100%; overflow-x: scroll}
+    .row-alert{display: none}
+    .grid th{white-space: nowrap}
+    .pagination-row{margin-top: 3rem; margin-bottom: 2rem; justify-content: center}
+    .pagination-row a:nth-child(3),
+    .pagination-row a:nth-child(4),
+    .pagination-row a:nth-child(5)
+    {display: none}
+}
+
+@media (min-width:1024px){
+    .desktop{display: flex}
+    .sg-1{top: 0px; right: 0px; z-index: -1; max-width: 800px; height: auto; z-index: -1}
+    .sg-2{left: -350px; top: 400px; max-width: 700px; height: auto; z-index: -1}
+    .sg-3{right: -200px; top: 1100px; height: auto; z-index: -1}
+    .sg-4{left: -400px; top: 2200px; height: auto; z-index: -1}
+    .sg-5{right: -400px; top: 4200px; height: auto; z-index: -1}
+    .search-inputs .fil-dropdown select{min-width: 216px;}
+    .search-inputs .fil-input input{min-width: 290px;}
+    .text-sm-right{text-align: right}
+}
+@media (width:1024px){
+    .banner-img img{width: 100%; height: auto}
+    .homepage .header{height: auto}
+    .token-row{padding: 2rem 0}
+    .section-desc br{display: none}
+    .blockchain-feature p br{display: none}
+    .exchange-img img{width: 100%; height: auto}
+    .roadmap-timeline{min-height: 680px;}
+    .timeline-desc{min-width: 170px; min-height: 495px;}
+    .our-investor{padding: 0 5rem}
+    .slide-cont{padding: 0 3rem}
+    .dist-chart img{width: 100%; height: auto}
+    .active-tabs, .staked-toggle{margin: 0 !important}
+    .curr-row > .col-sm-3{width: 50%;}
+    .farming .curr-row > .col-sm-4{width: 50%;}
+    .lock-overview{padding: 2rem !important}
+    .lock-prop{flex-direction: column; align-items: flex-start !important;}
+    .lockup-chart img{width: 100%; height: auto}
+    #countdown li{margin-right: 1rem}
+}
+
+@media (min-width:769px){
+    .mobile{display: none !important }
+    .desktop{display: flex}
+    .video-link-step h2{color: white}
+    .video-link-step p{color: #dfdfdf}
+}
+
+@media(width:768px){
+    .whitepaper-slider-guide .token-row .col-sm-3 .token-block{width: 100%}
+    .staking .banner-desc{margin-top: 0}
+    .farming .banner-desc{margin-top: 0}
+    .active-tabs, .staked-toggle{margin: 0 !important}
+    .curr-row > .col-sm-3{width: 50%;}
+    .farming .curr-row > .col-sm-4{width: 50%;}
+    .locking-row > .col-sm-5{width: 100%;}
+    .locking-row > .col-sm-7{width: 100%; margin-top: 2rem !important}
+    
+    .countdown-row > .col-sm-6{width: 100%;}
+}
+
+@media(max-width:768px){
+    .mobile{display: flex}
+    .desktop{display: none}
+    .homepage .header{height: auto}
+    .d-none{display: none !important}
+    .sg-1, .sg-2, .sg-3, .sg-4, .sg-5{display: none !important}
+    .banner-img img{width: 150px; height: auto}
+    .banner-content h1{font-size: 29px;}
+    .banner-content p{font-size: 13px}
+    .banner-content p br{display: none}
+    .banner-goj-ic{width: 40px; height: auto; top: 100px; left: 30px;}
+    .banner-gaba-ic{width: 40px; height: auto; top: 100px; right: 30px;}
+    .banner-mia-ic{width: 40px; height: auto; top: 250px; right: auto; left: 80px;}
+    .banner-hanu-ic{width: 40px; height: auto; top: 300px; right: 80px; left: auto;}
+    .token-links{margin-top: 5rem !important; padding: 0}
+    .section-heading{font-size: 18px;}
+    .section-desc{margin-top: 1rem}
+    .section-desc br{display: none}
+    .token-block{width: 255px;}
+    .slick-dots li{width: 6px !important; height: 6px !important; border-radius: 50px !important;}
+    .slick-dots{justify-content: center !important}
+    .slick-dots li.slick-active{background: #8DC33F !important}
+    .whitepaper-link{padding: 2rem 0rem}
+    .whitepaper-desc{padding: 2rem 1rem}
+    
+    .whitepaper-img{order: 12; padding: 0; margin-top: 4rem}
+    .blockchain-features{padding: 2rem 1rem}
+    .blockchain-slider .slide{text-align: center}
+    .goji-exchange{padding: 2rem 0}
+    .exchange-img{margin-bottom: 3rem}
+    .exchange-img img{width: 100%; height: auto}
+    
+    .exchange-points{padding: 0 2rem}
+    .exchange-points p{margin-top: 0}
+    .start-guide{padding: 2rem 1rem}
+    .guide-video .video{margin-top: 3rem}
+    .video-play-link{top: calc(50% - 40px); left: calc(50% - 25px);}
+    .blockchain-benefits h1 br{display: none}
+    .blockchain-benefits-slider{padding-left: 2rem !important}
+    .blockchain-benefits-slider .slick-arrow{display: none !important}
+    .our-team{padding: 2rem 1rem}
+    .team-member{max-height: 430px; overflow: hidden; border-radius: 16px;}
+    .our-team .col-sm-4{margin-bottom: 3rem}
+    .timeline-slider h2{font-family: 'Righteous'; font-size: 14px; text-align: center}
+    .timeline-desc{width: 219px; min-height: 395px;  margin-right: 0px; margin-left: 0px; margin-top: 10px;}
+    footer{text-align: center}
+    footer .col-sm-3{margin-top: 4rem}
+    .footer-bottom .footer-bottom-row{flex-direction: column}
+    
+    .nav-wrapper{margin-top: 5rem}
+    .nav-wrapper a{font-family: 'Righteous'; font-size: 20px; text-align: center; color: white; margin-bottom: 1rem; }
+/*    .member-info{top: -195px;}*/
+    .blockchain-feature-ic img{filter: invert(1)}
+    
+    .our-investor{padding: 1.5rem}
+    .investor{width: 103px; height: 56px;}
+    .top-watermark{width: 70%; height: auto}
+    .investor img{width: 50px;}
+    body:not(.homepage) footer{margin-top: 3rem}
+    
+    .slide-cont{padding: 0 2rem; margin-bottom: 5rem}
+    .whitepaper-slider-guide .carousel-item:nth-child(1) img{width: 150px;}
+    .whitepaper-slider-guide .carousel-item .token-row{padding: 0;}
+    .whitepaper-slider-guide .carousel-item:nth-child(3) .token-block{margin-bottom: 2rem}
+    .whitepaper .header{height: auto}
+    .whitepaper .banner-content{height: auto}
+    
+    .news-block .card-body{text-align: left}
+    
+    .news-single-img img{width: 100%; height: auto}
+    
+    .blog-content h2{font-size: 18px;}
+    .blog-content h2 br{display: none}
+    .blog-content p br{display: none}
+    
+    .dist-chart img{width: 100%; height: auto}
+    .Tokenomics-img img{width: 100%; height: auto}
+    .timeline-token-slider .slide-body{width: 205px; height: 243px;}
+    .timeline-token-slider .slide-body h1{font-size: 16px;}
+    .slide-body h2{font-size: 16px;}
+    .Tokenomics-img{justify-content: center; margin-bottom: 3rem}
+    .Tokenomics-img img{max-width: 200px; height: auto}
+    .tokenomics-prop h2{font-size: 14px;}
+    .tokenomics-btn-1{font-size: 12px !important}
+    .tokenomics-btn-2{font-size: 12px !important; white-space: nowrap}
+    .swapper-legend{text-align: center; justify-content: center}
+    
+    .gaba-token .dist-chart{margin-bottom: 3rem}
+    .gaba-token .dist-chart img{width: 200px; height: auto}
+    .gaba-token-info br{display: none}
+    
+    .footer-bottom-row{text-align: center}
+    .lock-prop{flex-direction: column; align-items: flex-start !important;}
+    
+    .lockup-chart img{width: 100%; height: auto}
+    #countdown li { font-size: 9px; padding: .75rem;}
+    #countdown li span { font-size: 18px;}
+    #countdown li{margin-right: 0}
+    
+    .token-select{width: 340px;}
+    
+    
+    
+    }
+
+
+@media (max-width:615px){
+    
+    .theme-toggler svg{width: 50px; height: auto}
+    .banner-img{order: 1; text-align: center}
+    .banner-desc{order: 12}
+    .whitepaper-desc{order: 1; text-align: center}
+    .exchange-desc{text-align: center}
+    .banner-desc{text-align: center; margin-top: 5rem}
+    .dao .banner-desc{margin-top: 0rem}
+    .sg-1{display: none}
+    .sg-1.mobile{width: 100%; display: flex !important; top: -50px;  height: 100%; object-fit: cover; z-index: -1}
+    .sg-2{display: none}
+    .sg-2.mobile{width: 100%; display: flex !important; top: 900px; left: 0;  z-index: -1}
+    .sg-3{display: none}
+    .sg-3.mobile{width: 100%; display: flex !important; top: 1850px; right: 0; z-index: -1}
+    .sg-4{display: none}
+    .sg-4.mobile{width: 100%; display: flex !important; top: 3550px; left: 0; z-index: -1}
+    .sg-5{display: none}
+    
+    .blog-content{text-align: center}
+    
+    .gaba-token-info{text-align: center}
+    .gaba-token .dist-chart{text-align: center;} 
+    .sorting-filters{flex-direction: column}
+    
+    
+    .staking .banner-desc{margin-top: 0}
+    .farming .banner-desc{margin-top: 0}
+    .search-inputs {flex-direction: column; text-align: center}
+    .fil-dropdown{margin-bottom: 1rem}
+    
+}
+
+
+@media (orientation: landscape) and (max-height:550px){
+    
+    
+    .mobile{display: flex !important}
+    .desktop{display: none}
+    .homepage .header{height: auto}
+    .d-none{display: none !important}
+    .sg-1, .sg-2, .sg-3, .sg-4, .sg-5{display: none !important}
+    .banner-img img{width: 150px; height: auto}
+    .banner-content h1{font-size: 29px;}
+    .banner-content p{font-size: 13px}
+    .banner-content p br{display: none}
+    .banner-goj-ic{width: 40px; height: auto; top: 100px; left: 30px;}
+    .banner-gaba-ic{width: 40px; height: auto; top: 100px; right: 30px;}
+    .banner-mia-ic{width: 40px; height: auto; top: 250px; right: auto; left: 80px;}
+    .banner-hanu-ic{width: 40px; height: auto; top: 300px; right: 80px; left: auto;}
+    .token-links{margin-top: 5rem !important; padding: 0}
+    .token-slider{flex-direction: column}
+    .section-heading{font-size: 18px;}
+    .section-desc{margin-top: 1rem}
+    .section-desc br{display: none}
+    .token-block{width: 255px;}
+    .slick-dots li{width: 6px !important; height: 6px !important; border-radius: 50px !important;}
+    .slick-dots{justify-content: center !important}
+    .slick-dots li.slick-active{background: #8DC33F !important}
+    .whitepaper-link{padding: 2rem 0rem}
+    .whitepaper-desc{padding: 2rem 1rem}
+    
+    .whitepaper-img{order: 12; padding: 0; margin-top: 4rem}
+    .blockchain-features{padding: 2rem 1rem}
+    .blockchain-slider .slide{text-align: center}
+    .goji-exchange{padding: 2rem 0}
+    .exchange-img{margin-bottom: 3rem}
+    .exchange-img img{width: 100%; height: auto}
+    
+    .exchange-points{padding: 0 2rem}
+    .exchange-points p{margin-top: 0}
+    .start-guide{padding: 2rem 1rem}
+    .guide-video .video{margin-top: 3rem}
+    .video-play-link{top: calc(50% - 40px); left: calc(50% - 25px);}
+    .blockchain-benefits h1 br{display: none}
+    .blockchain-benefits-slider{padding-left: 2rem !important}
+    .blockchain-benefits-slider .slick-arrow{display: none !important}
+    .our-team{padding: 2rem 1rem}
+    .team-member{max-height: 430px; margin-bottom: 3rem;}
+    .timeline-slider h2{font-family: 'Righteous'; font-size: 14px; text-align: center}
+    .timeline-desc{width: 219px; min-height: 395px;  margin-right: 0px; margin-left: 0px; margin-top: 10px;}
+    footer{text-align: center}
+    footer .col-sm-3{margin-top: 4rem}
+    .footer-bottom .footer-bottom-row{flex-direction: column}
+    
+    .nav-wrapper{margin-top: 5rem}
+    .nav-wrapper a{font-family: 'Righteous'; font-size: 20px; text-align: center; color: white; margin-bottom: 1rem; }
+    
+    .theme-toggler svg{width: 50px; height: auto}
+    .banner-desc{margin-top: 5rem}
+    .sg-1, .sg-2, .sg-3, .sg-4, .sg-5{display: none !important}
+    
+    .slide-cont{padding: 0 2rem; margin-bottom: 5rem}
+    .whitepaper-slider-guide .carousel-item:nth-child(1) img{width: 150px;}
+    .whitepaper-slider-guide .carousel-item .token-row{padding: 0;}
+    .whitepaper-slider-guide .carousel-item:nth-child(3) .token-block{margin-bottom: 2rem}
+    .whitepaper .header{height: auto}
+    .whitepaper .banner-content{height: auto}
+    .whitepaper-slider-guide .token-row .col-sm-3 .token-block{width: 100%}
+    
+    .dist-chart img{width: 100%; height: auto}
+    .Tokenomics-img img{width: 100%; height: auto}
+    .Tokenomics .col-sm-4{width: 50%;}
+    
+
+    .staking .banner-desc{margin-top: 0}
+    .farming .banner-desc{margin-top: 0}
+    .active-tabs, .staked-toggle{margin: 0 !important}
+    .curr-row > .col-sm-3{width: 50%;}
+    .farming .curr-row > .col-sm-4{width: 50%;}
+    
+    .lockup-chart img{width: 100%; height: auto}
+    #countdown li { font-size: 9px; padding: .75rem;}
+    #countdown li span { font-size: 18px;}
+    #countdown li{margin-right: 0}
+    .locking-row > .col-sm-5{width: 100%;}
+    .locking-row > .col-sm-7{width: 100%; margin-top: 2rem !important}
+   
+  
+    
+    
+}
+    
+
+::-webkit-scrollbar {width: 6px;}
+::-webkit-scrollbar:focus{50px}
+
+::-webkit-scrollbar-thumb {background:linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); ;border-radius:5px;}
+::-webkit-scrollbar-thumb:hover {background:linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); }
+
+body{font-family: 'Axiforma';}
+.theme-btn{background:linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); color: white;  font-size: 14px; font-weight: 400; text-transform: inherit; letter-spacing: 0.5px; height: 44px; border-radius: 60px;}
+.navbar-nav .nav-link{font-size: 14px; opacity: 0.5}
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover{opacity: 1.0}
+.navbar{box-shadow: none}
+.theme-btn.dropdown-toggle{border-radius: 8px; height: 30px; width: 60px; display: flex; align-items: center; justify-content: center; padding: 0;}
+.theme-btn.dropdown-toggle:after{margin-left: 10px;}
+.mobile-nav{display: none !important}
+
+.dropdown-menu{background: #1F1F1F}
+.dropdown-menu a{color: white}
+.filter-btn{padding: 0; height: 34px; width: 34px; position: absolute; top: 15px; right: 15px;}
+.swapper .nav-item a{font-size: 14px; text-transform: capitalize;}
+.gojiswap .gradient{height: 100%; z-index: -1}
+.gojiswap  .gradient.goji{top: 0; right: 0;}
+.watermark{right: 0; top: 100px}
+.swapper{border-radius: 16px;}
+
+
+
+.input-group .btn{background: #1A111D; box-shadow: none; padding: 0; height: 38px; border-radius: 16px !important; width: 108px; margin-top: 6px; border: 0.5px solid #484848; color: white; position: relative; z-index: 1}
+.input-group input{opacity: 0.5; border: 0.5px solid #484848; border-radius: 16px !important; height: 50px !important; margin-left: -113px !important; padding-left: 125px;}
+.input-group input:focus{background: none; border: none; outline: 0; opacity: 1}
+.input-group .dropdown-menu{max-width: 20%}
+.dropdown-menu li a:hover{background: linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%);}
+.swap-form .swipe-btn{margin-top: -3px; margin-bottom: -3px; z-index: 1}
+.swipe-btn:hover{opacity: 0.5}
+
+.toggle-control {display: block; position: relative; padding-left: 50px; margin-bottom: 12px; cursor: pointer; font-size: 22px;
+  -webkit-user-select: none; -moz-user-select: none;  -ms-user-select: none;  user-select: none;}
+.toggle-control input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;}
+.toggle-control input:checked ~ .control { background-color: #00A8A8;}
+.toggle-control input:checked ~ .control:after { left: 23px;}
+.toggle-control .control { position: absolute; top: 0; left: 0; height: 16px; width: 40px; border-radius: 25px; background-color: #8DC33F; transition: background-color 0.15s ease-in;}
+.toggle-control .control:after {content: ""; position: absolute; left: 0px; top: 0px; width: 16px; height: 16px; border-radius: 25px; background: white; transition: left 0.15s ease-in;}
+.input-heading{font-size: 14px;}
+.toggle-switch label{font-size: 13px;}
+.limit-form .swipe-btn{margin-bottom: 15px; margin-top: 15px }
+.form-desc h1{font-family: 'Righteous'; font-size: 36px; line-height: 48px; color: white}
+.form-desc p{font-size: 13px; color: #DFDFDF}
+.crypto-tbl{border-radius: 16px;}
+.crypto-tbl thead{font-size: 14px;}
+.crypto-tbl tbody{font-size: 12px;}
+.red{color: red}
+.green{color: #8DC33F}
+.crypto-tbl{overflow: auto}
+.crypto-tbl .table{border-spacing: 0 10px; border-collapse: separate;}
+.crypto-tbl tbody td,
+.crypto-tbl thead th{border: none}
+.crypto-tbl tbody tr:hover{cursor: pointer; opacity: 0.7}
+.hanu-row{background: linear-gradient(144.82deg, rgba(141, 195, 63, 0.5) 14.13%, rgba(0, 167, 167, 0.5) 86.38%) !important;}
+.crypto-tbl tbody tr td:first-child{border-top-left-radius: 16px; border-bottom-left-radius: 16px;}
+.crypto-tbl tbody tr td:last-child{border-top-right-radius: 16px; border-bottom-right-radius: 16px;}
+
+.filter-modal .modal-content{background: #1F1F1F; border: 0.5px solid #484848; border-radius: 16px; color: white; margin-top: 200px;}
+.modal-title{font-size: 14px;}
+.filter-modal h4{font-size: 13px;}
+.filter-modal .btn-close{filter: invert(1)}
+.filter-modal .modal-header{border:none;}
+
+.crypto-tbl::-webkit-scrollbar {width: 2px;}
+.crypto-tbl::-webkit-scrollbar:focus{50px}
+.crypto-tbl::-webkit-scrollbar-track {background: #1A111D; }
+.crypto-tbl::-webkit-scrollbar-thumb {background:linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); ;border-radius:5px;}
+.crypto-tbl::-webkit-scrollbar-thumb:hover {background:linear-gradient(144.82deg, #8DC33F 14.13%, #00A7A7 86.38%); }
+
+
+.powered-by{color: #dfdfdf}
+.uniswap .swipe-btn svg path{fill:#664D60}
+.uniswap .form-btn .theme-btn{background: linear-gradient(-179.82deg, #664D60 14.13%, #222122 86.38%);}
+.uniswap .gradient{width: 100%; height: 100%}
+
+.oneinch .swipe-btn svg path{fill:#B32020}
+.oneinch .form-btn{text-align: center}
+.oneinch .form-btn .theme-btn{background: linear-gradient(-179.82deg, #D82122 14.13%, #4B1A1A 86.38%); max-width: 328px;}
+.oneinch .gradient{width: 100%; height: 100%}
+
+.sushiswap .swipe-btn svg path{fill:#0F90EB}
+.sushiswap .form-btn{text-align: center}
+.sushiswap .form-btn .theme-btn{background: linear-gradient(114.87deg, #0F90EB 15.84%, #DE41C7 84.16%); max-width: 328px;}
+.sushiswap .gradient{width: 100%; height: 100%}
+
+
+.gojiswap .swapper .nav-item a.active,
+.gojiswap .swapper .nav-item a:hover{background: -webkit-linear-gradient(#8DC33F, #00A7A7) !important; font-weight: 800;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+
+.uniswap .swapper .nav-item a.active,
+.uniswap .swapper .nav-item a:hover{background: -webkit-linear-gradient(#AF8EA7, #8A618A) !important; font-weight: 800;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+
+.oneinch  .swapper .nav-item a.active,
+.oneinch  .swapper .nav-item a:hover{background: -webkit-linear-gradient(#D82122, #A62324) !important; font-weight: 800;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+
+.sushiswap .swapper .nav-item a.active,
+.sushiswap .swapper .nav-item a:hover{background: -webkit-linear-gradient(#0F90EB, #DE41C7) !important; font-weight: 800;
+  -webkit-background-clip: text  !important; -webkit-text-fill-color: transparent  !important; border: none !important}
+
+@media(min-width:1024px){
+    .oneinch .swapper{min-width: 870px;}
+    .sushiswap .swapper{min-width: 870px;}
+
+}
+
+@media (min-width:769px){
+    .swap-form{padding-left: 5rem !important; padding-right: 5rem !important} 
+    .footer-line{position: sticky; margin-top: 105px; display: flex; justify-content: center; width: 100%; font-size: 12px; align-items: center}
+    .uniswap .swapper{min-width: 532px;}
+    .mobile{display: none}
+}
+
+@media (max-width:768px){
+    
+    .mobile-nav{display: flex !important}
+    .form-desc h1{font-size: 29px; line-height: 36px;}
+    .form-desc p br{display: none}
+    .swapper-section{margin-top: 3rem}
+    .swapper .nav-item a{font-size: 13px;}
+    .nav-tabs{justify-content: flex-start !important}
+    .swap-form .swipe-btn{margin-top: 30px; margin-bottom: 30px;}
+    .swipe-btn a svg{width: 40px; height: 40px;}
+    .footer-line{text-align: center; margin-top: 50px;}
+    .gradient{width: 100%; height: auto}
+    .watermark{display: none}
+    .gradient{z-index: -1}
+}
+
+@media (max-width:615px){
+    .swapper-section{order: 12}
+    .form-desc{text-align: center}
+    .swapper{min-height: 458px; padding: 0 1rem}
+    .filter-btn{top: 50px;}
+   
+}
+
+
+@media (orientation: landscape) and (max-height:550px){
+    
+}

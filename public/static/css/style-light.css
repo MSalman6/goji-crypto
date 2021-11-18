@@ -1,0 +1,132 @@
+
+body{
+    --heading-txt: #070707;
+    --desc-txt: #717171;
+}
+::-webkit-scrollbar-track {background: #ddd; }
+body{background: #070707}
+.banner-content h1{color: var(--heading-txt)}
+.banner-content p{color: var(--desc-txt)}
+.section-heading{color: var(--heading-txt)}
+.section-desc{color: var(--desc-txt)}
+.blockchain-feature h2{color: var(--heading-txt)}
+.blockchain-feature p{color: var(--desc-txt)}
+.section-sub-heading{color: var(--heading-txt)}
+.slide-body h2{color: var(--heading-txt)}
+.slide-body p{color: var(--desc-txt)}
+.member-name{color: var(--heading-txt)}
+.member-designation{color: var(--desc-txt)}
+.social-links a:hover svg circle{fill:white}
+.timeline li:before{color: var(--heading-txt)}
+.homepage footer h2{color: white !important}
+.homepage footer p a{color: #dfdfdf !important}
+footer p a:hover{color: var(--heading-txt)}
+.homepage footer{background: linear-gradient(180deg, #00A7A7 -16.82%, #00A7A7 -16.81%, #000000 99.99%);}
+.homepage .copyright{color: white}
+.timeline-slider h2{color: var(--heading-txt)}
+.sg-1, .sg-2, .sg-3, .sg-4, .sg-5{opacity: 0.5}
+.blockchain-feature-ic svg path{fill: #070707}
+.our-team .overlay{background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);}
+.navbar-toggler svg path{fill:#070707}
+.theme-toggler svg path{fill:#070707}
+.theme-toggler svg line{stroke:#070707}
+footer .col-sm-3 svg path{fill:#070707; opacity: 0.25}
+footer p a{color: #717171}
+.footer-bottom-row svg circle{fill:#070707}
+.footer-bottom-row svg g path{fill:#fff}
+
+.slide-cont h1{color: var(--heading-txt)}
+.slide-cont h2{color: var(--heading-txt)}
+.whitepaper-slider-guide .token-block h2{color: white}
+.slide-cont p{color: var(--desc-txt)}
+.slide-cont h3{color: var(--heading-txt)}
+.bulltets span{background: #1f1f1f; color: white}
+.modal h2{color: white}
+.modal p{color: #dfdfdf}
+.modal .modal-title{color: white}
+.modal .btn-close{filter: invert(1)}
+.modal .modal-content{background: #1f1f1f}
+.whitepaper-slider-guide button img{filter: invert(1)}
+.slide-number{color:  var(--heading-txt)}
+
+.news-block{background: #F0F0F0}
+.news-block h5{color: var(--heading-txt)}
+.news-block p{color: var(--desc-txt)}
+
+.blog-content h2{color: var(--heading-txt)}
+.blog-content p{color: var(--desc-txt)}
+
+.timeline-token-slider .slide-body h1{color: white}
+.swapper{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #ddd; box-shadow: 0px 4px 40px rgba(141, 195, 63, 0.25);}
+.gaba-tokenomics-info{color: var(--desc-txt)}
+
+
+
+body{background: #fff}
+.theme-toggle svg path{fill:#353635}
+.theme-toggle svg line{stroke:#353635}
+.c-t-wallet svg path{ fill:#353635}
+.form-desc h1{color: #353635}
+.form-desc p{color: #717171}
+path.p{fill:#353635}
+.gojiswap .swapper{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #E2E2E2; box-shadow: 0px 4px 40px rgba(141, 195, 63, 0.25);}
+.uniswap .swapper{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #E2E2E2; box-shadow: 0px 4px 22px #bfb8be;}
+.oneinch .swapper{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #E2E2E2; box-shadow: 0px 4px 22px #bfb8be;}
+.sushiswap .swapper{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #E2E2E2; box-shadow: 0px 4px 22px #bfb8be;}
+.swapper .nav-item a{color: #353635}
+.input-group input{background: #F4F4F4; border: 0.5px solid #BBBBBB; color: #353635}
+.swipe-btn svg rect[fill="#1F1F1F"]{fill:#ffff;}
+.crypto-tbl{background: rgba(244, 244, 244, 0.5); border: 0.5px solid #E2E2E2; box-shadow: 0px 4px 40px rgba(141, 195, 63, 0.25);}
+.crypto-tbl thead{color: #353635}
+.crypto-tbl tbody tr{background: #F4F4F4; border: 0.5px solid #BBBBBB;}
+.crypto-tbl tbody{color: #353635}
+.input-heading{color: #353635;}
+.navbar-nav .nav-link{color:#353635 !important }
+.navbar-nav .nav-link.active{color:#353635 !important }
+.navbar-nav .nav-link svg path{fill:#353635 !important }
+.toggle-switch label{color: #353635;}
+
+.watermark.uniswap path{fill:#624A5D}
+.footer-line span{color: #717171}
+.footer-line svg path{fill: #717171}
+
+.slider{background: #c4c4c4}
+.staked-toggle span{color: var(--heading-txt)}
+.estimated-val{color: var(--heading-txt) !important}
+.curr-name{color: var(--heading-txt)}
+.stake-item{background: none; border: 1px solid #8DC33F}
+.stake-item .curr-name{color: var(--heading-txt)}
+.stake-item:not(.active) .curr-props h3{color:  var(--heading-txt) !important;}
+.stake-item:not(.active) .curr-detail h3, .stake-item:not(.active) .curr-detail h4{color:  var(--heading-txt) !important;}
+.stake-item:not(.active) .curr-detail a{color: var(--heading-txt) !important; border-bottom-color: var(--heading-txt) !important}
+
+.stake-item.active .curr-name{color: white !important}
+.stake-item.active .curr-props h3{color: white !important;}
+.stake-item.active .curr-detail h3, .stake-item.active .curr-detail h4{color:  white !important;}
+.stake-item.active .curr-detail a{color: white !important; border-bottom-color: white !important}
+.stake-item.active .curr-detail h4, .stake-item.active .curr-detail a{color: white !important}
+
+
+.stake-item:not(.active) .curr-props h3{color: var(--heading-txt) !important;}
+.stake-item:not(.active) .curr-detail h3, .stake-item:not(.active) .curr-detail h4{color:  var(--heading-txt) !important;}
+.stake-item:not(.active) .curr-detail a{color: white !important; border-bottom-color: var(--heading-txt) !important}
+.stake-item:not(.active) .curr-detail h4, .stake-item:not(.active) .curr-detail a{color: var(--heading-txt) !important}
+.slider:before{background: #070707 !important}
+
+
+.locking-row h2{color: var(--heading-txt)}
+.locking-row p{color: var(--desc-txt)}
+.locking-row h3{color: var(--heading-txt)}
+#countdown li span{color: var(--heading-txt)}
+#countdown li{color: var(--desc-txt)}
+.countdown-heading{color: var(--desc-txt)}
+
+.tab-content-body h2{color: var(--heading-txt)}
+.tab-content-body p{color: var(--desc-txt)}
+.grid th{color: var(--desc-txt)}
+.grid tbody tr{color: var(--heading-txt)}
+.top-address h2{color: var(--heading-txt)}
+.grid tbody tr{background: #DFDFDF;}
+.dao-tabs.mobile .tab-body-content h2{color: var(--heading-txt)}
+.dao-tabs.mobile .tab-body-content .dao-stats h4{color: var(--heading-txt)}
+.dao-tabs.mobile .tab-body-content p{color: var(--desc-txt)}
