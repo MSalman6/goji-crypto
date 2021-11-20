@@ -10,10 +10,13 @@ import NewLockLight from './NewLockLight';
 import NewLockDark from './NewLockDark';
 import StakingLight from './StakingLight';
 import StakingDark from './StakingDark';
+import Navbar from './NavBar';
+import { NotFound } from 'http-errors';
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/dao-light">
           <DaoLight />
@@ -44,6 +47,9 @@ function App() {
         </Route>
         <Route exact path="/staking-dark">
           <StakingDark />
+        </Route>
+        <Route exact path="*">
+          <NotFound />
         </Route>
       </Switch>
     </Router>

@@ -9,7 +9,7 @@ const NewLockDark = () => {
             <img className="position-absolute sg-1 desktop" src="static/img/sg-1-desktop.svg" />
             <img className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
 
-            <div className="nav-overlay">
+            {/* <div className="nav-overlay">
                 <Link to="index-dark" className="overlay-logo">
                     <img src="static/img/mobile-logo.svg" />
                 </Link>
@@ -127,7 +127,7 @@ const NewLockDark = () => {
                         </nav>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">

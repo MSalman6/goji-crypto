@@ -1,20 +1,54 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { changeTheme, changePage } from "./redux/ducks/navReducer";
 
-const LockingLight = () => {
+const Navbar = () => {
+    const dispatch = useDispatch();
+    var themeColor = useSelector((state) => state.navReducer.theme);
+    var alterThemeColor = themeColor == 'light' ? 'dark' : 'light';
+    const pages = useSelector((state) => state.navReducer.pages);
+    const currentPage = window.location.href.split("/")[3].split("-")[0];
+
+    if (themeColor == undefined) {
+        themeColor = window.location.href.split("/")[3].split("-")[1];
+        alterThemeColor = themeColor == 'light' ? 'dark' : 'light';
+    }
+
+    const chngPage = (activePage) => {
+        if (activePage == undefined) {
+            activePage = window.location.href.split("/")[3].split("-")[0];
+            if (activePage == 'locking') {
+                activePage = 'lock'
+            }
+        }
+
+        const pages = {
+            dao: '',
+            staking: '',
+            farming: '',
+            lock: ''
+        }
+        pages[activePage] = ' active';
+        dispatch(changePage(pages));
+    }
+
+    useEffect(() => {
+        chngPage()
+    }, [])
+    
+    const toggleTheme = () => {
+        dispatch(changeTheme(alterThemeColor));
+        localStorage.setItem("theme", alterThemeColor);
+    }
+
     return ( 
-        <div className="locking">
-            <link rel="stylesheet" href="static/css/style-light.css" />
-
-            <img className="top-watermark" src="static/img/top-right-ic.svg" />
-            <img className="position-absolute sg-1 desktop" src="static/img/sg-1-desktop.svg" />
-            <img className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
-            <img className="position-absolute sg-2 mobile" src="static/img/sg-2-mobile.svg" />
-            <img className="position-absolute sg-2" src="static/img/green-shadow.svg" />
-
-            {/* <div className="nav-overlay">
-                <Link to="index-light" className="overlay-logo">
+        <div>
+            <div className="nav-overlay">
+                <Link onClick={() => chngPage('dao')} to={`/dao-${themeColor}`} className="overlay-logo">
                     <img src="static/img/mobile-logo.svg" />
                 </Link>
+
                 <a className="position-absolute close-menu" href="#">
                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="3" y="0.213196" width="30" height="3" transform="rotate(45 3 0.213196)" fill="white" />
@@ -23,10 +57,10 @@ const LockingLight = () => {
                 </a>
                 <div className="nav-wrapper d-flex align-items-end">
                     <div className="d-flex flex-column m-auto">
-                        <Link to="staking-light" className="d-block menu-a text-white">Goji Staking</Link>
-                        <Link to="farming-light" className="d-block menu-a text-white">Goji Farming</Link>
-                        <Link to="locking-light" className="d-block menu-a text-white active">Goji Lock</Link>
-                        <Link to="dao-light" className="d-block menu-a text-white">Goji Dao</Link>
+                        <Link onClick={() => chngPage('staking')} to={`/staking-${themeColor}`} className={`d-block menu-a text-white${pages.staking}`}>Goji Staking</Link>
+                        <Link onClick={() => chngPage('farming')} to={`/farming-${themeColor}`} className={`d-block menu-a text-white${pages.farming}`}>Goji Farming</Link>
+                        <Link onClick={() => chngPage('lock')} to={`/locking-${themeColor}`} className={`d-block menu-a text-white${pages.lock}`}>Goji Lock</Link>
+                        <Link onClick={() => chngPage('dao')} to={`/dao-${themeColor}`} className={`d-block menu-a text-white${pages.dao}`}>Goji Dao</Link>
                     </div>
                 </div>
             </div>
@@ -35,7 +69,7 @@ const LockingLight = () => {
                 <div className="header-content position-relative">
                     <div className="main-nav">
                         <nav className="container-fluid navbar navbar-expand-lg navbar-dark w-100 main-nav d-flex p-sm-5 navbar-row" id="navbar">
-                            <Link className="navbar-brand header-logo me-auto" to="dao-light">
+                            <Link onClick={() => chngPage('dao')} className="navbar-brand header-logo me-auto" to={`/dao-${themeColor}`}>
                                 <svg width="150" height="48" viewBox="0 0 150 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path className="p" d="M64.6622 27.7601C64.0563 28.2749 63.3815 28.6696 62.6374 28.9455C61.8917 29.2204 61.1168 29.3586 60.3116 29.3586C59.6945 29.3586 59.0994 29.278 58.5268 29.1169C57.9543 28.9578 57.4204 28.7301 56.9241 28.4359C56.4267 28.1427 55.9734 27.7916 55.5618 27.3829C55.1495 26.9742 54.7987 26.5196 54.5078 26.0206C54.2173 25.5209 53.9914 24.9834 53.831 24.4082C53.6706 23.8331 53.5903 23.2361 53.5903 22.619C53.5903 22.0019 53.6709 21.4083 53.831 20.8394C53.9912 20.2695 54.217 19.7348 54.5078 19.2359C54.7987 18.7369 55.1495 18.2826 55.5618 17.8736C55.9734 17.4649 56.4267 17.1157 56.9241 16.8241C57.4204 16.5343 57.9543 16.3084 58.5268 16.1483C59.0994 15.9881 59.6948 15.9075 60.3116 15.9075C61.1171 15.9075 61.8917 16.0458 62.6374 16.3207C63.3815 16.5956 64.0563 16.9912 64.6622 17.5058L63.3001 19.7766C62.9063 19.3765 62.452 19.064 61.9371 18.8366C61.4233 18.6089 60.8805 18.4951 60.3114 18.4951C59.7425 18.4951 59.2076 18.6044 58.7086 18.8225C58.2086 19.0413 57.771 19.3355 57.3957 19.7082C57.0209 20.0794 56.724 20.5155 56.5063 21.016C56.2882 21.5149 56.1789 22.0499 56.1789 22.619C56.1789 23.1941 56.2882 23.7332 56.5063 24.2358C56.724 24.7382 57.0211 25.1777 57.3957 25.5525C57.771 25.9286 58.2089 26.2246 58.7086 26.4427C59.2076 26.6607 59.7425 26.77 60.3114 26.77C60.6379 26.77 60.9567 26.7309 61.2647 26.6518C61.5746 26.5731 61.868 26.4646 62.146 26.3245V22.619H64.6619V27.7601H64.6622Z" fill="white" />
                                     <path className="p" d="M75.8066 24.1266C75.8066 24.854 75.6762 25.5298 75.4154 26.1565C75.1546 26.7833 74.8009 27.325 74.3536 27.783C73.9055 28.24 73.3794 28.6007 72.7772 28.8633C72.1749 29.1276 71.5289 29.259 70.839 29.259C70.1535 29.259 69.5111 29.1276 68.9079 28.8633C68.3056 28.6007 67.7785 28.24 67.3278 27.783C66.8761 27.325 66.5216 26.7833 66.2608 26.1565C66.0007 25.5298 65.8703 24.854 65.8703 24.1266C65.8703 23.3887 66.0007 22.704 66.2608 22.0739C66.5216 21.4445 66.8761 20.9007 67.3278 20.4437C67.7788 19.9868 68.3056 19.6279 68.9079 19.3671C69.5111 19.1078 70.1535 18.9766 70.839 18.9766C71.5289 18.9766 72.1749 19.0992 72.7772 19.3444C73.3794 19.5893 73.9055 19.9388 74.3536 20.3895C74.8009 20.8405 75.1546 21.3822 75.4154 22.016C75.6762 22.648 75.8066 23.3519 75.8066 24.1266ZM73.309 24.1266C73.309 23.7275 73.2435 23.3657 73.1131 23.0421C72.9827 22.7181 72.8058 22.4398 72.5826 22.2061C72.3578 21.9724 72.0959 21.7938 71.7965 21.6694C71.497 21.546 71.1775 21.4839 70.8387 21.4839C70.4981 21.4839 70.1796 21.546 69.8794 21.6694C69.58 21.7938 69.32 21.9722 69.0985 22.2061C68.8779 22.4398 68.7036 22.7181 68.5769 23.0421C68.4491 23.366 68.386 23.7275 68.386 24.1266C68.386 24.5019 68.4491 24.8503 68.5769 25.1719C68.7036 25.493 68.8779 25.7705 69.0985 26.0068C69.32 26.2431 69.58 26.4296 69.8794 26.5655C70.1796 26.7019 70.4984 26.7702 70.8387 26.7702C71.1775 26.7702 71.497 26.7063 71.7965 26.5796C72.0956 26.4528 72.3575 26.2742 72.5826 26.0439C72.8058 25.8136 72.9827 25.5352 73.1131 25.2079C73.2435 24.8801 73.309 24.5212 73.309 24.1266Z" fill="white" />
@@ -59,21 +93,21 @@ const LockingLight = () => {
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav m-auto mb-2 mb-lg-0 justify-content-center h-100">
                                     <li className="nav-item mx-sm-3">
-                                        <Link className="nav-link d-flex" aria-current="page" to="staking-light">Goji Staking</Link>
+                                        <Link onClick={() => chngPage('staking')} className={`nav-link d-flex${pages['staking']}`} aria-current="page" to={`/staking-${themeColor}`}>Goji Staking</Link>
                                     </li>
                                     <li className="nav-item mx-sm-3">
-                                        <Link className="nav-link d-flex" aria-current="page" to="farming-light">Goji Farming</Link>
+                                        <Link onClick={() => chngPage('farming')} className={`nav-link d-flex${pages['farming']}`} aria-current="page" to={`/farming-${themeColor}`}>Goji Farming</Link>
                                     </li>
                                     <li className="nav-item mx-sm-3">
-                                        <Link className="nav-link d-flex active" aria-current="page" to="locking-light">Goji Lock</Link>
+                                        <Link onClick={() => chngPage('lock')} className={`nav-link d-flex${pages['lock']}`} aria-current="page" to={`/locking-${themeColor}`}>Goji Lock</Link>
                                     </li>
                                     <li className="nav-item mx-sm-3">
-                                        <Link className="nav-link d-flex" aria-current="page" to="dao-light">Goji Dao</Link>
+                                        <Link onClick={() => chngPage('dao')} className={`nav-link d-flex${pages['dao']}`} aria-current="page" to={`/dao-${themeColor}`}>Goji Dao</Link>
                                     </li>
                                 </ul>
                             </div>
                             <div className="d-flex w-auto d-none d-sm-flex">
-                                <Link to="locking-dark" className="me-3 theme-toggle d-flex align-items-center">
+                                <Link to={`/${currentPage}-${alterThemeColor}`} className="me-3 theme-toggle d-flex align-items-center" onClick={toggleTheme}>
                                     <svg width="69" height="24" viewBox="0 0 69 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.66002 4.20002L6.05002 4.59002C6.44002 4.97002 6.44002 5.61002 6.05002 5.99002L6.04002 6.00002C5.65002 6.39002 5.03002 6.39002 4.64002 6.00002L4.25002 5.61002C3.86002 5.23002 3.86002 4.60002 4.25002 4.21002L4.26002 4.20002C4.64002 3.82002 5.27002 3.81002 5.66002 4.20002Z" fill="white" />
                                         <path d="M1.99 10.95H3.01C3.56 10.95 4 11.39 4 11.95V11.96C4 12.51 3.56 12.95 3 12.94H1.99C1.44 12.94 1 12.5 1 11.95V11.94C1 11.39 1.44 10.95 1.99 10.95Z" fill="white" />
@@ -87,7 +121,6 @@ const LockingLight = () => {
                                         <path fillRule="evenodd" clipRule="evenodd" d="M49.1532 13.5796L49.1534 13.5807C49.773 16.782 52.4218 19.3384 55.6468 19.856L55.65 19.8565C58.041 20.2443 60.2623 19.581 61.942 18.254C56.3547 16.2585 52.9746 10.3231 54.2624 4.45887C50.6982 5.74265 48.3579 9.48316 49.1532 13.5796ZM55.0081 2.18125C49.766 3.22401 46.0987 8.34018 47.1898 13.9608C47.9698 17.9908 51.2798 21.1808 55.3299 21.8308C58.851 22.4018 62.0953 21.1315 64.266 18.8294C64.2763 18.8185 64.2864 18.8077 64.2966 18.7968C64.4383 18.6452 64.5755 18.4891 64.7077 18.3288C64.7103 18.3257 64.7128 18.3226 64.7154 18.3194C64.8851 18.1133 65.0467 17.9002 65.1999 17.6808C65.4099 17.3708 65.2399 16.9308 64.8699 16.8908C64.5112 16.8503 64.16 16.7916 63.8168 16.7159C63.7962 16.7113 63.7756 16.7067 63.755 16.702C63.6674 16.6821 63.5802 16.661 63.4936 16.6388C63.4917 16.6383 63.4899 16.6379 63.488 16.6374C58.0232 15.2354 54.7249 9.45077 56.454 4.00488C56.4547 4.00285 56.4553 4.00083 56.456 3.99881C56.4873 3.90025 56.5203 3.8018 56.555 3.70349C56.5563 3.69982 56.5576 3.69614 56.5589 3.69246C56.6766 3.35992 56.8134 3.029 56.9699 2.70076C57.1299 2.36076 56.8499 1.98076 56.4699 2.00076C56.1952 2.0145 55.9238 2.03919 55.6559 2.07439C55.6515 2.07498 55.647 2.07557 55.6426 2.07616C55.4411 2.10292 55.2416 2.13563 55.0444 2.17411C55.0323 2.17647 55.0202 2.17885 55.0081 2.18125Z" fill="white" />
                                         <line x1="34.5" y1="3" x2="34.5" y2="21" stroke="white" />
                                     </svg>
-
                                 </Link>
                                 <a className="m-0" href="#">
                                     <button className="btn theme-btn m-0 top-btn">Get started</button>
@@ -95,7 +128,7 @@ const LockingLight = () => {
                             </div>
 
                             <div className="mobile-nav-btns align-items-center mobile">
-                                <Link className="theme-toggler" to="dao-light">
+                                <Link className="theme-toggler" to={`/${currentPage}-${alterThemeColor}`} onClick={toggleTheme}>
                                     <svg width="69" height="24" viewBox="0 0 69 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.66002 4.20002L6.05002 4.59002C6.44002 4.97002 6.44002 5.61002 6.05002 5.99002L6.04002 6.00002C5.65002 6.39002 5.03002 6.39002 4.64002 6.00002L4.25002 5.61002C3.86002 5.23002 3.86002 4.60002 4.25002 4.21002L4.26002 4.20002C4.64002 3.82002 5.27002 3.81002 5.66002 4.20002Z" fill="white" />
                                         <path d="M1.99 10.95H3.01C3.56 10.95 4 11.39 4 11.95V11.96C4 12.51 3.56 12.95 3 12.94H1.99C1.44 12.94 1 12.5 1 11.95V11.94C1 11.39 1.44 10.95 1.99 10.95Z" fill="white" />
@@ -109,7 +142,6 @@ const LockingLight = () => {
                                         <path fillRule="evenodd" clipRule="evenodd" d="M49.1532 13.5796L49.1534 13.5807C49.773 16.782 52.4218 19.3384 55.6468 19.856L55.65 19.8565C58.041 20.2443 60.2623 19.581 61.942 18.254C56.3547 16.2585 52.9746 10.3231 54.2624 4.45887C50.6982 5.74265 48.3579 9.48316 49.1532 13.5796ZM55.0081 2.18125C49.766 3.22401 46.0987 8.34018 47.1898 13.9608C47.9698 17.9908 51.2798 21.1808 55.3299 21.8308C58.851 22.4018 62.0953 21.1315 64.266 18.8294C64.2763 18.8185 64.2864 18.8077 64.2966 18.7968C64.4383 18.6452 64.5755 18.4891 64.7077 18.3288C64.7103 18.3257 64.7128 18.3226 64.7154 18.3194C64.8851 18.1133 65.0467 17.9002 65.1999 17.6808C65.4099 17.3708 65.2399 16.9308 64.8699 16.8908C64.5112 16.8503 64.16 16.7916 63.8168 16.7159C63.7962 16.7113 63.7756 16.7067 63.755 16.702C63.6674 16.6821 63.5802 16.661 63.4936 16.6388C63.4917 16.6383 63.4899 16.6379 63.488 16.6374C58.0232 15.2354 54.7249 9.45077 56.454 4.00488C56.4547 4.00285 56.4553 4.00083 56.456 3.99881C56.4873 3.90025 56.5203 3.8018 56.555 3.70349C56.5563 3.69982 56.5576 3.69614 56.5589 3.69246C56.6766 3.35992 56.8134 3.029 56.9699 2.70076C57.1299 2.36076 56.8499 1.98076 56.4699 2.00076C56.1952 2.0145 55.9238 2.03919 55.6559 2.07439C55.6515 2.07498 55.647 2.07557 55.6426 2.07616C55.4411 2.10292 55.2416 2.13563 55.0444 2.17411C55.0323 2.17647 55.0202 2.17885 55.0081 2.18125Z" fill="white" />
                                         <line x1="34.5" y1="3" x2="34.5" y2="21" stroke="white" />
                                     </svg>
-
                                 </Link>
                                 <button className="navbar-toggler menu-btn nav-trigger ms-auto">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,218 +161,9 @@ const LockingLight = () => {
                         </nav>
                     </div>
                 </div>
-            </div> */}
-
-            <div className="container banner-content">
-                <div className="row m-0 position-relative mt-5">
-                    <div className="col-sm-12 banner-desc px-sm-5 text-center">
-                        <h1 className="mb-4">Goji Locking</h1>
-                    </div>
-                </div>
-            </div>
-            <div className="container py-sm-4 px-sm-5">
-                <div className="d-flex sorting-filters align-items-center">
-                    <div className="me-sm-3 my-sm-0 my-3 search-inputs d-flex ms-sm-auto">
-                        <div className="fil-dropdown me-sm-3">
-                            <a href="new-lock-light.html"><button className="btn theme-btn">Lock Hanu</button></a>
-                        </div>
-                        <div className="fil-input">
-                            <button className="btn theme-btn">Lock Liquidity</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row m-0 position-relative px-sm-5 locking-row">
-                <div className="col-sm-5 mt-4 mt-sm-0">
-                    <div className="lock-overview p-sm-5 p-4">
-                        <div className="d-flex flex-column mb-5">
-                            <h2>Hanu Yokia Lockup Overview</h2>
-                            <p>View liquidity and HANU lockup information</p>
-                        </div>
-                        <div className="lock-prop d-flex p-4 align-items-center my-4">
-                            <div className="me-sm-auto">
-                                <h3>Liquidity Locked</h3>
-                                <p style={{color: "#EF16A7"}} className="mb-0">Uniswap V2</p>
-                            </div>
-                            <div className="ms-sm-auto d-flex">
-                                <h3 className="me-3">23.628% </h3>
-                                <p className="mb-0">Liquidity</p>
-                            </div>
-                        </div>
-                        <div className="lock-prop d-flex p-4 align-items-center my-4">
-                            <div className="me-sm-auto">
-                                <h3>HANU Locked</h3>
-                                <p style={{color: "#5F658B"}} className="mb-0">Ethereum</p>
-                            </div>
-                            <div className="ms-sm-auto d-flex">
-                                <h3 className="me-3">0.000%</h3>
-                                <p className="mb-0">0.00 HANU</p>
-                            </div>
-                        </div>
-                        <div className="lock-prop d-flex p-4 align-items-center my-4">
-                            <div className="me-sm-auto">
-                                <h3>Circulating Supply</h3>
-                            </div>
-                            <div className="ms-sm-auto d-flex">
-                                <h3 className="me-3">1,000,000,000,000,000.00</h3>
-                                <p className="mb-0">HANU</p>
-                            </div>
-                        </div>
-                        <div className="lock-prop d-flex p-4 align-items-center my-4">
-                            <div className="me-sm-auto">
-                                <h3>Total Supply</h3>
-                            </div>
-                            <div className="ms-sm-auto d-flex">
-                                <h3 className="me-3">1,000,000,000,000,000.00</h3>
-                                <p className="mb-0">HANU</p>
-                            </div>
-                        </div>
-                        <div className="lock-prop d-flex p-4 align-items-center my-4">
-                            <div className="me-sm-auto">
-                                <h3>CoinGecko Ranking</h3>
-                            </div>
-                            <div className="ms-sm-auto d-flex">
-                                <h3 className="me-0">1188</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="col-sm-7 mt-4 mt-sm-0">
-                    <div className="lockup-val p-sm-5 p-4">
-                        <div className="d-flex">
-                            <div className="me-sm-auto">
-                                <h2>Lockup Value</h2>
-                                <p>View the lockup value over time</p>
-                            </div>
-                            <div className="ms-sm-auto text-sm-right">
-                                <h2 style={{color: "#8DC33F"}}>$128,742.45</h2>
-                                <p>32.59 ETH</p>
-                            </div>
-                        </div>
-
-                        <div className="d-flex lockup-chart my-5 pt-sm-4">
-                            <img src="static/img/lockup-chart.svg" />
-                        </div>
-
-                        <div className="row m-0 position-relative mt-5 pt-sm-5">
-                            <div className="col-sm-3">
-                                <div className="lockup-chart-legend mc ps-3">
-                                    <h3>$8,925,141.70</h3>
-                                    <p>Market Cap</p>
-                                </div>
-                            </div>
-                            <div className="col-sm-3">
-                                <div className="lockup-chart-legend vol ps-3">
-                                    <h3>$104,014.15</h3>
-                                    <p>Volume (24h)</p>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div className="lockup-chart-legend cs ps-3">
-                                    <h3>1,000,000,000,000,000.00 HANU</h3>
-                                    <p>Circulating Supply</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="col-sm-12 mt-4">
-                    <div className="lock-events p-sm-5 p-4">
-                        <div className="d-flex">
-                            <div className="me-sm-auto">
-                                <h2>HANU Lock Events</h2>
-                                <p>Locked Uniswap V2- 680.22 UNI-V2 (23.63%)</p>
-                            </div>
-                            <div className="ms-sm-auto">
-                                <a href=""><img src="static/img/maximize-btn.svg" /></a>
-                            </div>
-                        </div>
-                        <div className="row m-0 position-relative mt-5 countdown-row">
-                            <div className="col-sm-6 d-flex">
-                                <div className="d-flex me-5">
-                                    <img src="static/img/lock-event-ic.svg" />
-                                </div>
-                                <div className="d-flex flex-column">
-                                    <p>Locked 07/10/2021 • Unlocks 07/10/2022</p>
-                                    <button className="btn theme-btn">Locked</button>
-                                </div>
-                            </div>
-
-                            <div className="col-sm-6">
-                                <p className="countdown-heading">Unlock Countdown</p>
-                                <div id="countdown">
-                                    <ul className="p-0 mb-0">
-                                        <li><span id="days"></span>days</li>
-                                        <li><span id="hours"></span>Hours</li>
-                                        <li><span id="minutes"></span>Minutes</li>
-                                        <li><span id="seconds"></span>Seconds</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <div className="row m-0 position-relative mt-5 pt-sm-5 footer-bottom px-sm-5 py-3">
-                <div className="d-flex footer-bottom-row">
-                    <div className="me-sm-auto">
-                        <p className="copyright">Copyright © 2021. All Rights Reserved.</p>
-                    </div>
-                    <div className="ms-sm-auto">
-                        <a href="" className="mx-2">
-                            <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="16" cy="16.0254" r="16" fill="white" />
-                                <g clipPath="url(#clip0)">
-                                    <path d="M18.3316 11.35H19.6097V9.12397C19.3892 9.09364 18.6309 9.02539 17.7477 9.02539C15.905 9.02539 14.6426 10.1845 14.6426 12.3148V14.2754H12.6091V16.7639H14.6426V23.0254H17.1358V16.7645H19.087L19.3968 14.276H17.1352V12.5616C17.1358 11.8423 17.3295 11.35 18.3316 11.35Z" fill="black" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0">
-                                        <rect width="14" height="14" fill="white" transform="translate(9 9.02539)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </a>
-                        <a href="" className="mx-2">
-                            <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="16" cy="16.0254" r="16" fill="white" />
-                                <g clipPath="url(#clip0)">
-                                    <path d="M22.9864 13.1414C22.9536 12.3976 22.8333 11.8861 22.6609 11.443C22.4832 10.9726 22.2097 10.5515 21.8514 10.2014C21.5013 9.84586 21.0774 9.56959 20.6124 9.3946C20.1667 9.22228 19.658 9.10199 18.9141 9.06919C18.1647 9.03362 17.9268 9.02539 16.026 9.02539C14.1253 9.02539 13.8873 9.03362 13.1407 9.06641C12.3968 9.09921 11.8854 9.21961 11.4424 9.39183C10.9719 9.56959 10.5508 9.84309 10.2007 10.2014C9.84513 10.5515 9.56897 10.9754 9.39387 11.4403C9.22155 11.8861 9.10126 12.3948 9.06846 13.1387C9.03288 13.8881 9.02466 14.126 9.02466 16.0268C9.02466 17.9275 9.03288 18.1654 9.06568 18.9121C9.09848 19.656 9.21888 20.1674 9.3912 20.6105C9.56897 21.0809 9.84513 21.502 10.2007 21.8521C10.5508 22.2077 10.9747 22.4839 11.4396 22.6589C11.8854 22.8312 12.394 22.9515 13.138 22.9843C13.8846 23.0172 14.1226 23.0253 16.0233 23.0253C17.9241 23.0253 18.162 23.0172 18.9087 22.9843C19.6525 22.9515 20.1639 22.8312 20.607 22.6589C21.5479 22.2951 22.2917 21.5513 22.6555 20.6105C22.8277 20.1647 22.9481 19.656 22.9809 18.9121C23.0137 18.1654 23.0219 17.9275 23.0219 16.0268C23.0219 14.126 23.0191 13.8881 22.9864 13.1414ZM21.7256 18.8574C21.6955 19.5411 21.5807 19.9103 21.4849 20.1565C21.2497 20.7664 20.7656 21.2504 20.1557 21.4857C19.9096 21.5814 19.5377 21.6962 18.8566 21.7263C18.1182 21.7592 17.8968 21.7673 16.0288 21.7673C14.1608 21.7673 13.9366 21.7592 13.2008 21.7263C12.5171 21.6962 12.1479 21.5814 11.9018 21.4857C11.5982 21.3735 11.322 21.1957 11.0977 20.9633C10.8653 20.7363 10.6875 20.4628 10.5753 20.1592C10.4796 19.9131 10.3648 19.5411 10.3347 18.8602C10.3018 18.1217 10.2937 17.9002 10.2937 16.0322C10.2937 14.1642 10.3018 13.94 10.3347 13.2044C10.3648 12.5206 10.4796 12.1514 10.5753 11.9053C10.6875 11.6017 10.8653 11.3255 11.1005 11.1011C11.3274 10.8687 11.6009 10.6909 11.9045 10.5788C12.1507 10.4831 12.5227 10.3683 13.2036 10.3381C13.942 10.3053 14.1636 10.2971 16.0315 10.2971C17.9022 10.2971 18.1237 10.3053 18.8594 10.3381C19.5431 10.3683 19.9124 10.4831 20.1585 10.5788C20.462 10.6909 20.7383 10.8687 20.9625 11.1011C21.195 11.3282 21.3728 11.6017 21.4849 11.9053C21.5807 12.1514 21.6955 12.5233 21.7256 13.2044C21.7584 13.9428 21.7666 14.1642 21.7666 16.0322C21.7666 17.9002 21.7584 18.119 21.7256 18.8574Z" fill="black" />
-                                    <path d="M16.0258 12.4302C14.0404 12.4302 12.4294 14.041 12.4294 16.0266C12.4294 18.0122 14.0404 19.623 16.0258 19.623C18.0114 19.623 19.6223 18.0122 19.6223 16.0266C19.6223 14.041 18.0114 12.4302 16.0258 12.4302ZM16.0258 18.3595C14.7378 18.3595 13.6929 17.3148 13.6929 16.0266C13.6929 14.7384 14.7378 13.6937 16.0258 13.6937C17.314 13.6937 18.3587 14.7384 18.3587 16.0266C18.3587 17.3148 17.314 18.3595 16.0258 18.3595Z" fill="black" />
-                                    <path d="M20.6044 12.2878C20.6044 12.7515 20.2284 13.1274 19.7646 13.1274C19.301 13.1274 18.925 12.7515 18.925 12.2878C18.925 11.8241 19.301 11.4482 19.7646 11.4482C20.2284 11.4482 20.6044 11.8241 20.6044 12.2878Z" fill="black" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0">
-                                        <rect width="14" height="14" fill="white" transform="translate(9 9.02539)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </a>
-                        <a href="" className="mx-2">
-                            <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="16" cy="16.0254" r="16" fill="white" />
-                                <g clipPath="url(#clip0)">
-                                    <path d="M23 11.6845C22.4794 11.9129 21.9246 12.0643 21.3462 12.1378C21.9412 11.7825 22.3954 11.2243 22.6089 10.5514C22.0541 10.8821 21.4416 11.1158 20.7889 11.2461C20.2621 10.6853 19.5114 10.3379 18.6924 10.3379C17.1034 10.3379 15.8241 11.6276 15.8241 13.2088C15.8241 13.4363 15.8434 13.655 15.8906 13.8633C13.5045 13.7469 11.3931 12.6033 9.97475 10.8611C9.72712 11.2908 9.58188 11.7825 9.58188 12.3119C9.58188 13.3059 10.0938 14.187 10.8568 14.6971C10.3956 14.6884 9.94325 14.5545 9.56 14.3436C9.56 14.3524 9.56 14.3638 9.56 14.3751C9.56 15.7699 10.5549 16.9284 11.8595 17.1953C11.6259 17.2591 11.3712 17.2898 11.107 17.2898C10.9232 17.2898 10.7377 17.2793 10.5636 17.2408C10.9355 18.3774 11.9908 19.213 13.2455 19.2401C12.269 20.004 11.0291 20.4643 9.68688 20.4643C9.4515 20.4643 9.22575 20.4538 9 20.4249C10.2714 21.2448 11.7781 21.7129 13.403 21.7129C18.6845 21.7129 21.572 17.3379 21.572 13.5456C21.572 13.4188 21.5676 13.2963 21.5615 13.1746C22.1311 12.7704 22.6097 12.2655 23 11.6845Z" fill="black" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0">
-                                        <rect width="14" height="14" fill="white" transform="translate(9 9.02539)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
      );
 }
  
-export default LockingLight;
+export default Navbar;
