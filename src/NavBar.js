@@ -2,8 +2,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeTheme, changePage } from "./redux/ducks/navReducer";
+import React, { useContext } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
+
 
 const Navbar = () => {
+    const { connectWallet, currentAccount } = useContext(TransactionContext);
     const dispatch = useDispatch();
     var themeColor = useSelector((state) => state.navReducer.theme);
     var alterThemeColor = themeColor == 'light' ? 'dark' : 'light';
@@ -122,9 +126,9 @@ const Navbar = () => {
                                         <line x1="34.5" y1="3" x2="34.5" y2="21" stroke="white" />
                                     </svg>
                                 </Link>
-                                <a className="m-0" href="#">
-                                    <button className="btn theme-btn m-0 top-btn">Get started</button>
-                                </a>
+                                {/* <a className="m-0" href="#"> */}
+                                    {!currentAccount ? (<button className="btn theme-btn m-0 top-btn" onClick={connectWallet}>Get started</button>) : (<button className="btn theme-btn m-0 top-btn">Connected</button>)}
+                                {/* </a> */}
                             </div>
 
                             <div className="mobile-nav-btns align-items-center mobile">

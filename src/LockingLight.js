@@ -1,6 +1,46 @@
+import React, { useContext } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
 import { Link } from "react-router-dom";
 
 const LockingLight = () => {
+    const { lockHanuAmount, hanuLockingFormData, handleHanuFormChange, userHanuLockRecords } = useContext(TransactionContext);
+
+    const showNotification = (status, amount) => {
+        var x = document.getElementById("notification");
+
+        if (status) {
+            if (typeof(status) == 'string') {
+                x.innerHTML = status
+            } else {
+                x.innerHTML = `Successfully locked ${amount} Ether.`
+            }
+        } else {
+            x.innerHTML = `Something Went Wrong :/`
+        }
+
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    }
+
+    const handleHanuSubmit = async (e) => {
+        const { amount } = hanuLockingFormData;
+        e.preventDefault();
+
+        const lockingResp = await lockHanuAmount();
+        if (lockingResp) {
+            // hide hanu lock modal after locking
+            var modal = document.getElementById("lockingModal");
+            modal.style.display = "none";
+
+            // show notification of locked ether
+            showNotification(lockingResp, amount);
+        } else {
+            showNotification(lockingResp, 0);
+        }
+
+        
+    }
+
     return ( 
         <div className="locking">
             <link rel="stylesheet" href="static/css/style-light.css" />
@@ -131,6 +171,27 @@ const LockingLight = () => {
                 </div>
             </div> */}
 
+            <div className="notification-container">
+                <div id="notification"></div>
+            </div>
+
+            {/* hanu lock modal */}
+            <div id="lockingModal" className="modal">
+
+            <div className="modal-content">
+                <span className="close">&times;</span>
+                <form onSubmit={handleHanuSubmit}>
+                    <p className="hanu-locking-modal-heading">Hanu Locking</p>
+
+                    <input className="hanu-locking-input" name="amount" type="number" placeholder="Amount in Ether" onChange={handleHanuFormChange} required/>
+                    <input className="hanu-locking-input" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
+
+                    <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
+                </form>
+            </div>
+            {/* hanu lock modal */}
+
+            </div>
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
                     <div className="col-sm-12 banner-desc px-sm-5 text-center">
@@ -142,10 +203,12 @@ const LockingLight = () => {
                 <div className="d-flex sorting-filters align-items-center">
                     <div className="me-sm-3 my-sm-0 my-3 search-inputs d-flex ms-sm-auto">
                         <div className="fil-dropdown me-sm-3">
-                            <a href="new-lock-light.html"><button className="btn theme-btn">Lock Hanu</button></a>
+                            {/* <Link to="/new-lock-light"> */}
+                                <button id="lock-hanu" className="btn theme-btn">Lock Hanu</button>
+                            {/* </Link> */}
                         </div>
                         <div className="fil-input">
-                            <button className="btn theme-btn">Lock Liquidity</button>
+                            <button className="btn theme-btn" onClick={userHanuLockRecords}>Lock Liquidity</button>
                         </div>
                     </div>
                 </div>
