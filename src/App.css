@@ -81,7 +81,7 @@
   font-size: 24px !important;
 }
 
-.hanu-locking-input {
+.modal-form-input {
   padding: 10px;
   margin: 5px;
   width: 100%;
@@ -89,6 +89,11 @@
 
 .hanu-locking-submit {
   float: right;
+  margin-top: 5px !important;
+}
+
+.voting-submit {
+  margin-left: 90% !important;
   margin-top: 5px !important;
 }
 

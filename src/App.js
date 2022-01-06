@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import DaoLight from './DaoLight';
 import DaoDark from './DaoDark';
 import FarmingLight from './FarmingLight';
@@ -18,6 +18,9 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/staking-light" />
+        </Route>
         <Route exact path="/dao-light">
           <DaoLight />
         </Route>

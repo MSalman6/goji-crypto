@@ -3,7 +3,13 @@ import { TransactionContext } from "./contexts/TransactionContext";
 import { Link } from "react-router-dom";
 
 const LockingLight = () => {
-    const { lockHanuAmount, hanuLockingFormData, handleHanuFormChange, userHanuLockRecords } = useContext(TransactionContext);
+    const {
+        lockHanuAmount,
+        hanuLockingFormData,
+        handleHanuFormChange,
+        userHanuLockRecords,
+        hanuLockTime
+     } = useContext(TransactionContext);
 
     const showNotification = (status, amount) => {
         var x = document.getElementById("notification");
@@ -12,7 +18,7 @@ const LockingLight = () => {
             if (typeof(status) == 'string') {
                 x.innerHTML = status
             } else {
-                x.innerHTML = `Successfully locked ${amount} Ether.`
+                x.innerHTML = `Successfully locked ${amount} Hanu.`
             }
         } else {
             x.innerHTML = `Something Went Wrong :/`
@@ -171,10 +177,6 @@ const LockingLight = () => {
                 </div>
             </div> */}
 
-            <div className="notification-container">
-                <div id="notification"></div>
-            </div>
-
             {/* hanu lock modal */}
             <div id="lockingModal" className="modal">
 
@@ -183,8 +185,8 @@ const LockingLight = () => {
                 <form onSubmit={handleHanuSubmit}>
                     <p className="hanu-locking-modal-heading">Hanu Locking</p>
 
-                    <input className="hanu-locking-input" name="amount" type="number" placeholder="Amount in Ether" onChange={handleHanuFormChange} required/>
-                    <input className="hanu-locking-input" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
+                    <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Ether" onChange={handleHanuFormChange} required/>
+                    <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
 
                     <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
                 </form>
@@ -328,8 +330,10 @@ const LockingLight = () => {
                                     <img src="static/img/lock-event-ic.svg" />
                                 </div>
                                 <div className="d-flex flex-column">
+                                    <p>Amount Locked: {hanuLockTime.lockedAmount}</p>
                                     <p>Locked 07/10/2021 • Unlocks 07/10/2022</p>
-                                    <button className="btn theme-btn">Locked</button>
+                                    {hanuLockTime.isAmountLocked ? <button className="btn theme-btn">Locked</button> : <button className="btn theme-btn">Unlocked</button>}
+                                    
                                 </div>
                             </div>
 
@@ -337,10 +341,10 @@ const LockingLight = () => {
                                 <p className="countdown-heading">Unlock Countdown</p>
                                 <div id="countdown">
                                     <ul className="p-0 mb-0">
-                                        <li><span id="days"></span>days</li>
-                                        <li><span id="hours"></span>Hours</li>
-                                        <li><span id="minutes"></span>Minutes</li>
-                                        <li><span id="seconds"></span>Seconds</li>
+                                        <li><span id="days">{hanuLockTime.lockDays}</span>days</li>
+                                        <li><span id="hours">{hanuLockTime.lockHours}</span>Hours</li>
+                                        <li><span id="minutes">{hanuLockTime.lockMinutes}</span>Minutes</li>
+                                        <li><span id="seconds">{hanuLockTime.lockSeconds}</span>Seconds</li>
                                     </ul>
                                 </div>
                             </div>

@@ -1,6 +1,20 @@
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
 
 const DaoLight = () => {
+    const {
+        doVote,
+        handleVoteFormChange,
+        showNotification
+    } = useContext(TransactionContext);
+
+    const handleVoteSubmit = async (e) => {
+        e.preventDefault();
+
+        const resp = await doVote();
+        showNotification(resp);
+    }
+
     return ( 
         <div className="dao">
             <link rel="stylesheet" href="static/css/style-light.css" />
@@ -654,7 +668,23 @@ const DaoLight = () => {
                     </div>
                 </div>
             </div>
+            <button className="voting-submit btn theme-btn m-0 top-btn" id="do-vote">Vote</button>
+                <div id="lockingModal" className="modal">
 
+                {/* vote modal */}
+                <div className="modal-content">
+                    <span className="close">&times;</span>
+                    <form onSubmit={handleVoteSubmit}>
+                        <p className="hanu-locking-modal-heading">Gao Voting</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="voteFor" max="1" min="0" type="number" placeholder="( 1 or 2 )" onChange={handleVoteFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Vote</button>
+                    </form>
+                </div>
+                {/* vote modal */}
+
+            </div>
 
             <div className="container dao-tabs mobile">
                 <div className="w-100 FAQ-panel my-2">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {ethers} from 'ethers';
-import { hanuContractAddress, hanuContractABI, lockingContractAddress, lockingContractAbi } from "../utils/constants";
+import { hanuContractAddress, hanuContractABI, lockingContractAddress, lockingContractAbi, votingContractAddress, votingContractAbi } from "../utils/constants";
 
 
 export const TransactionContext = React.createContext();
@@ -15,21 +15,48 @@ const getHanuContract = () => {
     return hanuContract;
 }
 
-const getHanuLockContract = () => {
+const getLockContract = () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
-    const hanuLockContract = new ethers.Contract(lockingContractAddress, lockingContractAbi, signer);
+    const lockContract = new ethers.Contract(lockingContractAddress, lockingContractAbi, signer);
 
-    return hanuLockContract;
+    return lockContract;
+}
+
+const getVotingContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const votingContract = new ethers.Contract(votingContractAddress, votingContractAbi, signer);
+
+    return votingContract;
 }
 
 export const TransactionProvider = ({children}) => {
     const [currentAccount, setCurrentAccount] = useState('');
+
+    // hanu states
     const [hanuLockingFormData, setHanuLockingFormData] = useState({ amount: 0, timeInterval: 0 });
+    const [hanuLockTime, setHanuLockTime] = useState({ lockedAmount:0 , lockDays:0, lockHours: 0, lockMinutes: 0, lockSeconds: 0, isAmountLocked: true });
+
+    // vote states
+    const [votingFormData, setVotingFormData] = useState({ voteFor: 0 });
 
     useEffect(() => {
         checkIfWalletIsConnected();
     }, []);
+
+
+    ///////////////////////////////////////////////
+    //  Action Response Notification
+    ///////////////////////////////////////////////
+    const showNotification = (status) => {
+        var x = document.getElementById("notification");
+        
+        x.innerHTML = status
+
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    }
 
     ///////////////////////////////////////////////
     //  Wallet Functionality
@@ -38,11 +65,12 @@ export const TransactionProvider = ({children}) => {
         try {
             if (!ethereum) return alert("Please install MetaMask") // check if MetaMask is installed
 
-            const accounts = await ethereum.request({ method: 'eth_accounts'});
-
-            if (accounts.length) {
-                setCurrentAccount(accounts[0]);
-            }
+            await ethereum.request({ method: 'eth_accounts'}).then(accounts => {
+                if (accounts.length) {
+                    setCurrentAccount(accounts[0]);
+                    userHanuLockRecords(accounts[0]);
+                }
+            });
 
         } catch (error) {
             console.log(error);
@@ -55,9 +83,14 @@ export const TransactionProvider = ({children}) => {
         try {
             if (!ethereum) return alert("Please install MetaMask") // check if MetaMask is installed
 
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts'});
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts'}).then(accounts => {
+                if (accounts) {
+                    setCurrentAccount(accounts[0]);
+                    userHanuLockRecords(accounts[0]);
+                }
+            });
 
-            setCurrentAccount(accounts[0]);
+            
         } catch (error) {
             console.log(error);
 
@@ -66,7 +99,7 @@ export const TransactionProvider = ({children}) => {
     }
 
     ///////////////////////////////////////////////
-    //  Hanu Lock Functionality
+    //  Locking Functionality
     ///////////////////////////////////////////////
     const handleHanuFormChange = (e, name) => {
         setHanuLockingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
@@ -88,23 +121,38 @@ export const TransactionProvider = ({children}) => {
                 await hanuContract.approve(lockingContractAddress, amount);
             }
 
-            // call hanu lock method
-            const hanuLockContract = getHanuLockContract();
-            await hanuLockContract.lock(hanuContractAddress, amountInWei, timeInterval)
-            .then(data => {response = true})
-            .catch(err => {
-                if (err.data.message.includes('already')) {
-                    response =  "You've already locked this token, please unlock them all before locking again.";
-                } else {
-                    console.log(err);        
-                    response =  false;
-                }
-            });
-            
+            // check hany balance
+            const hanuBalance = await hanuContract.balanceOf(currentAccount);
+            if (hanuBalance >= amountInWei) {
+                // call hanu lock method
+                const lockContract = getLockContract();
+                await lockContract.lock(hanuContractAddress, amountInWei, timeInterval)
+                .then(data => {
+                    response = true;
+                    userHanuLockRecords(currentAccount);
+                })
+                .catch(err => {
+                    if (err.data.message.includes('already')) {
+                        response = "You've already locked this token, please unlock them all before locking again.";
+                    } else {
+                        console.log(err);
+                        response =  err.data.message;
+                    }
+                });
+            } else {
+                response = "You don't have enough hanu balance";
+            }
         })
         .catch(err => {
-            console.log(err);
-            response = false;
+            try {
+                console.log(err);
+                if (err.message.includes("denied")) {
+                    response = "User denied transaction signature.";
+                } else if (err.data.message.includes("Insufficient balance")) {
+                    response = "Insufficient balance";
+            }} catch (err) {
+                response = false;
+            }
         });
         return response
     }
@@ -115,32 +163,78 @@ export const TransactionProvider = ({children}) => {
         return approveAndLockResp;
     }
 
-    const userHanuLockRecords = async () => {
-        const hanuLockContract = getHanuLockContract();
-        await hanuLockContract.userLockRecords(currentAccount, hanuContractAddress)
+    const userHanuLockRecords = async (activeAccount) => {
+        const lockContract = getLockContract();
+        await lockContract.userLockRecords(activeAccount, hanuContractAddress)
         .then(async (data) => {
-            const amount = ethers.utils.formatEther(data.amount._hex);
-            const validity = ethers.utils.formatEther(data.validity._hex);
+            const lockedAmount = ethers.utils.formatEther(data.amount);
+            const validity = data.validity._hex;
             const address = data.addr;
             const token = data.token;
             const exists = data.doesExist;
             const insertedAt = data.insertedAt._hex;
             const updatedAt = data.updatedAt._hex;
-
-            console.log({
-                amount,
-                validity,
-                address,
-                token,
-                exists,
-                insertedAt,
-                updatedAt,
-            })
+            
+            var lockTimeSeconds = Number(parseInt(validity) - parseInt(insertedAt));
+            if (lockTimeSeconds <= 0) {
+                var isAmountLocked = false;
+            } else {
+                var isAmountLocked = true;
+            }
+            var lockDays = Math.floor(lockTimeSeconds / (3600*24));
+            var lockHours = Math.floor(lockTimeSeconds % (3600*24) / 3600);
+            var lockMinutes = Math.floor(lockTimeSeconds % 3600 / 60);
+            var lockSeconds = Math.floor(lockTimeSeconds % 60);
+            setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
         })
     }
 
+
+    ///////////////////////////////////////////////
+    //  Voting Functionality
+    ///////////////////////////////////////////////
+    const handleVoteFormChange = (e, name) => {
+        setVotingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const doVote = async () => {
+        var resp = "";
+        const votingContract = getVotingContract();
+        await votingContract.vote(votingFormData.voteFor)
+        .then( data => {
+            resp = `Successfully voted for ${votingFormData.voteFor}`;
+        })
+        .catch(err => {
+            if (err.data){
+                resp = err.data.message;
+            } else if (err.message){ 
+                resp = err.message;
+            } else {
+                resp = "Something went wrong";
+            }
+        })
+        return resp;
+    }
+
     return (
-        <TransactionContext.Provider value={{ connectWallet,  lockHanuAmount, currentAccount, hanuLockingFormData, setHanuLockingFormData, handleHanuFormChange, userHanuLockRecords }}>
+        <TransactionContext.Provider value={{
+                showNotification,
+
+                // hanu context
+                connectWallet,
+                lockHanuAmount,
+                currentAccount,
+                hanuLockingFormData,
+                setHanuLockingFormData,
+                handleHanuFormChange,
+                userHanuLockRecords,
+                hanuLockTime,
+
+                // vote context
+                doVote,
+                votingFormData,
+                handleVoteFormChange
+            }}>
             {children}
         </TransactionContext.Provider>
     )

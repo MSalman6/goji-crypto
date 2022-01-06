@@ -65,11 +65,20 @@
         var modal = document.getElementById("lockingModal");
 
         var btn = document.getElementById("lock-hanu");
+        var btn2 = document.getElementById("do-vote");
 
         var span = document.getElementsByClassName("close")[0];
 
-        btn.onclick = function() {
-          modal.style.display = "block";
+        if (btn) {
+          btn.onclick = function() {
+            modal.style.display = "block";
+          }
+        }
+
+        if (btn2) {
+          btn2.onclick = function() {
+            modal.style.display = "block";
+          }
         }
 
         span.onclick = function() {
