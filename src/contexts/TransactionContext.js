@@ -128,7 +128,7 @@ export const TransactionProvider = ({children}) => {
                 const lockContract = getLockContract();
                 await lockContract.lock(hanuContractAddress, amountInWei, timeInterval)
                 .then(data => {
-                    response = true;
+                    response = `Successfully locked ${amount} Hanu.`;
                     userHanuLockRecords(currentAccount);
                 })
                 .catch(err => {
@@ -144,14 +144,13 @@ export const TransactionProvider = ({children}) => {
             }
         })
         .catch(err => {
-            try {
+            if (err.data){
+                response = err.data.message;
+            } else if (err.message) { 
+                response = err.message;
+            } else {
                 console.log(err);
-                if (err.message.includes("denied")) {
-                    response = "User denied transaction signature.";
-                } else if (err.data.message.includes("Insufficient balance")) {
-                    response = "Insufficient balance";
-            }} catch (err) {
-                response = false;
+                response = "Something went wrong";
             }
         });
         return response
@@ -210,6 +209,7 @@ export const TransactionProvider = ({children}) => {
             } else if (err.message){ 
                 resp = err.message;
             } else {
+                console.log(err);
                 resp = "Something went wrong";
             }
         })

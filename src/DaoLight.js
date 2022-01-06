@@ -12,6 +12,11 @@ const DaoLight = () => {
         e.preventDefault();
 
         const resp = await doVote();
+
+        // hide vote modal after locking
+        var modal = document.getElementById("voteModal");
+        modal.style.display = "none";
+
         showNotification(resp);
     }
 
@@ -669,7 +674,7 @@ const DaoLight = () => {
                 </div>
             </div>
             <button className="voting-submit btn theme-btn m-0 top-btn" id="do-vote">Vote</button>
-                <div id="lockingModal" className="modal">
+            <div id="voteModal" className="modal">
 
                 {/* vote modal */}
                 <div className="modal-content">

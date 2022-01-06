@@ -8,25 +8,9 @@ const LockingLight = () => {
         hanuLockingFormData,
         handleHanuFormChange,
         userHanuLockRecords,
-        hanuLockTime
+        hanuLockTime,
+        showNotification
      } = useContext(TransactionContext);
-
-    const showNotification = (status, amount) => {
-        var x = document.getElementById("notification");
-
-        if (status) {
-            if (typeof(status) == 'string') {
-                x.innerHTML = status
-            } else {
-                x.innerHTML = `Successfully locked ${amount} Hanu.`
-            }
-        } else {
-            x.innerHTML = `Something Went Wrong :/`
-        }
-
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
-    }
 
     const handleHanuSubmit = async (e) => {
         const { amount } = hanuLockingFormData;
@@ -43,8 +27,6 @@ const LockingLight = () => {
         } else {
             showNotification(lockingResp, 0);
         }
-
-        
     }
 
     return ( 
