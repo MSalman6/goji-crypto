@@ -1,6 +1,45 @@
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
+
 
 const StakingLight = () => {
+    const {
+        stakeHanuAmount,
+        showNotification,
+        handleHanuStakeFormChange
+    } = useContext(TransactionContext);
+
+    const handleHanuStakeSubmit = async (e) => {
+        e.preventDefault();
+        
+        const resp = await stakeHanuAmount();
+        showNotification(resp);
+    }
+
+    const handleModal = () => {
+        var modal = document.getElementById("hanuStakeModal");
+        var btn = document.getElementById("stake-hanu");
+        var span = document.getElementsByClassName("close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    useEffect(() => {
+        handleModal();
+    }, [])
+
     return ( 
         <div className="staking">
             <link rel="stylesheet" href="static/css/style-light.css" />
@@ -131,6 +170,23 @@ const StakingLight = () => {
                 </div>
             </div> */}
 
+            {/* hanu staking modal */}
+            <div id="hanuStakeModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="close">&times;</span>
+                    <form onSubmit={handleHanuStakeSubmit}>
+                        <p className="hanu-locking-modal-heading">Hanu Stake</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Hanu" onChange={handleHanuStakeFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Stake</button>
+                    </form>
+                </div>
+
+            </div>
+            {/* hanu staking modal */}
+
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
                     <div className="col-sm-12 banner-desc px-sm-5 text-center">
@@ -238,7 +294,10 @@ const StakingLight = () => {
                                                 <button className="btn theme-btn btn-green">Harvest</button>
                                             </div>
                                             <div className="ms-auto">
-                                                <button className="btn theme-btn btn-green">+/-</button>
+                                                <button className="btn theme-btn btn-green unlock-btn" id="stake-hanu">
+                                                    Stake
+                                                </button>
+                                                {/* <button className="btn theme-btn btn-green">+/-</button> */}
                                             </div>
                                         </div>
                                     </div>

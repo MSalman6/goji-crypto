@@ -73,6 +73,20 @@
   cursor: pointer;
 }
 
+.liquidityClose {
+  color: black;
+  margin-left: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.liquidityClose:hover, .liquidityClose:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 .hanu-locking-modal-heading {
   margin-top: 20px;
   font-weight: bold;

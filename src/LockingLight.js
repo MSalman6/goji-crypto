@@ -4,14 +4,23 @@ import { Link } from "react-router-dom";
 
 const LockingLight = () => {
     const {
+        // general context
+        showNotification,
+
+        // hanu context
         lockHanuAmount,
         hanuLockingFormData,
         handleHanuFormChange,
-        userHanuLockRecords,
         hanuLockTime,
-        showNotification
+
+        // liquidity context
+        lockLiquidityAmount,
+        liquidityLockingFormData,
+        handleLiquidityFormChange,
+        liquidityLockTime
      } = useContext(TransactionContext);
 
+    // hanu lock methods
     const handleHanuSubmit = async (e) => {
         const { amount } = hanuLockingFormData;
         e.preventDefault();
@@ -19,24 +28,62 @@ const LockingLight = () => {
         const lockingResp = await lockHanuAmount();
         if (lockingResp) {
             // hide hanu lock modal after locking
-            var modal = document.getElementById("lockingModal");
+            var modal = document.getElementById("hanuLockingModal");
             modal.style.display = "none";
 
-            // show notification of locked ether
+            // show notification of locked hanu
             showNotification(lockingResp, amount);
         } else {
             showNotification(lockingResp, 0);
         }
     }
 
-    const handleModal = () => {
-        var modal = document.getElementById("lockingModal");
+    const handleHanuModal = () => {
+        var modal = document.getElementById("hanuLockingModal");
         var btn = document.getElementById("lock-hanu");
         var span = document.getElementsByClassName("close")[0];
 
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    // liquidity lock methods
+    const handleLiquiditySubmit = async (e) => {
+        const { amount } = liquidityLockingFormData;
+        e.preventDefault();
+
+        const lockingResp = await lockLiquidityAmount();
+        if (lockingResp) {
+            // hide liquidity lock modal after locking
+            var modal = document.getElementById("liquidityLockingModal");
+            modal.style.display = "none";
+
+            // show notification of locked hanu
+            showNotification(lockingResp, amount);
+        } else {
+            showNotification(lockingResp, 0);
+        }
+    }
+
+    const handleLiquidityModal = () => {
+        var modal = document.getElementById("liquidityLockingModal");
+        var btn = document.getElementById("lock-liquidity");
+        var span = document.getElementsByClassName("liquidityClose")[0];
+
+        var hanuBtn = document.getElementById("lock-hanu");
+        var hanumodal = document.getElementById("hanuLockingModal");
+
         window.onclick = function(event) {
-            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal & event.target !== hanuBtn
+                & event.target.parentNode.parentNode.parentNode !== hanumodal
+                ) {
                 modal.style.display = "none";
+                hanumodal.style.display = "none";
             }
         }
 
@@ -50,7 +97,8 @@ const LockingLight = () => {
     }
 
     useEffect(() => {
-        handleModal();
+        handleHanuModal();
+        handleLiquidityModal();
     }, [])
 
     return ( 
@@ -184,22 +232,38 @@ const LockingLight = () => {
             </div> */}
 
             {/* hanu lock modal */}
-            <div id="lockingModal" className="modal">
+            <div id="hanuLockingModal" className="modal">
+                <div className="modal-content">
+                    <span className="close">&times;</span>
+                    <form onSubmit={handleHanuSubmit}>
+                        <p className="hanu-locking-modal-heading">Hanu Locking</p>
 
-            <div className="modal-content">
-                <span className="close">&times;</span>
-                <form onSubmit={handleHanuSubmit}>
-                    <p className="hanu-locking-modal-heading">Hanu Locking</p>
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Hanu" onChange={handleHanuFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
 
-                    <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Ether" onChange={handleHanuFormChange} required/>
-                    <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
-
-                    <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
-                </form>
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
+                    </form>
+                </div>
             </div>
             {/* hanu lock modal */}
 
+            {/* liquidity lock modal */}
+            <div id="liquidityLockingModal" className="modal">
+                <div className="modal-content">
+                    <span className="liquidityClose">&times;</span>
+                    <form onSubmit={handleLiquiditySubmit}>
+                        <p className="hanu-locking-modal-heading">Liquidity Locking</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Liquidity" onChange={handleLiquidityFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleLiquidityFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
+                    </form>
+                </div>
             </div>
+            {/* liquidity lock modal */}
+
+            
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
                     <div className="col-sm-12 banner-desc px-sm-5 text-center">
@@ -216,7 +280,7 @@ const LockingLight = () => {
                             {/* </Link> */}
                         </div>
                         <div className="fil-input">
-                            <button className="btn theme-btn" onClick={userHanuLockRecords}>Lock Liquidity</button>
+                            <button id="lock-liquidity" className="btn theme-btn">Lock Liquidity</button>
                         </div>
                     </div>
                 </div>
