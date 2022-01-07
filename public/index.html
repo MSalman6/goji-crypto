@@ -58,52 +58,9 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-    <!-- modal scripts -->
+    <!-- jquery scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-      $(document).ready(function() {
-        var modal = document.getElementById("lockingModal");
-        var votingModal = document.getElementById("voteModal");
-
-        var btn = document.getElementById("lock-hanu");
-        var btn2 = document.getElementById("do-vote");
-
-        var span = document.getElementsByClassName("close")[0];
-
-        // locking modal functionality
-        if (btn) {
-          btn.onclick = function() {
-            modal.style.display = "block";
-          }
-        }
-    
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          } else if (event.target == votingModal) {
-            votingModal.style.display = "none";
-          }
-        }
-
-        // voting modal functionality
-        if (btn2) {
-          btn2.onclick = function() {
-            votingModal.style.display = "block";
-          }
-        }
-
-        span.onclick = function() {
-          try {
-            votingModal.style.display = "none";
-          } catch {
-            modal.style.display = "none";
-          }
-          
-        }
-      })
-    </script>
-
-
+   
     <!-- common js imports -->
     <script type="text/javascript" src="static/js/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/mdb.min.js"></script>

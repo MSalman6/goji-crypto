@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TransactionContext } from "./contexts/TransactionContext";
 
 const DaoLight = () => {
+    const [sortedVotingData, setSortedVotingData] = useState([]);
+
     const {
         doVote,
+        getVotersData,
         handleVoteFormChange,
         showNotification
     } = useContext(TransactionContext);
@@ -19,6 +22,54 @@ const DaoLight = () => {
 
         showNotification(resp);
     }
+
+    const handleModal = () => {
+        var modal = document.getElementById("voteModal");
+        var btn = document.getElementById("do-vote");
+        var span = document.getElementsByClassName("close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    useEffect(() => {
+        const votersData = getVotersData().then(
+            votingData => {
+                var percentageData = [];
+                var total_balance = 0;
+                // calculate total balance
+                votingData.map(data => {
+                    total_balance+=parseInt(data.balance)
+                });
+                // calculate percentage
+                votingData.map((data, i) => {
+                    var temp_dict = {};
+                    temp_dict[i] = parseInt(data.balance)/total_balance*100
+                    percentageData.push(temp_dict);
+                })
+                var percentageSortedVotingData = [];
+                percentageData.map(data => {
+                    var current_dict = {};
+                    current_dict[data[Object.keys(data)[0]].toFixed(2)] = votingData[Object.keys(data)[0]];
+                    percentageSortedVotingData.push(current_dict);
+                }) 
+                setSortedVotingData(percentageSortedVotingData);
+            }
+        );
+
+        handleModal();
+    }, [])
 
     return ( 
         <div className="dao">
@@ -286,66 +337,26 @@ const DaoLight = () => {
                                                         <th scope="col">Votes</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="votingData">
                                                     <tr>
-                                                        <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                                        <td>0.2%</td>
-                                                        <td>293,427</td>
+                                                        <td>x08123091823098213as</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                                        <td>1%</td>
-                                                        <td>156,093</td>
+                                                        <td>x08123091823098213as</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8</td>
-                                                        <td>0.35%</td>
-                                                        <td>356,195</td>
+                                                        <td>x08123091823098213as</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                                        <td>0.2%</td>
-                                                        <td>293,427</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                                        <td>1%</td>
-                                                        <td>156,093</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8</td>
-                                                        <td>0.35%</td>
-                                                        <td>356,195</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                                        <td>0.2%</td>
-                                                        <td>293,427</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                                        <td>1%</td>
-                                                        <td>156,093</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8</td>
-                                                        <td>0.35%</td>
-                                                        <td>356,195</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                                        <td>0.2%</td>
-                                                        <td>293,427</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                                        <td>1%</td>
-                                                        <td>156,093</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8</td>
-                                                        <td>0.35%</td>
-                                                        <td>356,195</td>
+                                                        <td>x08123091823098213as</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -682,7 +693,7 @@ const DaoLight = () => {
                     <form onSubmit={handleVoteSubmit}>
                         <p className="hanu-locking-modal-heading">Gao Voting</p>
 
-                        <input className="modal-form-input" autoComplete="off" name="voteFor" max="1" min="0" type="number" placeholder="( 1 or 2 )" onChange={handleVoteFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="voteFor" max="1" min="0" type="number" placeholder="( 0 or 1 )" onChange={handleVoteFormChange} required/>
 
                         <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Vote</button>
                     </form>
@@ -1144,66 +1155,14 @@ const DaoLight = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                    <td>0.2%</td>
-                                    <td>293,427</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                    <td>1%</td>
-                                    <td>156,093</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8</td>
-                                    <td>0.35%</td>
-                                    <td>356,195</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td><span>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</span> <span className="ms-3 row-alert pink">3</span></td>
-                                    <td>0.2%</td>
-                                    <td>293,427</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>0x9ea11561bea5bb64abde6a833601296170f2828c <span className="ms-3 row-alert pink">2</span></td>
-                                    <td>1%</td>
-                                    <td>156,093</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8 <span className="ms-3 row-alert green">2</span></td>
-                                    <td>0.35%</td>
-                                    <td>356,195</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b</td>
-                                    <td>0.2%</td>
-                                    <td>293,427</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>0x9ea11561bea5bb64abde6a833601296170f2828c</td>
-                                    <td>1%</td>
-                                    <td>156,093</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>0x57fb6c359c8cf9caf0ec8beac0c8b944cb63d9b8 <span className="ms-3 row-alert pink">13</span></td>
-                                    <td>0.35%</td>
-                                    <td>356,195</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>0x8f6a193c8b3c949e1046f1547c3a3f0836944e4b <span className="ms-3 row-alert green">18</span></td>
-                                    <td>0.2%</td>
-                                    <td>293,427</td>
-                                </tr>
+                                {sortedVotingData.map((data, i) => (
+                                    <tr key={i}>
+                                        <td>{i+1}</td>
+                                        <td>{data[Object.keys(data)[0]]._address}</td>
+                                        <td>{Object.keys(data)[0]} %</td>
+                                        <td>1</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TransactionContext } from "./contexts/TransactionContext";
 import { Link } from "react-router-dom";
 
@@ -28,6 +28,30 @@ const LockingLight = () => {
             showNotification(lockingResp, 0);
         }
     }
+
+    const handleModal = () => {
+        var modal = document.getElementById("lockingModal");
+        var btn = document.getElementById("lock-hanu");
+        var span = document.getElementsByClassName("close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    useEffect(() => {
+        handleModal();
+    }, [])
 
     return ( 
         <div className="locking">

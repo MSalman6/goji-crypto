@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from "react";
 import {ethers} from 'ethers';
-import { hanuContractAddress, hanuContractABI, lockingContractAddress, lockingContractAbi, votingContractAddress, votingContractAbi } from "../utils/constants";
-
+import {
+    hanuContractAddress,
+    hanuContractABI,
+    lockingContractAddress,
+    lockingContractAbi,
+    votingContractAddress,
+    votingContractAbi,
+    stakingContractAbi,
+    stakingContractAddress
+} from "../utils/constants";
 
 export const TransactionContext = React.createContext();
 
 const { ethereum } = window;
+const provider = new ethers.providers.Web3Provider(ethereum);
+const signer = provider.getSigner();
 
 const getHanuContract = () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
     const hanuContract = new ethers.Contract(hanuContractAddress, hanuContractABI, signer);
-
     return hanuContract;
 }
 
 const getLockContract = () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
     const lockContract = new ethers.Contract(lockingContractAddress, lockingContractAbi, signer);
-
     return lockContract;
 }
 
 const getVotingContract = () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
     const votingContract = new ethers.Contract(votingContractAddress, votingContractAbi, signer);
-
     return votingContract;
+}
+
+const getStakingContract = () => {
+    const stakingContract = new ethers.Contract(stakingContractAddress, stakingContractAbi, signer);
+    return stakingContract;
 }
 
 export const TransactionProvider = ({children}) => {
@@ -46,9 +52,9 @@ export const TransactionProvider = ({children}) => {
     }, []);
 
 
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     //  Action Response Notification
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     const showNotification = (status) => {
         var x = document.getElementById("notification");
         
@@ -58,9 +64,9 @@ export const TransactionProvider = ({children}) => {
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
     }
 
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     //  Wallet Functionality
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     const checkIfWalletIsConnected = async () => {
         try {
             if (!ethereum) return alert("Please install MetaMask") // check if MetaMask is installed
@@ -83,7 +89,7 @@ export const TransactionProvider = ({children}) => {
         try {
             if (!ethereum) return alert("Please install MetaMask") // check if MetaMask is installed
 
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts'}).then(accounts => {
+            await ethereum.request({ method: 'eth_requestAccounts'}).then(accounts => {
                 if (accounts) {
                     setCurrentAccount(accounts[0]);
                     userHanuLockRecords(accounts[0]);
@@ -98,9 +104,9 @@ export const TransactionProvider = ({children}) => {
         }
     }
 
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     //  Locking Functionality
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     const handleHanuFormChange = (e, name) => {
         setHanuLockingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
     }
@@ -168,17 +174,17 @@ export const TransactionProvider = ({children}) => {
         .then(async (data) => {
             const lockedAmount = ethers.utils.formatEther(data.amount);
             const validity = data.validity._hex;
-            const address = data.addr;
-            const token = data.token;
-            const exists = data.doesExist;
+            // const address = data.addr;
+            // const token = data.token;
+            // const exists = data.doesExist;
             const insertedAt = data.insertedAt._hex;
-            const updatedAt = data.updatedAt._hex;
+            // const updatedAt = data.updatedAt._hex;
             
             var lockTimeSeconds = Number(parseInt(validity) - parseInt(insertedAt));
             if (lockTimeSeconds <= 0) {
                 var isAmountLocked = false;
             } else {
-                var isAmountLocked = true;
+                isAmountLocked = true;
             }
             var lockDays = Math.floor(lockTimeSeconds / (3600*24));
             var lockHours = Math.floor(lockTimeSeconds % (3600*24) / 3600);
@@ -189,11 +195,17 @@ export const TransactionProvider = ({children}) => {
     }
 
 
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     //  Voting Functionality
-    ///////////////////////////////////////////////
+    ////////////////////////////////////
     const handleVoteFormChange = (e, name) => {
         setVotingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const getVotersData = async () => {
+        const votingContract = getVotingContract();
+        const votersData = await votingContract.getVotersData()
+        return votersData;
     }
 
     const doVote = async () => {
@@ -216,6 +228,34 @@ export const TransactionProvider = ({children}) => {
         return resp;
     }
 
+
+    ////////////////////////////////////
+    //  Staking Functionality
+    ////////////////////////////////////
+    const stakeAmount = async (amount) => {
+        const stakingContract = getStakingContract();
+        await stakingContract.stake(amount, hanuContractAddress)
+        .then (
+            data => {console.log(data)}
+        ).catch(
+            err => {console.log(err)}
+        )
+    }
+
+    const initWithdraw = async () => {
+        const stakingContract = getStakingContract();
+        await stakingContract.initWithdraw(hanuContractAddress)
+        .then(data => {console.log(data)})
+        .catch(err => {console.log(err)})
+    }
+
+    const withdrawAmount = async (amount) => {
+        const stakingContract = getStakingContract();
+        await stakingContract.finlaizeWithdraw(amount, hanuContractAddress)
+        .then(data => {console.log(data)})
+        .catch(err => {console.log(err)})
+    }
+
     return (
         <TransactionContext.Provider value={{
                 showNotification,
@@ -232,6 +272,7 @@ export const TransactionProvider = ({children}) => {
 
                 // vote context
                 doVote,
+                getVotersData,
                 votingFormData,
                 handleVoteFormChange
             }}>
