@@ -1,36 +1,5 @@
 [
     {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_tokenAddr",
-                "type": "address"
-            },
-            {
-                "name": "_stakers",
-                "type": "address[]"
-            },
-            {
-                "name": "_amounts",
-                "type": "uint256[]"
-            },
-            {
-                "name": "_dest",
-                "type": "address"
-            }
-        ],
-        "name": "releaseStake",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "constant": false,
         "inputs": [
             {
@@ -87,29 +56,6 @@
         "type": "function"
     },
     {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_amount",
-                "type": "uint256"
-            },
-            {
-                "name": "_tokenAddr",
-                "type": "address"
-            }
-        ],
-        "name": "finalizeWithdraw",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
         "constant": true,
         "inputs": [
             {
@@ -126,25 +72,6 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_tokenAddr",
-                "type": "address"
-            }
-        ],
-        "name": "initWithdraw",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -194,28 +121,32 @@
         "type": "function"
     },
     {
-        "constant": true,
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
+        "constant": false,
+        "inputs": [
             {
-                "name": "",
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "name": "_tokenAddr",
                 "type": "address"
             }
         ],
+        "name": "unstake",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
         "payable": false,
-        "stateMutability": "view",
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "Mediator",
+        "inputs": [],
+        "name": "owner",
         "outputs": [
             {
                 "name": "",
@@ -279,14 +210,6 @@
         "outputs": [
             {
                 "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "name": "requested",
-                "type": "bool"
-            },
-            {
-                "name": "releaseDate",
                 "type": "uint256"
             }
         ],

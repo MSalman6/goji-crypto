@@ -18,4 +18,10 @@ export const liquidityContractAbi = liquidityAbi;
 export const liquidityContractAddress = '0xBf314EAEcfEC16D6B2f0093CfE44a5cD387045C0';
 
 export const stakingContractAbi = stakingAbi;
-export const stakingContractAddress = '0x15E2596e6AF500382b1F1420305Aa039FB0C1Be0';
+export const stakingContractAddress = '0xC93dc3BC805DA439116C9F3eAD6bCe290D972AD7';
+
+export const miaContractAbi = '';
+export const miaContractAddress = '';
+
+export const gabaContractAbi = '';
+export const gabaContractAddress = '';

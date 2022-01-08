@@ -10,7 +10,11 @@ import {
     votingContractAddress,
     votingContractAbi,
     stakingContractAbi,
-    stakingContractAddress
+    stakingContractAddress,
+    miaContractAbi,
+    miaContractAddress,
+    gabaContractAbi,
+    gabaContractAddress
 } from "../utils/constants";
 
 export const TransactionContext = React.createContext();
@@ -60,6 +64,20 @@ export const TransactionProvider = ({children}) => {
 
     // staking states
     const [hanuStakeFormData, setHanuStakeFormData] = useState({ amount: 0 });
+    const [hanuUnstakeFormData, setHanuUnstakeFormData] = useState({ amount: 0 });
+    const [hanuStakedAmountData, setHanuStakedAmountData] = useState({ stakedAmount: 0 });
+
+    const [gojiStakeFormData, setGojiStakeFormData] = useState({ amount: 0 });
+    const [gojiUnstakeFormData, setGojiUnstakeFormData] = useState({ amount: 0 });
+    const [gojiStakedAmountData, setGojiStakedAmountData] = useState({ stakedAmount: 0 });
+
+    const [miaStakeFormData, setMiaStakeFormData] = useState({ amount: 0 });
+    const [miaUnstakeFormData, setMiaUnstakeFormData] = useState({ amount: 0 });
+    const [miaStakedAmountData, setMiaStakedAmountData] = useState({ stakedAmount: 0 });
+
+    const [gabaStakeFormData, setGabaStakeFormData] = useState({ amount: 0 });
+    const [gabaUnstakeFormData, setGabaUnstakeFormData] = useState({ amount: 0 });
+    const [gabaStakedAmountData, setGabaStakedAmountData] = useState({ stakedAmount: 0 });
 
     useEffect(() => {
         checkIfWalletIsConnected();
@@ -98,6 +116,7 @@ export const TransactionProvider = ({children}) => {
                 if (accounts.length) {
                     setCurrentAccount(accounts[0]);
                     userHanuLockRecords(accounts[0]);
+                    getStakedValue(accounts[0])
                 } else {
                     await connectWallet();
                 }
@@ -155,6 +174,9 @@ export const TransactionProvider = ({children}) => {
             if (val <= parseInt(amountInWei)) {
                 const amount = ethers.utils.parseEther("1000000000")._hex;
                 await hanuContract.approve(lockingContractAddress, amount);
+                showNotification("Hanu approved.")
+                // wait for 5 seconds after approve
+                await new Promise(resolve => setTimeout(resolve, 5000));
             }
 
             // check hanu balance
@@ -248,6 +270,9 @@ export const TransactionProvider = ({children}) => {
             if (val <= parseInt(amountInWei)) {
                 const amount = ethers.utils.parseEther("1000000000")._hex;
                 await liquidityContract.approve(lockingContractAddress, amount);
+                showNotification("Hanu approved.")
+                // wait for 5 seconds after approve
+                await new Promise(resolve => setTimeout(resolve, 5000));
             }
 
             // check liquidity balance
@@ -322,6 +347,7 @@ export const TransactionProvider = ({children}) => {
         })
     }
 
+
     ////////////////////////////////////
     //  Voting Functionality
     ////////////////////////////////////
@@ -367,20 +393,64 @@ export const TransactionProvider = ({children}) => {
     const handleHanuStakeFormChange = (e, name) => {
         setHanuStakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
     }
+    const handleHanuUnstakeFormChange = (e, name) => {
+        setHanuUnstakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
 
-    const stakeHanuAmount = async () => {
+    const handleGojiStakeFormChange = (e, name) => {
+        setGojiStakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleGojiUnstakeFormChange = (e, name) => {
+        setGojiUnstakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const handleMiaStakeFormChange = (e, name) => {
+        setMiaStakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleMiaUnstakeFormChange = (e, name) => {
+        setMiaUnstakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const handleGabaStakeFormChange = (e, name) => {
+        setGabaStakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleGabaUnstakeFormChange = (e, name) => {
+        setGabaUnstakeFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const stakeToken = async (tokenName) => {
+        var amount = 0;
+        var response = "";
+        var stakeToken = "";
+        var tokenContract = "";
+
         if (!currentAccount) {
             connectWallet() // makesure site has connection to metamask
             return "Please connect MetaMask before performing any actions."
         }
-        
-        var response = "";
-        var amount = hanuStakeFormData.amount;
+
+        if (tokenName === 'hanu'){
+            stakeToken = hanuContractAddress;
+            tokenContract = getHanuContract();
+            amount = hanuStakeFormData.amount;
+        } else if (tokenName === 'goji') {
+            stakeToken = liquidityContractAddress;
+            tokenContract = getLiquidityContract();
+            amount = gojiStakeFormData.amount;
+        } else if (tokenName === 'mia') {
+            stakeToken = '';
+            tokenContract = '';
+            amount = miaStakeFormData.amount;
+        } else if (tokenName === 'gaba') {
+            stakeToken = '';
+            tokenContract = '';
+            amount = gabaStakeFormData.amount;
+        }
+
         const stakingContract = getStakingContract();
 
-        // check currently approved value
-        const hanuContract = getHanuContract();
-        await hanuContract.allowance(currentAccount, lockingContractAddress)
+        // check currently approved token value
+        await tokenContract.allowance(currentAccount, stakingContractAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
             const amountInWei = ethers.utils.parseEther(amount)._hex;
@@ -388,22 +458,23 @@ export const TransactionProvider = ({children}) => {
             // call approve method if amount entered is greater than previously approved value
             if (val <= parseInt(amountInWei)) {
                 const amount = ethers.utils.parseEther("1000000000")._hex;
-                await hanuContract.approve(lockingContractAddress, amount);
+                await tokenContract.approve(stakingContractAddress, amount);
+                showNotification(`${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)} approved.`)
+                // wait for 5 seconds after approve
+                await new Promise(resolve => setTimeout(resolve, 5000));
             }
-
-            // check if user has enough hanu balance
-            const hanuBalance = await hanuContract.balanceOf(currentAccount);
-            if (hanuBalance >= amountInWei) {
-                await stakingContract.stake(amountInWei, hanuContractAddress)
+            // check if user has enough token balance
+            const tokenBalance = await tokenContract.balanceOf(currentAccount);
+            if (tokenBalance >= amountInWei) {
+                await stakingContract.stake(amountInWei, stakeToken)
                 .then( data => {
-                    console.log(data)
-                    response = `Successfully Staked ${amount} Hanu.`
+                    response = `Successfully Staked ${amount} ${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)}.`
                 })
                 .catch(err => {
                     response = err.data.message
                 });
             } else {
-                response = "You don't have enough hanu balance";
+                response = `You don't have enough ${tokenName} balance`;
             }
         })
         .catch(err => {
@@ -419,23 +490,82 @@ export const TransactionProvider = ({children}) => {
         return response
     }
 
-    const initWithdraw = async () => {
+    const unStakeToken = async (tokenName) => {
+        var resp = "";
+        var amount = "";
+        var unstakeToken = "";
+        var stakedAmount = "";
         const stakingContract = getStakingContract();
-        await stakingContract.initWithdraw(hanuContractAddress)
-        .then(data => {console.log(data)})
-        .catch(err => {console.log(err)})
+
+        if (tokenName === 'hanu') {
+            unstakeToken = hanuContractAddress;
+            stakedAmount = hanuUnstakeFormData.amount;
+            amount = ethers.utils.parseEther(stakedAmount);
+        } else if (tokenName === 'goji') {
+            unstakeToken = liquidityContractAddress;
+            stakedAmount = gojiUnstakeFormData.amount;
+            amount = ethers.utils.parseEther(stakedAmount);
+        } else if (tokenName === 'mia') {
+            unstakeToken = miaContractAddress;
+            stakedAmount = miaUnstakeFormData.amount;
+            amount = ethers.utils.parseEther(stakedAmount);
+        } else if (tokenName === 'gaba') {
+            unstakeToken = gabaContractAddress;
+            stakedAmount = gabaUnstakeFormData.amount;
+            amount = ethers.utils.parseEther(stakedAmount);
+        }
+
+        await stakingContract.unstake(amount, unstakeToken)
+        .then(data => {
+            console.log(data);
+            resp = `Successfully unstaked ${stakedAmount} ${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)}.`
+        }).catch( err => {
+            if (err.data){
+                resp = err.data.message;
+            } else if (err.message) { 
+                resp = err.message;
+            } else {
+                console.log(err);
+                resp = "Something went wrong";
+            }
+        })
+        return resp
     }
 
-    const withdrawAmount = async (amount) => {
+    const getStakedValue = async (account) => {
         const stakingContract = getStakingContract();
-        await stakingContract.finlaizeWithdraw(amount, hanuContractAddress)
-        .then(data => {console.log(data)})
+        // get hanu current staked value
+        await stakingContract.StakeMap(hanuContractAddress, account)
+        .then(data => {
+            var stakedAmount = ethers.utils.formatEther(data);
+            setHanuStakedAmountData({ stakedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get mia current staked value
+        await stakingContract.StakeMap(miaContractAddress, account)
+        .then(data => {
+            var stakedAmount = ethers.utils.formatEther(data);
+            setMiaStakedAmountData({ stakedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get goji current staked value
+        await stakingContract.StakeMap(liquidityContractAddress, account)
+        .then(data => {
+            var stakedAmount = ethers.utils.formatEther(data);
+            setGojiStakedAmountData({ stakedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get gaba current staked value
+        await stakingContract.StakeMap(gabaContractAddress, account)
+        .then(data => {
+            var stakedAmount = ethers.utils.formatEther(data);
+            setGabaStakedAmountData({ stakedAmount });
+        })
         .catch(err => {console.log(err)})
     }
 
     return (
         <TransactionContext.Provider value={{
-
                 // general context
                 connectWallet,
                 currentAccount,
@@ -462,8 +592,24 @@ export const TransactionProvider = ({children}) => {
                 handleVoteFormChange,
 
                 // staking context
-                stakeHanuAmount,
-                handleHanuStakeFormChange
+                stakeToken,
+                unStakeToken,
+                // staking hanu context
+                hanuStakedAmountData,
+                handleHanuStakeFormChange,
+                handleHanuUnstakeFormChange,
+                // staking goji context
+                gojiStakedAmountData,
+                handleGojiStakeFormChange,
+                handleGojiUnstakeFormChange,
+                // staking mia context
+                miaStakedAmountData,
+                handleMiaStakeFormChange,
+                handleMiaUnstakeFormChange,
+                // staking gaba context
+                gabaStakedAmountData,
+                handleGabaStakeFormChange,
+                handleGabaUnstakeFormChange,
             }}>
             {children}
         </TransactionContext.Provider>

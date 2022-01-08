@@ -86,6 +86,43 @@
   cursor: pointer;
 }
 
+.hanuStake-close,
+.miaStake-close,
+.gojiStake-close,
+.gabaStake-close {
+  color: black;
+  margin-left: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.hanuStake-close:hover, .hanuStake-close:focus,
+.gojiStake-close:hover, .gojiStake-close:focus,
+.miaStake-close:hover, .miaStake-close:focus,
+.gabaStake-close:hover, .gabaStake-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hanuUnstake-close,
+.miaUnstake-close,
+.gojiUnstake-close,
+.gabaUnstake-close {
+  color: black;
+  margin-left: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.hanuUnstake-close:hover, .hanuUnstake-close:focus,
+.gojiUnstake-close:hover, .gojiUnstake-close:focus,
+.miaUnstake-close:hover, .miaUnstake-close:focus,
+.gabaUnstake-close:hover, .gabaUnstake-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 .hanu-locking-modal-heading {
   margin-top: 20px;
