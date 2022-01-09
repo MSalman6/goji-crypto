@@ -565,7 +565,9 @@ const DaoLight = () => {
                     </div>
                 </div>
             </div>
-            <button className="voting-submit btn theme-btn m-0 top-btn" id="do-vote">Vote</button>
+            <div className="vote-btn-container container top-add">
+                <button className="voting-submit btn theme-btn" id="do-vote">Vote</button>
+            </div>
             <div id="voteModal" className="modal">
 
                 {/* vote modal */}

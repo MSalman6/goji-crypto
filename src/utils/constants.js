@@ -3,6 +3,7 @@ import votingAbi from './votingAbi.json';
 import hanuLockAbi from './hanuLockAbi.json';
 import stakingAbi from './stakingAbi.json';
 import liquidityAbi from './liquidityAbi.json'
+import farmingAbi from './farmingAbi.json'
 
 
 export const votingContractAbi = votingAbi;
@@ -25,3 +26,6 @@ export const miaContractAddress = '';
 
 export const gabaContractAbi = '';
 export const gabaContractAddress = '';
+
+export const farmingContractAddress = '0x6FC901708622F5f57900521fA39FDa49153d9bf3';
+export const farmingContractAbi = farmingAbi;

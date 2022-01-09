@@ -14,13 +14,16 @@ import {
     miaContractAbi,
     miaContractAddress,
     gabaContractAbi,
-    gabaContractAddress
+    gabaContractAddress,
+    farmingContractAddress,
+    farmingContractAbi
 } from "../utils/constants";
 
 export const TransactionContext = React.createContext();
 
 const { ethereum } = window;
 
+// get contracts methods
 const getHanuContract = () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
@@ -56,6 +59,14 @@ const getStakingContract = () => {
     return stakingContract;
 }
 
+const getFarmingContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const farmingContract = new ethers.Contract(farmingContractAddress, farmingContractAbi, signer);
+    return farmingContract;
+}
+
+
 export const TransactionProvider = ({children}) => {
     const [currentAccount, setCurrentAccount] = useState('');
 
@@ -86,6 +97,23 @@ export const TransactionProvider = ({children}) => {
     const [gabaStakeFormData, setGabaStakeFormData] = useState({ amount: 0 });
     const [gabaUnstakeFormData, setGabaUnstakeFormData] = useState({ amount: 0 });
     const [gabaStakedAmountData, setGabaStakedAmountData] = useState({ stakedAmount: 0 });
+
+    // farming states
+    const [hanuHarvestFormData, setHanuHarvestFormData] = useState({ amount: 0 });
+    const [hanuUnharvestFormData, setHanuUnharvestFormData] = useState({ amount: 0 });
+    const [hanuHarvestedAmountData, setHanuHarvestedAmountData] = useState({ harvestedAmount: 0 });
+
+    const [gojiHarvestFormData, setGojiHarvestFormData] = useState({ amount: 0 });
+    const [gojiUnharvestFormData, setGojiUnharvestFormData] = useState({ amount: 0 });
+    const [gojiHarvestedAmountData, setGojiHarvestedAmountData] = useState({ harvestedAmount: 0 });
+
+    const [miaHarvestFormData, setMiaHarvestFormData] = useState({ amount: 0 });
+    const [miaUnharvestFormData, setMiaUnharvestFormData] = useState({ amount: 0 });
+    const [miaHarvestedAmountData, setMiaHarvestedAmountData] = useState({ harvestedAmount: 0 });
+
+    const [gabaHarvestFormData, setGabaHarvestFormData] = useState({ amount: 0 });
+    const [gabaUnharvestFormData, setGabaUnharvestFormData] = useState({ amount: 0 });
+    const [gabaHarvestedAmountData, setGabaHarvestedAmountData] = useState({ harvestedAmount: 0 });
 
     useEffect(() => {
         checkIfWalletIsConnected();
@@ -124,7 +152,8 @@ export const TransactionProvider = ({children}) => {
                 if (accounts.length) {
                     setCurrentAccount(accounts[0]);
                     userHanuLockRecords(accounts[0]);
-                    getStakedValue(accounts[0])
+                    getStakedValue(accounts[0]);
+                    getHarvestedValue(accounts[0]);
                 } else {
                     await connectWallet();
                 }
@@ -135,7 +164,7 @@ export const TransactionProvider = ({children}) => {
         } catch (error) {
             console.log(error);
 
-            throw new Error('No Ethereum object found.');
+            showNotification('No Ethereum object found. Install MetaMask!');
         }
     }
 
@@ -156,7 +185,7 @@ export const TransactionProvider = ({children}) => {
         } catch (error) {
             console.log(error);
 
-            throw new Error('No Ethereum object found.')
+            showNotification('No Ethereum object found. Install MetaMask!')
         }
         return currentAccount;
     }
@@ -572,6 +601,183 @@ export const TransactionProvider = ({children}) => {
         .catch(err => {console.log(err)})
     }
 
+    ////////////////////////////////////
+    //  Farming Functionality
+    ////////////////////////////////////
+    const handleHanuHarvestFormChange = (e, name) => {
+        setHanuHarvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleHanuUnharvestFormChange = (e, name) => {
+        setHanuUnharvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const handleGojiHarvestFormChange = (e, name) => {
+        setGojiHarvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleGojiUnharvestFormChange = (e, name) => {
+        setGojiUnharvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const handleMiaHarvestFormChange = (e, name) => {
+        setMiaHarvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleMiaUnharvestFormChange = (e, name) => {
+        setMiaUnharvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const handleGabaHarvestFormChange = (e, name) => {
+        setGabaHarvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+    const handleGabaUnharvestFormChange = (e, name) => {
+        setGabaUnharvestFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const harvestToken = async (tokenName) => {
+        var amount = 0;
+        var response = "";
+        var harvestTokenAddress = "";
+        var tokenContract = "";
+
+        if (!currentAccount) {
+            connectWallet() // makesure site has connection to metamask stake
+            return "Please connect MetaMask before performing any actions."
+        }
+
+        if (tokenName === 'hanu') {
+            harvestTokenAddress = hanuContractAddress;
+            tokenContract = getHanuContract();
+            amount = hanuHarvestFormData.amount;
+        } else if (tokenName === 'goji') {
+            harvestTokenAddress = liquidityContractAddress;
+            tokenContract = getLiquidityContract();
+            amount = gojiHarvestFormData.amount;
+        } else if (tokenName === 'mia') {
+            harvestTokenAddress = '';
+            tokenContract = '';
+            amount = miaHarvestFormData.amount;
+        } else if (tokenName === 'gaba') {
+            harvestTokenAddress = '';
+            tokenContract = '';
+            amount = gabaHarvestFormData.amount;
+        }
+
+        const farmingContract = getFarmingContract();
+
+        // check currently approved token value
+        await tokenContract.allowance(currentAccount, farmingContractAddress)
+        .then(async (data) => {
+            const val = parseInt(data._hex);
+            const amountInWei = ethers.utils.parseEther(amount)._hex;
+
+            // call approve method if amount entered is greater than previously approved value
+            if (val <= parseInt(amountInWei)) {
+                const amount = ethers.utils.parseEther("1000000000")._hex;
+                await tokenContract.approve(farmingContractAddress, amount);
+                showNotification(`${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)} approved.`)
+                // wait for 5 seconds after approve
+                await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+            // check if user has enough token balance
+            const tokenBalance = await tokenContract.balanceOf(currentAccount);
+            if (tokenBalance >= amountInWei) {
+                await farmingContract.harvest(amountInWei, harvestTokenAddress)
+                .then( data => {
+                    response = `Successfully Harvested ${amount} ${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)}.`
+                })
+                .catch(err => {
+                    response = err.data.message
+                });
+            } else {
+                response = `You don't have enough ${tokenName} balance`;
+            }
+        })
+        .catch(err => {
+            if (err.data){
+                response = err.data.message;
+            } else if (err.message) { 
+                response = err.message;
+            } else {
+                console.log(err);
+                response = "Something went wrong";
+            }
+        });
+        return response
+    }
+
+    const unharvestToken = async (tokenName) => {
+        var resp = "";
+        var amount = "";
+        var unHarvestTokenAddress = "";
+        var unHarvestAmount = "";
+        const farmingContract = getFarmingContract();
+
+        if (tokenName === 'hanu') {
+            unHarvestTokenAddress = hanuContractAddress;
+            unHarvestAmount = hanuUnharvestFormData.amount;
+            amount = ethers.utils.parseEther(unHarvestAmount);
+        } else if (tokenName === 'goji') {
+            unHarvestTokenAddress = liquidityContractAddress;
+            unHarvestAmount = gojiUnharvestFormData.amount;
+            amount = ethers.utils.parseEther(unHarvestAmount);
+        } else if (tokenName === 'mia') {
+            unHarvestTokenAddress = miaContractAddress;
+            unHarvestAmount = miaUnharvestFormData.amount;
+            amount = ethers.utils.parseEther(unHarvestAmount);
+        } else if (tokenName === 'gaba') {
+            unHarvestTokenAddress = gabaContractAddress;
+            unHarvestAmount = gabaUnharvestFormData.amount;
+            amount = ethers.utils.parseEther(unHarvestAmount);
+        }
+
+        await farmingContract.Unharvest(amount, unHarvestTokenAddress)
+        .then(data => {
+            console.log(data);
+            resp = `Successfully Unharvested ${unHarvestAmount} ${tokenName.charAt(0).toUpperCase() + tokenName.slice(1)}.`
+        }).catch( err => {
+            if (err.data){
+                resp = err.data.message;
+            } else if (err.message) { 
+                resp = err.message;
+            } else {
+                console.log(err);
+                resp = "Something went wrong";
+            }
+        })
+        return resp
+    }
+
+    const getHarvestedValue = async (account) => {
+        const farmingContract = getFarmingContract();
+        // get hanu current harvested value
+        await farmingContract.FarmMap(hanuContractAddress, account)
+        .then(data => {
+            var harvestedAmount = ethers.utils.formatEther(data);
+            setHanuHarvestedAmountData({ harvestedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get mia current harvested value
+        await farmingContract.FarmMap(miaContractAddress, account)
+        .then(data => {
+            var harvestedAmount = ethers.utils.formatEther(data);
+            setMiaHarvestedAmountData({ harvestedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get goji current harvested value
+        await farmingContract.FarmMap(liquidityContractAddress, account)
+        .then(data => {
+            var harvestedAmount = ethers.utils.formatEther(data);
+            setGojiHarvestedAmountData({ harvestedAmount });
+        })
+        .catch(err => {console.log(err)})
+        // get gaba current harvested value
+        await farmingContract.FarmMap(gabaContractAddress, account)
+        .then(data => {
+            var harvestedAmount = ethers.utils.formatEther(data);
+            setGabaHarvestedAmountData({ harvestedAmount });
+        })
+        .catch(err => {console.log(err)})
+    }
+
     return (
         <TransactionContext.Provider value={{
                 // general context
@@ -579,27 +785,27 @@ export const TransactionProvider = ({children}) => {
                 currentAccount,
                 showNotification,
 
-                // hanu context
+                // Hanu lock context
                 lockHanuAmount,
                 hanuLockingFormData,
                 setHanuLockingFormData,
                 handleHanuFormChange,
                 hanuLockTime,
 
-                // liquidity context
+                // Liquidity lock context
                 lockLiquidityAmount,
                 liquidityLockingFormData,
                 setLiquidityLockingFormData,
                 handleLiquidityFormChange,
                 liquidityLockTime,
                 
-                // vote context
+                // Voting context
                 doVote,
                 getVotersData,
                 votingFormData,
                 handleVoteFormChange,
 
-                // staking context
+                // Staking context
                 stakeToken,
                 unStakeToken,
                 // staking hanu context
@@ -618,6 +824,26 @@ export const TransactionProvider = ({children}) => {
                 gabaStakedAmountData,
                 handleGabaStakeFormChange,
                 handleGabaUnstakeFormChange,
+
+                // Farming context
+                harvestToken,
+                unharvestToken,
+                // Farming hanu context
+                hanuHarvestedAmountData,
+                handleHanuHarvestFormChange,
+                handleHanuUnharvestFormChange,
+                // Farming goji context
+                gojiHarvestedAmountData,
+                handleGojiHarvestFormChange,
+                handleGojiUnharvestFormChange,
+                // Farming mia context
+                miaHarvestedAmountData,
+                handleMiaHarvestFormChange,
+                handleMiaUnharvestFormChange,
+                // Farming gaba context
+                gabaHarvestedAmountData,
+                handleGabaHarvestFormChange,
+                handleGabaUnharvestFormChange,
             }}>
             {children}
         </TransactionContext.Provider>

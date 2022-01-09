@@ -86,6 +86,7 @@
   cursor: pointer;
 }
 
+/* staking styling */
 .hanuStake-close,
 .miaStake-close,
 .gojiStake-close,
@@ -124,6 +125,46 @@
   cursor: pointer;
 }
 
+/* farming styling */
+.hanuHarvest-close,
+.miaUnharvest-close,
+.gojiHarvest-close,
+.gabaHarvest-close {
+  color: black;
+  margin-left: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.hanuHarvest-close:hover, .hanuHarvest-close:focus,
+.gojiHarvest-close:hover, .gojiHarvest-close:focus,
+.miaUnharvest-close:hover, .miaUnharvest-close:focus,
+.gabaHarvest-close:hover, .gabaHarvest-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hanuUnharvest-close,
+.miaUnharvest-close,
+.gojiUnharvest-close,
+.gabaUnharvest-close {
+  color: black;
+  margin-left: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.hanuUnharvest-close:hover, .hanuUnharvest-close:focus,
+.gojiUnharvest-close:hover, .gojiUnharvest-close:focus,
+.miaUnharvest-close:hover, .miaUnharvest-close:focus,
+.gabaUnharvest-close:hover, .gabaUnharvest-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 .hanu-locking-modal-heading {
   margin-top: 20px;
   font-weight: bold;
@@ -143,9 +184,16 @@
   margin-top: 5px !important;
 }
 
+.vote-btn-container {
+  width: 100vw;
+  display: block;
+  height: 44px;
+}
+
 .voting-submit {
-  margin-left: 90% !important;
   margin-top: 5px !important;
+  float: right;
+  margin-right: 12px;
 }
 
 /* notification css */
@@ -193,4 +241,13 @@
 @keyframes fadeout {
   from {top: 30px; opacity: 1;}
   to {top: 0; opacity: 0;}
+}
+
+/* farming page style */
+.harvest-btn {
+  margin-left: 5px;
+}
+
+.unharvest-btn {
+  margin-right: 5px;
 }

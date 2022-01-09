@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeTheme, changePage } from "./redux/ducks/navReducer";
-import React, { useContext } from "react";
 import { TransactionContext } from "./contexts/TransactionContext";
 
 

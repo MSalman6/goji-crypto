@@ -1,6 +1,340 @@
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
 
 const FarmingLight = () => {
+    const {
+        // general context
+        showNotification,
+
+        // Farming context
+        harvestToken,
+        unharvestToken,
+        // Farming hanu context
+        hanuHarvestedAmountData,
+        handleHanuHarvestFormChange,
+        handleHanuUnharvestFormChange,
+        // Farming goji context
+        gojiHarvestedAmountData,
+        handleGojiHarvestFormChange,
+        handleGojiUnharvestFormChange,
+        // Farming mia context
+        miaHarvestedAmountData,
+        handleMiaHarvestFormChange,
+        handleMiaUnharvestFormChange,
+        // Farming gaba context
+        gabaHarvestedAmountData,
+        handleGabaHarvestFormChange,
+        handleGabaUnharvestFormChange,
+    } = useContext(TransactionContext);
+
+    const closeModalOnWindowClick = () => {
+        var hanuBtn = document.getElementById("harvest-hanu");
+        var hanuUnharvestBtn = document.getElementById("unharvest-hanu");
+        var hanuHarvestModal = document.getElementById("hanuHarvestModal");
+        var hanuUnharvestModal = document.getElementById("hanuUnharvestModal");
+
+        var gojiBtn = document.getElementById("harvest-goji");
+        var gojiUnharvestBtn = document.getElementById("unharvest-goji");
+        var gojiHarvestModal = document.getElementById("gojiHarvestModal");
+        var gojiUnharvestModal = document.getElementById("gojiUnharvestModal");
+
+        var miaBtn = document.getElementById("harvest-mia");
+        var miaUnharvestBtn = document.getElementById("unharvest-mia");
+        var miaHarvestModal = document.getElementById("miaHarvestModal");
+        var miaUnharvestModal = document.getElementById("miaUnharvestModal");
+
+        var gabaBtn = document.getElementById("harvest-gaba");
+        var gabaUnharvestBtn = document.getElementById("unharvest-gaba");
+        var gabaHarvestModal = document.getElementById("gabaHarvestModal");
+        var gabaUnharvestModal = document.getElementById("gabaUnharvestModal");
+
+        window.onclick = function(event) {
+            if (
+                event.target !== hanuBtn & event.target.parentNode.parentNode.parentNode !== hanuHarvestModal &
+                event.target !== hanuUnharvestBtn & event.target.parentNode.parentNode.parentNode !== hanuUnharvestModal &
+
+                event.target !== gojiBtn & event.target.parentNode.parentNode.parentNode !== gojiHarvestModal &
+                event.target !== gojiUnharvestBtn & event.target.parentNode.parentNode.parentNode !== gojiUnharvestModal &
+
+                event.target !== miaBtn & event.target.parentNode.parentNode.parentNode !== miaHarvestModal &
+                event.target !== miaUnharvestBtn & event.target.parentNode.parentNode.parentNode !== miaUnharvestModal &
+
+                event.target !== gabaBtn & event.target.parentNode.parentNode.parentNode !== gabaHarvestModal &
+                event.target !== gabaUnharvestBtn & event.target.parentNode.parentNode.parentNode !== gabaUnharvestModal
+                ) 
+            {
+                hanuHarvestModal.style.display = "none";
+                hanuUnharvestModal.style.display = "none";
+
+                gojiHarvestModal.style.display = "none";
+                gojiHarvestModal.style.display = "none";
+
+                miaHarvestModal.style.display = "none";
+                miaHarvestModal.style.display = "none";
+
+                gabaHarvestModal.style.display = "none";
+                gabaHarvestModal.style.display = "none";
+            }
+        }
+    }
+
+    useEffect(() => {
+        handleHanuHarvestModal();
+        handleHanuUnHarvestModal();
+
+        handleGojiHarvestModal();
+        handlegojiUnharvestModal();
+
+        handleMiaHarvestModal();
+        handleMiaUnHarvestModal();
+
+        handleGabaHarvestModal();
+        handleGabaUnHarvestModal();
+        
+        closeModalOnWindowClick();
+    }, [])
+
+    ///////////////////////////////////////
+    // hanu harvest and unharvest functionality
+    ///////////////////////////////////////
+    const handleHanuHarvestSubmit = async (e) => {
+        e.preventDefault();
+        
+        const resp = await harvestToken('hanu');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("hanuHarvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleHanuHarvestModal = () => {
+        var modal = document.getElementById("hanuHarvestModal");
+        var btn = document.getElementById("harvest-hanu");
+        var span = document.getElementsByClassName("hanuHarvest-close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    const handleHanuUnharvestSubmit = async (e) => {
+        e.preventDefault();
+        const resp = await unharvestToken('hanu');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("hanuUnharvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleHanuUnHarvestModal = () => {
+        var modal = document.getElementById("hanuUnharvestModal");
+        var btn = document.getElementById("unharvest-hanu");
+        var span = document.getElementsByClassName("hanuUnharvest-close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    ///////////////////////////////////////
+    // goji harvest and unharvest functionality
+    ///////////////////////////////////////
+    const handleGojiHarvestSubmit = async (e) => {
+        e.preventDefault();
+        
+        const resp = await harvestToken('goji');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("gojiHarvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleGojiHarvestModal = () => {
+        var modal = document.getElementById("gojiHarvestModal");
+        var btn = document.getElementById("harvest-goji");
+        var span = document.getElementsByClassName("gojiHarvest-close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    const handleGojiUnharvestSubmit = async (e) => {
+        e.preventDefault();
+        const resp = await unharvestToken('goji');
+
+        // hide unharvest modal after locking
+        var modal = document.getElementById("gojiUnharvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handlegojiUnharvestModal = () => {
+        var modal = document.getElementById("gojiUnharvestModal");
+        var btn = document.getElementById("unharvest-goji");
+        var span = document.getElementsByClassName("gojiUnharvest-close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    ///////////////////////////////////////
+    // mia harvest and unharvest functionality
+    ///////////////////////////////////////
+    const handleMiaHarvestSubmit = async (e) => {
+        e.preventDefault();
+        
+        const resp = await harvestToken('mia');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("miaHarvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleMiaHarvestModal = () => {
+        var modal = document.getElementById("miaHarvestModal");
+        var btn = document.getElementById("harvest-mia");
+        var span = document.getElementsByClassName("miaHarvest-close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    const handleMiaUnharvestSubmit = async (e) => {
+        e.preventDefault();
+        const resp = await unharvestToken('mia');
+
+        // hide unharvest modal after locking
+        var modal = document.getElementById("miaUnharvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleMiaUnHarvestModal = () => {
+        var modal = document.getElementById("miaUnharvestModal");
+        var btn = document.getElementById("unharvest-mia");
+        var span = document.getElementsByClassName("miaUnharvest-close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    ///////////////////////////////////////
+    // gaba harvest and unharvest functionality
+    ///////////////////////////////////////
+    const handleGabaHarvestSubmit = async (e) => {
+        e.preventDefault();
+        
+        const resp = await harvestToken('gaba');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("gabaHarvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleGabaHarvestModal = () => {
+        var modal = document.getElementById("gabaHarvestModal");
+        var btn = document.getElementById("harvest-gaba");
+        var span = document.getElementsByClassName("gabaHarvest-close")[0];
+
+        window.onclick = function(event) {
+            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    const handleGabaUnharvestSubmit = async (e) => {
+        e.preventDefault();
+        const resp = await unharvestToken('gaba');
+
+        // hide harvest modal after locking
+        var modal = document.getElementById("gabaUnharvestModal");
+        modal.style.display = "none";
+
+        showNotification(resp);
+    }
+
+    const handleGabaUnHarvestModal = () => {
+        var modal = document.getElementById("gabaUnharvestModal");
+        var btn = document.getElementById("unharvest-gaba");
+        var span = document.getElementsByClassName("gabaUnharvest-close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+
     return ( 
         <div className="farming">
             <link rel="stylesheet" href="static/css/style-light.css" />
@@ -10,6 +344,134 @@ const FarmingLight = () => {
             <img alt="" className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
             <img alt="" className="position-absolute sg-2 mobile" src="static/img/sg-2-mobile.svg" />
             <img alt="" className="position-absolute sg-2" src="static/img/green-shadow.svg" />
+
+            {/* hanu harvest and unharvest modals */}
+            <div id="hanuHarvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="hanuHarvest-close">&times;</span>
+                    <form onSubmit={handleHanuHarvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Hanu Harvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Harvest (Hanu)" onChange={handleHanuHarvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Harvest</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div id="hanuUnharvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="hanuUnharvest-close">&times;</span>
+                    <form onSubmit={handleHanuUnharvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Hanu Unharvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Unharvest (Hanu)" onChange={handleHanuUnharvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Unharvest</button>
+                    </form>
+                </div>
+
+            </div>
+            {/* hanu harvest and unharvest modals */}
+
+            {/* goji harvest and unharvest modals */}
+            <div id="gojiHarvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="gojiHarvest-close">&times;</span>
+                    <form onSubmit={handleGojiHarvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Goji Harvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Harvest (Goji)" onChange={handleGojiHarvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Harvest</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div id="gojiUnharvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="gojiUnharvest-close">&times;</span>
+                    <form onSubmit={handleGojiUnharvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Goji Unharvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Unharvest (Goji)" onChange={handleGojiUnharvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Unharvest</button>
+                    </form>
+                </div>
+
+            </div>
+            {/* goji harvest and unharvest modals */}
+
+            {/* mia harvest and unharvest modals */}
+            <div id="miaHarvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="miaHarvest-close">&times;</span>
+                    <form onSubmit={handleMiaHarvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Mia Harvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Harvest (Mia)" onChange={handleMiaHarvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Harvest</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div id="miaUnharvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="miaUnharvest-close">&times;</span>
+                    <form onSubmit={handleMiaUnharvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Mia Unharvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Unharvest (Mia)" onChange={handleMiaUnharvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Unharvest</button>
+                    </form>
+                </div>
+
+            </div>
+            {/* mia harvest and unharvest modals */}
+
+            {/* gaba harvest and unharvest modals */}
+            <div id="gabaHarvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="gabaHarvest-close">&times;</span>
+                    <form onSubmit={handleGabaHarvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Gaba Harvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Harvest (Gaba)" onChange={handleGabaHarvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Harvest</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div id="gabaUnharvestModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="gabaUnharvest-close">&times;</span>
+                    <form onSubmit={handleGabaUnharvestSubmit}>
+                        <p className="hanu-locking-modal-heading">Gaba UnHarvest</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to UnHarvest (Gaba)" onChange={handleGabaUnharvestFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">UnHarvest</button>
+                    </form>
+                </div>
+
+            </div>
+            {/* gaba harvest and unharvest modals */}
 
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
@@ -103,8 +565,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">14 Sep 2021 21:00 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$1564.68</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{hanuHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>
@@ -114,7 +576,10 @@ const FarmingLight = () => {
                                     <div className="curr-btn mt-5 mb-3">
                                         <div className="d-flex">
                                             <div className="m-auto">
-                                                <button className="btn theme-btn btn-green">Connect to wallet</button>
+                                                <button className="btn theme-btn btn-green unharvest-btn" id="unharvest-hanu"style={{visibility: 
+                                                    hanuHarvestedAmountData.harvestedAmount > 0 ? 'visible' : 'hidden'
+                                                }}>UnHarvest</button>
+                                                <button className="btn theme-btn btn-green harvest-btn" id="harvest-hanu">Harvest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -166,8 +631,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">21 Aug 2021 16:25 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$586.54</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{gojiHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>
@@ -177,7 +642,10 @@ const FarmingLight = () => {
                                     <div className="curr-btn mt-5 mb-3">
                                         <div className="d-flex">
                                             <div className="m-auto">
-                                                <button className="btn theme-btn btn-green">Connect to wallet</button>
+                                                <button className="btn theme-btn btn-green unharvest-btn" id="unharvest-goji"style={{visibility: 
+                                                    gojiHarvestedAmountData.harvestedAmount > 0 ? 'visible' : 'hidden'
+                                                }}>UnHarvest</button>
+                                                <button className="btn theme-btn btn-green harvest-btn" id="harvest-goji">Harvest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -229,8 +697,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">21 Aug 2021 16:25 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$586.54</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{gojiHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>
@@ -291,8 +759,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">21 Aug 2021 16:25 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$186.54</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{gabaHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>
@@ -302,7 +770,10 @@ const FarmingLight = () => {
                                     <div className="curr-btn mt-5 mb-3">
                                         <div className="d-flex">
                                             <div className="m-auto">
-                                                <button className="btn theme-btn btn-green">Connect to wallet</button>
+                                                <button className="btn theme-btn btn-green unharvest-btn" id="unharvest-gaba"style={{visibility: 
+                                                    gabaHarvestedAmountData.harvestedAmount > 0 ? 'visible' : 'hidden'
+                                                }}>UnHarvest</button>
+                                                <button className="btn theme-btn btn-green harvest-btn" id="harvest-gaba">Harvest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -353,8 +824,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">14 Sep 2021 21:00 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$1564.68</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{miaHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>
@@ -364,7 +835,10 @@ const FarmingLight = () => {
                                     <div className="curr-btn mt-5 mb-3">
                                         <div className="d-flex">
                                             <div className="m-auto">
-                                                <button className="btn theme-btn btn-green">Connect to wallet</button>
+                                                <button className="btn theme-btn btn-green unharvest-btn" id="unharvest-mia"style={{visibility: 
+                                                    miaHarvestedAmountData.harvestedAmount > 0 ? 'visible' : 'hidden'
+                                                }}>UnHarvest</button>
+                                                <button className="btn theme-btn btn-green harvest-btn" id="harvest-mia">Harvest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -415,8 +889,8 @@ const FarmingLight = () => {
                                             <h3 className="ms-auto">21 Aug 2021 16:25 UTC</h3>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <h3 className="me-auto">Your stake</h3>
-                                            <h3 className="ms-auto">$586.54</h3>
+                                            <h3 className="me-auto">Your Harvest</h3>
+                                            <h3 className="ms-auto">{hanuHarvestedAmountData.harvestedAmount}</h3>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h3 className="me-auto">GOJI reward</h3>

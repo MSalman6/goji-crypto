@@ -12,10 +12,12 @@ import StakingLight from './StakingLight';
 import StakingDark from './StakingDark';
 import Navbar from './NavBar';
 import { NotFound } from 'http-errors';
+import ScrollToTop from './ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <Switch>
         <Route exact path="/">
