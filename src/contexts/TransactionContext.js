@@ -20,30 +20,38 @@ import {
 export const TransactionContext = React.createContext();
 
 const { ethereum } = window;
-const provider = new ethers.providers.Web3Provider(ethereum);
-const signer = provider.getSigner();
 
 const getHanuContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
     const hanuContract = new ethers.Contract(hanuContractAddress, hanuContractAbi, signer);
     return hanuContract;
 }
 
 const getLiquidityContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
     const liquidityContract = new ethers.Contract(liquidityContractAddress, liquidityContractAbi, signer);
     return liquidityContract;
 }
 
 const getLockContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
     const lockContract = new ethers.Contract(lockingContractAddress, lockingContractAbi, signer);
     return lockContract;
 }
 
 const getVotingContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
     const votingContract = new ethers.Contract(votingContractAddress, votingContractAbi, signer);
     return votingContract;
 }
 
 const getStakingContract = () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
     const stakingContract = new ethers.Contract(stakingContractAddress, stakingContractAbi, signer);
     return stakingContract;
 }
