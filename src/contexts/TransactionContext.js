@@ -318,7 +318,7 @@ export const TransactionProvider = ({children}) => {
                 var lockSeconds = remainingSeconds;
                 setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
 
-                if (seconds == 0) {
+                if (seconds === 0) {
                     clearInterval(countdownTimer);
                     document.getElementById('countdown').innerHTML = "Completed";
                 } else {
