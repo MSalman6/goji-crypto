@@ -593,7 +593,7 @@ const StakingLight = () => {
                                         <h3 className="detail-heading mb-3">DETAILS</h3>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Deposit</h4>
-                                            <a href="" className="ms-auto">HANU</a>
+                                            <a href="# " className="ms-auto">HANU</a>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Total Liquidity</h4>
@@ -604,7 +604,7 @@ const StakingLight = () => {
                                             <h4 className="ms-auto">$0</h4>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <a href="" className="me-auto">View on Matic</a>
+                                            <a href="# " className="me-auto">View on Matic</a>
                                         </div>
                                     </div>
                                 </div>
@@ -683,7 +683,7 @@ const StakingLight = () => {
                                         <h3 className="detail-heading mb-3">DETAILS</h3>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Deposit</h4>
-                                            <a href="" className="ms-auto">MIA</a>
+                                            <a href="# " className="ms-auto">MIA</a>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Total Liquidity</h4>
@@ -694,7 +694,7 @@ const StakingLight = () => {
                                             <h4 className="ms-auto">$0</h4>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <a href="" className="me-auto">View on Matic</a>
+                                            <a href="# " className="me-auto">View on Matic</a>
                                         </div>
                                     </div>
                                 </div>
@@ -776,7 +776,7 @@ const StakingLight = () => {
                                         <h3 className="detail-heading mb-3">DETAILS</h3>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Deposit</h4>
-                                            <a href="" className="ms-auto">GOJ</a>
+                                            <a href="# " className="ms-auto">GOJ</a>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Total Liquidity</h4>
@@ -787,7 +787,7 @@ const StakingLight = () => {
                                             <h4 className="ms-auto">$0</h4>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <a href="" className="me-auto">View on Matic</a>
+                                            <a href="# " className="me-auto">View on Matic</a>
                                         </div>
                                     </div>
                                 </div>
@@ -868,7 +868,7 @@ const StakingLight = () => {
                                         <h3 className="detail-heading mb-3">DETAILS</h3>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Deposit</h4>
-                                            <a href="" className="ms-auto">GABA</a>
+                                            <a href="# " className="ms-auto">GABA</a>
                                         </div>
                                         <div className="d-flex my-2">
                                             <h4 className="me-auto">Total Liquidity</h4>
@@ -879,7 +879,7 @@ const StakingLight = () => {
                                             <h4 className="ms-auto">$0</h4>
                                         </div>
                                         <div className="d-flex my-2">
-                                            <a href="" className="me-auto">View on Matic</a>
+                                            <a href="# " className="me-auto">View on Matic</a>
                                         </div>
                                     </div>
                                 </div>
@@ -898,7 +898,7 @@ const StakingLight = () => {
                             <p className="copyright">Copyright © 2021. All Rights Reserved.</p>
                         </div>
                         <div className="ms-sm-auto">
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">
@@ -911,7 +911,7 @@ const StakingLight = () => {
                                     </defs>
                                 </svg>
                             </a>
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">
@@ -926,7 +926,7 @@ const StakingLight = () => {
                                     </defs>
                                 </svg>
                             </a>
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">

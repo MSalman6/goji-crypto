@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { TransactionContext } from "./contexts/TransactionContext";
 
 const FarmingLight = () => {
@@ -921,7 +921,7 @@ const FarmingLight = () => {
                             <p className="copyright">Copyright © 2021. All Rights Reserved.</p>
                         </div>
                         <div className="ms-sm-auto">
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">
@@ -934,7 +934,7 @@ const FarmingLight = () => {
                                     </defs>
                                 </svg>
                             </a>
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">
@@ -949,7 +949,7 @@ const FarmingLight = () => {
                                     </defs>
                                 </svg>
                             </a>
-                            <a href="" className="mx-2">
+                            <a href="# " className="mx-2">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="16" cy="16.0254" r="16" fill="white" />
                                     <g clipPath="url(#clip0)">

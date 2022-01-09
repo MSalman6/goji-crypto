@@ -1,19 +1,17 @@
-import { Link } from "react-router-dom";
-
 const LockingDark = () => {
     return ( 
         <div className="locking">
             <link rel="stylesheet" href="static/css/style-dark.css" />
 
-            <img className="top-watermark" src="static/img/top-right-ic.svg" />
-            <img className="position-absolute sg-1 desktop" src="static/img/sg-1-desktop.svg" />
-            <img className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
-            <img className="position-absolute sg-2 mobile" src="static/img/sg-2-mobile.svg" />
-            <img className="position-absolute sg-2" src="static/img/green-shadow.svg" />
+            <img alt="" className="top-watermark" src="static/img/top-right-ic.svg" />
+            <img alt="" className="position-absolute sg-1 desktop" src="static/img/sg-1-desktop.svg" />
+            <img alt="" className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
+            <img alt="" className="position-absolute sg-2 mobile" src="static/img/sg-2-mobile.svg" />
+            <img alt="" className="position-absolute sg-2" src="static/img/green-shadow.svg" />
 
             {/* <div className="nav-overlay">
                 <Link to="index-dark" className="overlay-logo">
-                    <img src="static/img/mobile-logo.svg" />
+                    <img alt="" src="static/img/mobile-logo.svg" />
                 </Link>
                 <a className="position-absolute close-menu" href="#">
                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -221,7 +219,7 @@ const LockingDark = () => {
                         </div>
 
                         <div className="d-flex lockup-chart my-5 pt-sm-4">
-                            <img src="static/img/lockup-chart.svg" />
+                            <img alt="" src="static/img/lockup-chart.svg" />
                         </div>
 
                         <div className="row m-0 position-relative mt-5 pt-sm-5">
@@ -256,13 +254,13 @@ const LockingDark = () => {
                                 <p>Locked Uniswap V2- 680.22 UNI-V2 (23.63%)</p>
                             </div>
                             <div className="ms-sm-auto">
-                                <a href=""><img src="static/img/maximize-btn.svg" /></a>
+                                <a href="# "><img alt="" src="static/img/maximize-btn.svg" /></a>
                             </div>
                         </div>
                         <div className="row m-0 position-relative mt-5 countdown-row">
                             <div className="col-sm-6 d-flex">
                                 <div className="d-flex me-5">
-                                    <img src="static/img/lock-event-ic.svg" />
+                                    <img alt="" src="static/img/lock-event-ic.svg" />
                                 </div>
                                 <div className="d-flex flex-column">
                                     <p>Locked 07/10/2021 • Unlocks 07/10/2022</p>
@@ -295,7 +293,7 @@ const LockingDark = () => {
                         <p className="copyright">Copyright © 2021. All Rights Reserved.</p>
                     </div>
                     <div className="ms-sm-auto">
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">
@@ -308,7 +306,7 @@ const LockingDark = () => {
                                 </defs>
                             </svg>
                         </a>
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">
@@ -323,7 +321,7 @@ const LockingDark = () => {
                                 </defs>
                             </svg>
                         </a>
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">

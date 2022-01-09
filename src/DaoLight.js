@@ -51,18 +51,21 @@ const DaoLight = () => {
                 // calculate total balance
                 votingData.map(data => {
                     total_balance+=parseInt(data.balance)
+                    return "";
                 });
                 // calculate percentage
                 votingData.map((data, i) => {
                     var temp_dict = {};
                     temp_dict[i] = parseInt(data.balance)/total_balance*100
                     percentageData.push(temp_dict);
+                    return "";
                 })
                 var percentageSortedVotingData = [];
                 percentageData.map(data => {
                     var current_dict = {};
                     current_dict[data[Object.keys(data)[0]].toFixed(2)] = votingData[Object.keys(data)[0]];
                     percentageSortedVotingData.push(current_dict);
+                    return "";
                 }) 
                 setSortedVotingData(percentageSortedVotingData);
             }
@@ -1051,16 +1054,16 @@ const DaoLight = () => {
                     </div>
                     <div className="pagination-row d-flex mb-sm-5">
                         <div className="ms-sm-auto d-flex">
-                            <a href="" className="px-3 mx-2">
+                            <a href="# " className="px-3 mx-2">
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.03376 4.96631L7.01371 5.9463L2.65296 10.3071H22V11.693H2.65296L7.01371 16.0538L6.03376 17.0338L0 11L6.03376 4.96631Z" fill="white" />
                                 </svg>
                             </a>
-                            <a href="" className="px-3 mx-2 ">1</a>
-                            <a href="" className="px-3 mx-2">2</a>
-                            <a href="" className="px-3 mx-2">3</a>
-                            <a href="" className="px-3 mx-2">....</a>
-                            <a href="" className="px-3 mx-2">
+                            <a href="# " className="px-3 mx-2 ">1</a>
+                            <a href="# " className="px-3 mx-2">2</a>
+                            <a href="# " className="px-3 mx-2">3</a>
+                            <a href="# " className="px-3 mx-2">....</a>
+                            <a href="# " className="px-3 mx-2">
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.9662 17.0337L14.9863 16.0537L19.347 11.6929L0 11.6929L0 10.307L19.347 10.307L14.9863 5.94622L15.9662 4.96622L22 11L15.9662 17.0337Z" fill="white" />
                                 </svg>
@@ -1079,7 +1082,7 @@ const DaoLight = () => {
                         <p className="copyright">Copyright © 2021. All Rights Reserved.</p>
                     </div>
                     <div className="ms-sm-auto">
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">
@@ -1092,7 +1095,7 @@ const DaoLight = () => {
                                 </defs>
                             </svg>
                         </a>
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">
@@ -1107,7 +1110,7 @@ const DaoLight = () => {
                                 </defs>
                             </svg>
                         </a>
-                        <a href="" className="mx-2">
+                        <a href="# " className="mx-2">
                             <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="16" cy="16.0254" r="16" fill="white" />
                                 <g clipPath="url(#clip0)">

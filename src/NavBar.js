@@ -9,19 +9,19 @@ const Navbar = () => {
     const { connectWallet, currentAccount } = useContext(TransactionContext);
     const dispatch = useDispatch();
     var themeColor = useSelector((state) => state.navReducer.theme);
-    var alterThemeColor = themeColor == 'light' ? 'dark' : 'light';
+    var alterThemeColor = themeColor === 'light' ? 'dark' : 'light';
     const pages = useSelector((state) => state.navReducer.pages);
     const currentPage = window.location.href.split("/")[3].split("-")[0];
 
-    if (themeColor == undefined) {
+    if (themeColor === undefined) {
         themeColor = window.location.href.split("/")[3].split("-")[1];
-        alterThemeColor = themeColor == 'light' ? 'dark' : 'light';
+        alterThemeColor = themeColor === 'light' ? 'dark' : 'light';
     }
 
     const chngPage = (activePage) => {
-        if (activePage == undefined) {
+        if (activePage === undefined) {
             activePage = window.location.href.split("/")[3].split("-")[0];
-            if (activePage == 'locking') {
+            if (activePage === 'locking') {
                 activePage = 'lock'
             }
         }
@@ -47,16 +47,20 @@ const Navbar = () => {
 
     return ( 
         <div>
+            <div id="loading">
+                <img id="loading-image" src="/loading.gif" alt="Loading..." />
+            </div>
+
             <div className="notification-container">
                 <div id="notification"></div>
             </div>
 
             <div className="nav-overlay">
                 <Link onClick={() => chngPage('dao')} to={`/dao-${themeColor}`} className="overlay-logo">
-                    <img src="static/img/mobile-logo.svg" />
+                    <img alt="" src="static/img/mobile-logo.svg" />
                 </Link>
 
-                <a className="position-absolute close-menu" href="#">
+                <a className="position-absolute close-menu" href="# ">
                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="3" y="0.213196" width="30" height="3" transform="rotate(45 3 0.213196)" fill="white" />
                         <rect x="1" y="21.2132" width="30" height="3" transform="rotate(-45 1 21.2132)" fill="white" />
@@ -129,7 +133,7 @@ const Navbar = () => {
                                         <line x1="34.5" y1="3" x2="34.5" y2="21" stroke="white" />
                                     </svg>
                                 </Link>
-                                {/* <a className="m-0" href="#"> */}
+                                {/* <a className="m-0" href="# "> */}
                                     {!currentAccount ? (<button className="btn theme-btn m-0 top-btn" onClick={connectWallet}>Get started</button>) : (<button className="btn theme-btn m-0 top-btn">Connected</button>)}
                                 {/* </a> */}
                             </div>

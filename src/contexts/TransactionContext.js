@@ -69,10 +69,20 @@ const getFarmingContract = () => {
 
 export const TransactionProvider = ({children}) => {
     const [currentAccount, setCurrentAccount] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const setLoader = (state) => {
+        if (state) {
+            document.getElementById('loading').style.display = 'flex';
+        } else {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
 
     // hanu states
     const [hanuLockingFormData, setHanuLockingFormData] = useState({ amount: 0, timeInterval: 0 });
     const [hanuLockTime, setHanuLockTime] = useState({ lockedAmount:0 , lockDays:0, lockHours: 0, lockMinutes: 0, lockSeconds: 0, isAmountLocked: true });
+    const [hanuLockedDate, setHanuLockedDate] = useState({ lockDay: 0, lockMonth: 0, lockYear: 0, lockStarted: '0/0/0', lockEnds: '0/0/0' });
 
     // liquidiy states
     const [liquidityLockingFormData, setLiquidityLockingFormData] = useState({ amount: 0, timeInterval: 0 });
@@ -117,6 +127,7 @@ export const TransactionProvider = ({children}) => {
 
     useEffect(() => {
         checkIfWalletIsConnected();
+        setLoader(false)
     }, []);
 
 
@@ -202,6 +213,7 @@ export const TransactionProvider = ({children}) => {
         const hanuContract = getHanuContract();
         
         // check currently approved value
+        setLoader(true);
         await hanuContract.allowance(currentAccount, lockingContractAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
@@ -248,6 +260,7 @@ export const TransactionProvider = ({children}) => {
                 response = "Something went wrong";
             }
         });
+        setLoader(false);
         return response
     }
 
@@ -273,18 +286,52 @@ export const TransactionProvider = ({children}) => {
             // const exists = data.doesExist;
             const insertedAt = data.insertedAt._hex;
             // const updatedAt = data.updatedAt._hex;
-            
-            var lockTimeSeconds = Number(parseInt(validity) - parseInt(insertedAt));
+
+            const validityDate = new Date(validity * 1000);
+            const insertedDate = new Date(insertedAt * 1000);
+
+            const dateToday = new Date();
+
+            var lockTimeSeconds = validityDate - dateToday;
+            lockTimeSeconds /= 1000
+
             if (lockTimeSeconds <= 0) {
                 var isAmountLocked = false;
             } else {
                 isAmountLocked = true;
             }
-            var lockDays = Math.floor(lockTimeSeconds / (3600*24));
-            var lockHours = Math.floor(lockTimeSeconds % (3600*24) / 3600);
-            var lockMinutes = Math.floor(lockTimeSeconds % 3600 / 60);
-            var lockSeconds = Math.floor(lockTimeSeconds % 60);
-            setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
+
+            var seconds = lockTimeSeconds;
+            const timer = () => {
+                var days        = Math.floor(seconds/24/60/60);
+                var hoursLeft   = Math.floor((seconds) - (days*86400));
+                var hours       = Math.floor(hoursLeft/3600);
+                var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+                var minutes     = Math.floor(minutesLeft/60);
+                var remainingSeconds = Math.floor(seconds % 60);
+                function pad(n) {
+                    return (n < 10 ? "0" + n : n);
+                }
+                var lockDays = days;
+                var lockHours = hours;
+                var lockMinutes = minutes;
+                var lockSeconds = remainingSeconds;
+                setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
+
+                if (seconds == 0) {
+                    clearInterval(countdownTimer);
+                    document.getElementById('countdown').innerHTML = "Completed";
+                } else {
+                    seconds--;
+                }
+            }
+            var countdownTimer = setInterval(()=>{timer()}, 1000);
+
+            // updated locked day, year and month
+            setHanuLockedDate(prevstate => ({...prevstate,
+                lockEnds: validityDate.toLocaleDateString('en-GB'),
+                lockStarted: insertedDate.toLocaleDateString('en-GB')
+            }));
         })
     }
 
@@ -298,6 +345,7 @@ export const TransactionProvider = ({children}) => {
         const liquidityContract = getLiquidityContract();
         
         // check currently approved value
+        setLoader(true);
         await liquidityContract.allowance(currentAccount, lockingContractAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
@@ -307,7 +355,7 @@ export const TransactionProvider = ({children}) => {
             if (val <= parseInt(amountInWei)) {
                 const amount = ethers.utils.parseEther("1000000000")._hex;
                 await liquidityContract.approve(lockingContractAddress, amount);
-                showNotification("Hanu approved.")
+                showNotification("Liquidity approved.")
                 // wait for 5 seconds after approve
                 await new Promise(resolve => setTimeout(resolve, 5000));
             }
@@ -344,6 +392,7 @@ export const TransactionProvider = ({children}) => {
                 response = "Something went wrong";
             }
         });
+        setLoader(false);
         return response
     }
 
@@ -406,6 +455,7 @@ export const TransactionProvider = ({children}) => {
 
         var resp = "";
         const votingContract = getVotingContract();
+        setLoader(true);
         await votingContract.vote(votingFormData.voteFor)
         .then( data => {
             resp = `Successfully voted for ${votingFormData.voteFor}`;
@@ -420,6 +470,7 @@ export const TransactionProvider = ({children}) => {
                 resp = "Something went wrong";
             }
         })
+        setLoader(false);
         return resp;
     }
 
@@ -487,6 +538,7 @@ export const TransactionProvider = ({children}) => {
         const stakingContract = getStakingContract();
 
         // check currently approved token value
+        setLoader(true);
         await tokenContract.allowance(currentAccount, stakingContractAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
@@ -524,6 +576,7 @@ export const TransactionProvider = ({children}) => {
                 response = "Something went wrong";
             }
         });
+        setLoader(false);
         return response
     }
 
@@ -552,6 +605,7 @@ export const TransactionProvider = ({children}) => {
             amount = ethers.utils.parseEther(stakedAmount);
         }
 
+        setLoader(true);
         await stakingContract.unstake(amount, unstakeToken)
         .then(data => {
             console.log(data);
@@ -566,6 +620,7 @@ export const TransactionProvider = ({children}) => {
                 resp = "Something went wrong";
             }
         })
+        setLoader(false);
         return resp
     }
 
@@ -577,28 +632,28 @@ export const TransactionProvider = ({children}) => {
             var stakedAmount = ethers.utils.formatEther(data);
             setHanuStakedAmountData({ stakedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get mia current staked value
         await stakingContract.StakeMap(miaContractAddress, account)
         .then(data => {
             var stakedAmount = ethers.utils.formatEther(data);
             setMiaStakedAmountData({ stakedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get goji current staked value
         await stakingContract.StakeMap(liquidityContractAddress, account)
         .then(data => {
             var stakedAmount = ethers.utils.formatEther(data);
             setGojiStakedAmountData({ stakedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get gaba current staked value
         await stakingContract.StakeMap(gabaContractAddress, account)
         .then(data => {
             var stakedAmount = ethers.utils.formatEther(data);
             setGabaStakedAmountData({ stakedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
     }
 
     ////////////////////////////////////
@@ -664,6 +719,7 @@ export const TransactionProvider = ({children}) => {
         const farmingContract = getFarmingContract();
 
         // check currently approved token value
+        setLoader(true);
         await tokenContract.allowance(currentAccount, farmingContractAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
@@ -701,6 +757,7 @@ export const TransactionProvider = ({children}) => {
                 response = "Something went wrong";
             }
         });
+        setLoader(false);
         return response
     }
 
@@ -729,6 +786,7 @@ export const TransactionProvider = ({children}) => {
             amount = ethers.utils.parseEther(unHarvestAmount);
         }
 
+        setLoader(true);
         await farmingContract.Unharvest(amount, unHarvestTokenAddress)
         .then(data => {
             console.log(data);
@@ -743,6 +801,7 @@ export const TransactionProvider = ({children}) => {
                 resp = "Something went wrong";
             }
         })
+        setLoader(false);
         return resp
     }
 
@@ -754,28 +813,28 @@ export const TransactionProvider = ({children}) => {
             var harvestedAmount = ethers.utils.formatEther(data);
             setHanuHarvestedAmountData({ harvestedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get mia current harvested value
         await farmingContract.FarmMap(miaContractAddress, account)
         .then(data => {
             var harvestedAmount = ethers.utils.formatEther(data);
             setMiaHarvestedAmountData({ harvestedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get goji current harvested value
         await farmingContract.FarmMap(liquidityContractAddress, account)
         .then(data => {
             var harvestedAmount = ethers.utils.formatEther(data);
             setGojiHarvestedAmountData({ harvestedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         // get gaba current harvested value
         await farmingContract.FarmMap(gabaContractAddress, account)
         .then(data => {
             var harvestedAmount = ethers.utils.formatEther(data);
             setGabaHarvestedAmountData({ harvestedAmount });
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
     }
 
     return (
@@ -791,6 +850,7 @@ export const TransactionProvider = ({children}) => {
                 setHanuLockingFormData,
                 handleHanuFormChange,
                 hanuLockTime,
+                hanuLockedDate,
 
                 // Liquidity lock context
                 lockLiquidityAmount,
