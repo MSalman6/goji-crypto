@@ -10,7 +10,7 @@ export const votingContractAbi = votingAbi;
 export const votingContractAddress = '0xcdC0b1269fa9A51e774D27BE283B0FB82aB86179';
 
 export const lockingContractAbi = hanuLockAbi;
-export const lockingContractAddress = '0x16c747e83C6e2e745ae85499398aCDDe893c43A6';
+export const lockingContractAddress = '0x93030b4B5E050F9A992aB12Ec266bCB0535C6aF2';
 
 export const stakingContractAbi = stakingAbi;
 export const stakingContractAddress = '0xC93dc3BC805DA439116C9F3eAD6bCe290D972AD7';

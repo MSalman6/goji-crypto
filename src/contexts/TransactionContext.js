@@ -79,6 +79,9 @@ export const TransactionProvider = ({children}) => {
         }
     }
 
+    // any token lock states
+    const [tokenLockingFormData, setTokenLockingFormData] = useState({ amount: 0, timeInterval: 0, tokenAddress: '' });
+
     // hanu states
     const [hanuLockingFormData, setHanuLockingFormData] = useState({ amount: 0, timeInterval: 0 });
     const [hanuLockTime, setHanuLockTime] = useState({ lockedAmount:0 , lockDays:0, lockHours: 0, lockMinutes: 0, lockSeconds: 0, isAmountLocked: true });
@@ -204,6 +207,79 @@ export const TransactionProvider = ({children}) => {
     ////////////////////////////////////
     //  Locking Functionality
     ////////////////////////////////////
+
+    // Any token locking functionality
+    const handleLockTokenFormChange = (e, name) => {
+        setTokenLockingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
+    }
+
+    const tokenApproveAndLock = async (amount, timeInterval, tokenAddress) => {
+        var response = "";
+        const hanuContract = getHanuContract();
+
+        // check currently approved value
+        setLoader(true);
+        await hanuContract.allowance(currentAccount, tokenAddress)
+        .then(async (data) => {
+            const val = parseInt(data._hex);
+            const amountInWei = ethers.utils.parseEther(amount)._hex;
+
+            // call approve method if amount entered is greater than previously approved value
+            if (val <= parseInt(amountInWei)) {
+                const amount = ethers.utils.parseEther("1000000000")._hex;
+                await hanuContract.approve(tokenAddress, amount);
+                showNotification("Token Approved.")
+                // wait for 5 seconds after approve
+                await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+
+            // check token balance
+            const tokenBalance = await hanuContract.balanceOf(currentAccount);
+            if (tokenBalance >= amountInWei) {
+                // call hanu lock method
+                const lockContract = getLockContract();
+                await lockContract.lock(tokenAddress, amountInWei, timeInterval)
+                .then(data => {
+                    response = `Successfully locked ${amount} Token(s).`;
+                })
+                .catch(err => {
+                    if (err.data.message.includes('already')) {
+                        response = "You've already locked this token, please unlock them all before locking again.";
+                    } else {
+                        console.log(err);
+                        response =  err.data.message;
+                    }
+                });
+            } else {
+                response = "You don't have enough token balance";
+            }
+        })
+        .catch(err => {
+            if (err.data){
+                response = err.data.message;
+            } else if (err.message) { 
+                response = err.message;
+            } else {
+                console.log(err);
+                response = "Something went wrong";
+            }
+        });
+        setLoader(false);
+        return response
+    }
+
+    const lockTokenAmount = async () => {
+        if (!currentAccount) {
+            connectWallet() // makesure site has connection to metamask
+            return "Please connect MetaMask before performing any actions."
+        }
+
+        const { amount, timeInterval, tokenAddress } = tokenLockingFormData;
+        const approveAndLockResp = await tokenApproveAndLock(amount, timeInterval, tokenAddress);
+        return approveAndLockResp;
+    }
+
+    // hanu locking functionality
     const handleHanuFormChange = (e, name) => {
         setHanuLockingFormData((prevstate) => ({...prevstate, [e.target.name]: e.target.value}))
     }
@@ -301,37 +377,39 @@ export const TransactionProvider = ({children}) => {
                 isAmountLocked = true;
             }
 
-            var seconds = lockTimeSeconds;
-            const timer = () => {
-                var days        = Math.floor(seconds/24/60/60);
-                var hoursLeft   = Math.floor((seconds) - (days*86400));
-                var hours       = Math.floor(hoursLeft/3600);
-                var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
-                var minutes     = Math.floor(minutesLeft/60);
-                var remainingSeconds = Math.floor(seconds % 60);
-                function pad(n) {
-                    return (n < 10 ? "0" + n : n);
-                }
-                var lockDays = days;
-                var lockHours = hours;
-                var lockMinutes = minutes;
-                var lockSeconds = remainingSeconds;
-                setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
+            if (isAmountLocked) {
+                var seconds = lockTimeSeconds;
+                const timer = () => {
+                    var days        = Math.floor(seconds/24/60/60);
+                    var hoursLeft   = Math.floor((seconds) - (days*86400));
+                    var hours       = Math.floor(hoursLeft/3600);
+                    var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+                    var minutes     = Math.floor(minutesLeft/60);
+                    var remainingSeconds = Math.floor(seconds % 60);
 
-                if (seconds === 0) {
-                    clearInterval(countdownTimer);
-                    document.getElementById('countdown').innerHTML = "Completed";
-                } else {
-                    seconds--;
+                    var lockDays = days;
+                    var lockHours = hours;
+                    var lockMinutes = minutes;
+                    var lockSeconds = remainingSeconds;
+                    setHanuLockTime((prevstate) => ({ ...prevstate, lockedAmount, lockDays, lockHours, lockMinutes, lockSeconds, isAmountLocked }));
+
+                    if (seconds === 0) {
+                        clearInterval(countdownTimer);
+                        document.getElementById('countdown').innerHTML = "Completed";
+                    } else {
+                        seconds--;
+                    }
                 }
+                var countdownTimer = setInterval(()=>{timer()}, 1000);
+
+                // updated locked day, year and month
+                setHanuLockedDate(prevstate => ({...prevstate,
+                    lockEnds: validityDate.toLocaleDateString('en-GB'),
+                    lockStarted: insertedDate.toLocaleDateString('en-GB')
+                }));
+            } else {
+                setHanuLockTime((prevstate) => ({ ...prevstate, isAmountLocked }));
             }
-            var countdownTimer = setInterval(()=>{timer()}, 1000);
-
-            // updated locked day, year and month
-            setHanuLockedDate(prevstate => ({...prevstate,
-                lockEnds: validityDate.toLocaleDateString('en-GB'),
-                lockStarted: insertedDate.toLocaleDateString('en-GB')
-            }));
         })
     }
 
@@ -843,6 +921,11 @@ export const TransactionProvider = ({children}) => {
                 connectWallet,
                 currentAccount,
                 showNotification,
+
+                // Any Token lock context
+                lockTokenAmount,
+                tokenLockingFormData,
+                handleLockTokenFormChange,
 
                 // Hanu lock context
                 lockHanuAmount,

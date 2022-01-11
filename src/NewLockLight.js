@@ -1,5 +1,59 @@
+import React, { useContext, useEffect } from "react";
+import { TransactionContext } from "./contexts/TransactionContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
+
 
 const NewLockLight = () => {
+    const history = useHistory();
+    var themeColor = useSelector((state) => state.navReducer.theme);
+
+    if (themeColor === undefined) {
+        themeColor = window.location.href.split("/")[3].split("-")[2];
+    }
+
+    const {
+        // general context
+        showNotification,
+
+        // hanu context
+        lockTokenAmount,
+        handleLockTokenFormChange,
+    } = useContext(TransactionContext);
+
+     // hanu lock methods
+     const handleLockTokenSubmit = async (e) => {
+        e.preventDefault();
+
+        const lockingResp = await lockTokenAmount();
+        // hide hanu lock modal after locking
+        var modal = document.getElementById("hanuLockingModal");
+        modal.style.display = "none";
+
+        // show notification of locked hanu
+        showNotification(lockingResp);
+        var lockLocation = `/locking-${themeColor}`;
+        setTimeout(()=>{history.push(lockLocation)}, 2000)
+    }
+
+    const handleLockTokenModal = () => {
+        var modal = document.getElementById("hanuLockingModal");
+        var btn = document.getElementById("lock-hanu");
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+    }
+
+    useEffect(() => {
+        handleLockTokenModal();
+    }, [])
+
     return ( 
         <div className="locking">
             <link rel="stylesheet" href="static/css/style-light.css" />
@@ -7,6 +61,23 @@ const NewLockLight = () => {
             <img alt="" className="top-watermark" src="static/img/top-right-ic.svg" />
             <img alt="" className="position-absolute sg-1 desktop" src="static/img/sg-1-desktop.svg" />
             <img alt="" className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
+
+            {/* Token lock modal */}
+            <div id="hanuLockingModal" className="modal">
+                <div className="modal-content">
+                    <span className="close">&times;</span>
+                    <form onSubmit={handleLockTokenSubmit}>
+                        <p className="hanu-locking-modal-heading">Token Locking</p>
+
+                        <input className="modal-form-input" autoComplete="off" name="tokenAddress" type="text" placeholder="Token Address" onChange={handleLockTokenFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Lock" onChange={handleLockTokenFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleLockTokenFormChange} required/>
+
+                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
+                    </form>
+                </div>
+            </div>
+            {/* Token lock modal */}
 
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
@@ -17,7 +88,7 @@ const NewLockLight = () => {
                 </div>
             </div>
             <div className="container d-flex justify-content-center align-items-center flex-column">
-                <div className="token-select d-flex p-4 my-3">
+                <div className="token-select d-flex p-4 my-3" id="lock-hanu">
                     <div className="d-flex me-3">
                         <div><img alt="" src="static/img/new-lock-eth.svg" /></div>
                     </div>
@@ -26,7 +97,7 @@ const NewLockLight = () => {
                         <p className="mb-0">Choose if your coin is an ERC-20 Token</p>
                     </div>
                 </div>
-                <div className="token-select d-flex p-4 my-3 select">
+                <div className="token-select d-flex p-4 my-3 select" id="lock-liquidity">
                     <div className="d-flex me-3">
                         <div><img alt="" src="static/img/new-lock-binance.svg" /></div>
                     </div>
@@ -44,9 +115,9 @@ const NewLockLight = () => {
                         <p className="mb-0">Choose if your coin is built on AVAX</p>
                     </div>
                 </div>
-                <div className="d-flex p-4 my-3">
+                {/* <div className="d-flex p-4 my-3">
                     <button className="btn theme-btn">Continue</button>
-                </div>
+                </div> */}
             </div>
 
             <div className="row m-0 position-relative mt-5 pt-sm-5 footer-bottom px-sm-5 py-3">

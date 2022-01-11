@@ -1,104 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { TransactionContext } from "./contexts/TransactionContext";
 
 const LockingDark = () => {
     const {
-        // general context
-        showNotification,
-
-        // hanu context
-        lockHanuAmount,
-        hanuLockingFormData,
-        handleHanuFormChange,
         hanuLockTime,
         hanuLockedDate,
-
-        // liquidity context
-        lockLiquidityAmount,
-        liquidityLockingFormData,
-        handleLiquidityFormChange,
-     } = useContext(TransactionContext);
-
-    // hanu lock methods
-    const handleHanuSubmit = async (e) => {
-        const { amount } = hanuLockingFormData;
-        e.preventDefault();
-
-        const lockingResp = await lockHanuAmount();
-        if (lockingResp) {
-            // hide hanu lock modal after locking
-            var modal = document.getElementById("hanuLockingModal");
-            modal.style.display = "none";
-
-            // show notification of locked hanu
-            showNotification(lockingResp, amount);
-        } else {
-            showNotification(lockingResp, 0);
-        }
-    }
-
-    const handleHanuModal = () => {
-        var modal = document.getElementById("hanuLockingModal");
-        var btn = document.getElementById("lock-hanu");
-        var span = document.getElementsByClassName("close")[0];
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-    }
-
-    // liquidity lock methods
-    const handleLiquiditySubmit = async (e) => {
-        const { amount } = liquidityLockingFormData;
-        e.preventDefault();
-
-        const lockingResp = await lockLiquidityAmount();
-        if (lockingResp) {
-            // hide liquidity lock modal after locking
-            var modal = document.getElementById("liquidityLockingModal");
-            modal.style.display = "none";
-
-            // show notification of locked hanu
-            showNotification(lockingResp, amount);
-        } else {
-            showNotification(lockingResp, 0);
-        }
-    }
-
-    const handleLiquidityModal = () => {
-        var modal = document.getElementById("liquidityLockingModal");
-        var btn = document.getElementById("lock-liquidity");
-        var span = document.getElementsByClassName("liquidityClose")[0];
-
-        var hanuBtn = document.getElementById("lock-hanu");
-        var hanumodal = document.getElementById("hanuLockingModal");
-
-        window.onclick = function(event) {
-            if (event.target !== btn & event.target.parentNode.parentNode.parentNode !== modal & event.target !== hanuBtn
-                & event.target.parentNode.parentNode.parentNode !== hanumodal
-                ) {
-                modal.style.display = "none";
-                hanumodal.style.display = "none";
-            }
-        }
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-    }
-
-    useEffect(() => {
-        handleHanuModal();
-        handleLiquidityModal();
-    }, [])
+    } = useContext(TransactionContext);
 
     return ( 
         <div className="locking">
@@ -109,39 +17,7 @@ const LockingDark = () => {
             <img alt="" className="position-absolute sg-1 mobile" src="static/img/sg-1-mobile.svg" />
             <img alt="" className="position-absolute sg-2 mobile" src="static/img/sg-2-mobile.svg" />
             <img alt="" className="position-absolute sg-2" src="static/img/green-shadow.svg" />
-            {/* hanu lock modal */}
-            <div id="hanuLockingModal" className="modal">
-                <div className="modal-content">
-                    <span className="close">&times;</span>
-                    <form onSubmit={handleHanuSubmit}>
-                        <p className="hanu-locking-modal-heading">Hanu Locking</p>
 
-                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Hanu" onChange={handleHanuFormChange} required/>
-                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleHanuFormChange} required/>
-
-                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
-                    </form>
-                </div>
-            </div>
-            {/* hanu lock modal */}
-
-            {/* liquidity lock modal */}
-            <div id="liquidityLockingModal" className="modal">
-                <div className="modal-content">
-                    <span className="liquidityClose">&times;</span>
-                    <form onSubmit={handleLiquiditySubmit}>
-                        <p className="hanu-locking-modal-heading">Liquidity Locking</p>
-
-                        <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount in Liquidity" onChange={handleLiquidityFormChange} required/>
-                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleLiquidityFormChange} required/>
-
-                        <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
-                    </form>
-                </div>
-            </div>
-            {/* liquidity lock modal */}
-
-            
             <div className="container banner-content">
                 <div className="row m-0 position-relative mt-5">
                     <div className="col-sm-12 banner-desc px-sm-5 text-center">
@@ -153,12 +29,14 @@ const LockingDark = () => {
                 <div className="d-flex sorting-filters align-items-center">
                     <div className="me-sm-3 my-sm-0 my-3 search-inputs d-flex ms-sm-auto">
                         <div className="fil-dropdown me-sm-3">
-                            {/* <Link to="/new-lock-light"> */}
+                            <Link to="/new-lock-dark">
                                 <button id="lock-hanu" className="btn theme-btn">Lock Hanu</button>
-                            {/* </Link> */}
+                            </Link>
                         </div>
                         <div className="fil-input">
-                            <button id="lock-liquidity" className="btn theme-btn">Lock Liquidity</button>
+                            <Link to="/new-lock-dark">
+                                <button id="lock-liquidity" className="btn theme-btn">Lock Liquidity</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
