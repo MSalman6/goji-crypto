@@ -71,7 +71,7 @@ const NewLockLight = () => {
 
                         <input className="modal-form-input" autoComplete="off" name="tokenAddress" type="text" placeholder="Token Address" onChange={handleLockTokenFormChange} required/>
                         <input className="modal-form-input" autoComplete="off" name="amount" type="number" placeholder="Amount to Lock" onChange={handleLockTokenFormChange} required/>
-                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="number" min="3" max="12" step="3" placeholder="Time Interval (3, 6, 9 or 12)" onChange={handleLockTokenFormChange} required/>
+                        <input className="modal-form-input" autoComplete="off" name="timeInterval" type="date" onChange={handleLockTokenFormChange} required/>
 
                         <button className="hanu-locking-submit btn theme-btn m-0 top-btn">Lock</button>
                     </form>

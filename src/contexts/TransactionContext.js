@@ -153,10 +153,13 @@ export const TransactionProvider = ({children}) => {
         try {
             if (!ethereum) return alert("Please install MetaMask") // check if MetaMask is installed
 
+            try {
             await ethereum.on('accountsChanged', function (accounts) {
                 setCurrentAccount(accounts[0]);
                 userHanuLockRecords(accounts[0]);
-            })
+            })} catch( err) {
+                console.log(err, "#################")
+            }
 
             await ethereum.on('disconnect', function(accounts) {
                 console.log(accounts)
@@ -232,12 +235,13 @@ export const TransactionProvider = ({children}) => {
                 // wait for 5 seconds after approve
                 await new Promise(resolve => setTimeout(resolve, 5000));
             }
-
+            
             // check token balance
             const tokenBalance = await hanuContract.balanceOf(currentAccount);
             if (tokenBalance >= amountInWei) {
                 // call hanu lock method
                 const lockContract = getLockContract();
+                console.log(tokenAddress, amountInWei, timeInterval);
                 await lockContract.lock(tokenAddress, amountInWei, timeInterval)
                 .then(data => {
                     response = `Successfully locked ${amount} Token(s).`;
@@ -275,7 +279,9 @@ export const TransactionProvider = ({children}) => {
         }
 
         const { amount, timeInterval, tokenAddress } = tokenLockingFormData;
-        const approveAndLockResp = await tokenApproveAndLock(amount, timeInterval, tokenAddress);
+        var dateInterval = ethers.utils.hexlify(Date.parse(timeInterval) / 1000);
+        console.log(dateInterval)
+        const approveAndLockResp = await tokenApproveAndLock(amount, dateInterval, tokenAddress);
         return approveAndLockResp;
     }
 

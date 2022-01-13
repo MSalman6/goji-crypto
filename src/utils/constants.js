@@ -1,6 +1,6 @@
 import hanuAbi from './hanuAbi.json';
 import votingAbi from './votingAbi.json';
-import hanuLockAbi from './hanuLockAbi.json';
+import lockingAbi from './lockingAbi.json';
 import stakingAbi from './stakingAbi.json';
 import liquidityAbi from './liquidityAbi.json'
 import farmingAbi from './farmingAbi.json'
@@ -9,8 +9,8 @@ import farmingAbi from './farmingAbi.json'
 export const votingContractAbi = votingAbi;
 export const votingContractAddress = '0xcdC0b1269fa9A51e774D27BE283B0FB82aB86179';
 
-export const lockingContractAbi = hanuLockAbi;
-export const lockingContractAddress = '0x93030b4B5E050F9A992aB12Ec266bCB0535C6aF2';
+export const lockingContractAbi = lockingAbi;
+export const lockingContractAddress = '0x5bB89686d90d2B361A2C7C964c4AD374C80296b2';
 
 export const stakingContractAbi = stakingAbi;
 export const stakingContractAddress = '0xC93dc3BC805DA439116C9F3eAD6bCe290D972AD7';
