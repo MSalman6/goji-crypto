@@ -24,6 +24,14 @@ export const TransactionContext = React.createContext();
 const { ethereum } = window;
 
 // get contracts methods
+const getTokenContract = (tokenAdress) => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const hanuContract = new ethers.Contract(tokenAdress, hanuContractAbi, signer);
+    return hanuContract;
+}
+
+
 const getHanuContract = () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
@@ -218,30 +226,29 @@ export const TransactionProvider = ({children}) => {
 
     const tokenApproveAndLock = async (amount, timeInterval, tokenAddress) => {
         var response = "";
-        const hanuContract = getHanuContract();
+        const tokenContract = getTokenContract(tokenAddress);
 
         // check currently approved value
         setLoader(true);
-        await hanuContract.allowance(currentAccount, tokenAddress)
+        await tokenContract.allowance(currentAccount, tokenAddress)
         .then(async (data) => {
             const val = parseInt(data._hex);
             const amountInWei = ethers.utils.parseEther(amount)._hex;
 
             // call approve method if amount entered is greater than previously approved value
             if (val <= parseInt(amountInWei)) {
-                const amount = ethers.utils.parseEther("1000000000")._hex;
-                await hanuContract.approve(tokenAddress, amount);
+                const amount = ethers.utils.parseEther("1000000000000000000000000000")._hex;
+                await tokenContract.approve(lockingContractAddress, amount);
                 showNotification("Token Approved.")
                 // wait for 5 seconds after approve
                 await new Promise(resolve => setTimeout(resolve, 5000));
             }
             
             // check token balance
-            const tokenBalance = await hanuContract.balanceOf(currentAccount);
+            const tokenBalance = await tokenContract.balanceOf(currentAccount);
             if (tokenBalance >= amountInWei) {
                 // call hanu lock method
                 const lockContract = getLockContract();
-                console.log(tokenAddress, amountInWei, timeInterval);
                 await lockContract.lock(tokenAddress, amountInWei, timeInterval)
                 .then(data => {
                     response = `Successfully locked ${amount} Token(s).`;
@@ -280,8 +287,7 @@ export const TransactionProvider = ({children}) => {
 
         const { amount, timeInterval, tokenAddress } = tokenLockingFormData;
         var dateInterval = ethers.utils.hexlify(Date.parse(timeInterval) / 1000);
-        console.log(dateInterval)
-        const approveAndLockResp = await tokenApproveAndLock(amount, dateInterval, tokenAddress);
+        const approveAndLockResp = await tokenApproveAndLock(amount, 1643105845, tokenAddress);
         return approveAndLockResp;
     }
 
